@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Archivo de construccion Ant para el cliente consola SOAP. -->
+<!-- Si lo borras y reabres el proyecto se volvera a crear. -->
+<project name="cliente_consola_soap_java_conuni_gr06" default="default" basedir=".">
+    <description>Construye, prueba y ejecuta el proyecto cliente_consola_soap_java_conuni_gr06.</description>
+    <import file="nbproject/build-impl.xml"/>
+</project>

@@ -1,0 +1,47 @@
+ec.edu.monster.conuni.app-lifecycle-viewmodel-savedstate-2.6.2-0 /Users/im47/.gradle/caches/transforms-4/0106de7a8115018d7a8744526c541e41/transformed/lifecycle-viewmodel-savedstate-2.6.2/res
+ec.edu.monster.conuni.app-foundation-layout-release-1 /Users/im47/.gradle/caches/transforms-4/0dd3115396e34305c9fdef8516722b88/transformed/foundation-layout-release/res
+ec.edu.monster.conuni.app-lifecycle-runtime-2.6.2-2 /Users/im47/.gradle/caches/transforms-4/0ee6bd74890fa9b9e7eca6aba488b9be/transformed/lifecycle-runtime-2.6.2/res
+ec.edu.monster.conuni.app-runtime-saveable-release-3 /Users/im47/.gradle/caches/transforms-4/0fac1e76274be426f5935ad5fae715cb/transformed/runtime-saveable-release/res
+ec.edu.monster.conuni.app-material3-release-4 /Users/im47/.gradle/caches/transforms-4/210176a9aac184799f341ea8e1d6466f/transformed/material3-release/res
+ec.edu.monster.conuni.app-activity-compose-1.8.0-5 /Users/im47/.gradle/caches/transforms-4/21e934e1659cabbb5b5b7ed4ceb2fc01/transformed/activity-compose-1.8.0/res
+ec.edu.monster.conuni.app-ui-tooling-preview-release-6 /Users/im47/.gradle/caches/transforms-4/240ca48ad8c0fb2accc0313b3c1346ab/transformed/ui-tooling-preview-release/res
+ec.edu.monster.conuni.app-runtime-release-7 /Users/im47/.gradle/caches/transforms-4/306b358acae06f84cfd7606263c035b6/transformed/runtime-release/res
+ec.edu.monster.conuni.app-material-release-8 /Users/im47/.gradle/caches/transforms-4/47e0fbd0642881e1a1ef1cc9c9203b60/transformed/material-release/res
+ec.edu.monster.conuni.app-annotation-experimental-1.4.0-9 /Users/im47/.gradle/caches/transforms-4/48a06a1c1de647adf0fe17342d08f1bc/transformed/annotation-experimental-1.4.0/res
+ec.edu.monster.conuni.app-ui-graphics-release-10 /Users/im47/.gradle/caches/transforms-4/4bdef4aae1cf58fefc1747f91ff21c45/transformed/ui-graphics-release/res
+ec.edu.monster.conuni.app-savedstate-ktx-1.2.1-11 /Users/im47/.gradle/caches/transforms-4/50e612db1349c562915bd73a1340806b/transformed/savedstate-ktx-1.2.1/res
+ec.edu.monster.conuni.app-ui-release-12 /Users/im47/.gradle/caches/transforms-4/55585af19a68081051446d97889a8c5f/transformed/ui-release/res
+ec.edu.monster.conuni.app-ui-util-release-13 /Users/im47/.gradle/caches/transforms-4/55cb8c2ea7f19295d299e0278c1b6e39/transformed/ui-util-release/res
+ec.edu.monster.conuni.app-core-ktx-1.13.1-14 /Users/im47/.gradle/caches/transforms-4/5691405a6697076dec9bf1682877de7b/transformed/core-ktx-1.13.1/res
+ec.edu.monster.conuni.app-material-icons-core-release-15 /Users/im47/.gradle/caches/transforms-4/56f74fb8b8fd0010a0d7a739125eb90d/transformed/material-icons-core-release/res
+ec.edu.monster.conuni.app-lifecycle-viewmodel-2.6.2-16 /Users/im47/.gradle/caches/transforms-4/57caed610cfe49bf9cffce3828aff26b/transformed/lifecycle-viewmodel-2.6.2/res
+ec.edu.monster.conuni.app-animation-core-release-17 /Users/im47/.gradle/caches/transforms-4/60832a68e19a9a720fe51a1d67e9543a/transformed/animation-core-release/res
+ec.edu.monster.conuni.app-ui-tooling-release-18 /Users/im47/.gradle/caches/transforms-4/6699b2bab2edc3c9f0baf844f832f85c/transformed/ui-tooling-release/res
+ec.edu.monster.conuni.app-lifecycle-viewmodel-ktx-2.6.2-19 /Users/im47/.gradle/caches/transforms-4/68e13d674a5777cbe6c0569ada9830aa/transformed/lifecycle-viewmodel-ktx-2.6.2/res
+ec.edu.monster.conuni.app-core-runtime-2.2.0-20 /Users/im47/.gradle/caches/transforms-4/71e035483ae40f3b96c287e9609b2b5a/transformed/core-runtime-2.2.0/res
+ec.edu.monster.conuni.app-ui-geometry-release-21 /Users/im47/.gradle/caches/transforms-4/744fc7f3fb6b845bb8230902313b2732/transformed/ui-geometry-release/res
+ec.edu.monster.conuni.app-profileinstaller-1.3.0-22 /Users/im47/.gradle/caches/transforms-4/77b5ff823befc3626d9ace5a494cea71/transformed/profileinstaller-1.3.0/res
+ec.edu.monster.conuni.app-ui-test-manifest-1.6.6-23 /Users/im47/.gradle/caches/transforms-4/77e5dfb88ab79c8421f5711490dbb08e/transformed/ui-test-manifest-1.6.6/res
+ec.edu.monster.conuni.app-ui-unit-release-24 /Users/im47/.gradle/caches/transforms-4/869320e747496034ed3043066e5fa802/transformed/ui-unit-release/res
+ec.edu.monster.conuni.app-activity-1.8.0-25 /Users/im47/.gradle/caches/transforms-4/9431ccf83e6ca0442862c069f67c34dd/transformed/activity-1.8.0/res
+ec.edu.monster.conuni.app-customview-poolingcontainer-1.0.0-26 /Users/im47/.gradle/caches/transforms-4/9c5f8238fc1af70ec1d220cafa81cb6b/transformed/customview-poolingcontainer-1.0.0/res
+ec.edu.monster.conuni.app-savedstate-1.2.1-27 /Users/im47/.gradle/caches/transforms-4/a0cd37779fa942a39e14b7ed82af83c9/transformed/savedstate-1.2.1/res
+ec.edu.monster.conuni.app-emoji2-1.3.0-28 /Users/im47/.gradle/caches/transforms-4/a7e7288e84dc5a6b16645178fa53da88/transformed/emoji2-1.3.0/res
+ec.edu.monster.conuni.app-animation-release-29 /Users/im47/.gradle/caches/transforms-4/a8d7f90101bb096e3d8210aebb954db8/transformed/animation-release/res
+ec.edu.monster.conuni.app-lifecycle-process-2.6.2-30 /Users/im47/.gradle/caches/transforms-4/afab3289030e474157b7e66fd8b74d6b/transformed/lifecycle-process-2.6.2/res
+ec.edu.monster.conuni.app-ui-tooling-data-release-31 /Users/im47/.gradle/caches/transforms-4/b8eacc34cdb9fc3fac64467ef72d5139/transformed/ui-tooling-data-release/res
+ec.edu.monster.conuni.app-material-ripple-release-32 /Users/im47/.gradle/caches/transforms-4/bdf539cee158ceb50ca0cea562812128/transformed/material-ripple-release/res
+ec.edu.monster.conuni.app-ui-text-release-33 /Users/im47/.gradle/caches/transforms-4/d8cf31b33d6bcc6dda7e8704800d8a04/transformed/ui-text-release/res
+ec.edu.monster.conuni.app-core-1.13.1-34 /Users/im47/.gradle/caches/transforms-4/d9269dc9362d6f79fd0ee8a8b3190bbb/transformed/core-1.13.1/res
+ec.edu.monster.conuni.app-lifecycle-runtime-ktx-2.6.2-35 /Users/im47/.gradle/caches/transforms-4/ed3dfe509160aafa2dccde6d984ac6a5/transformed/lifecycle-runtime-ktx-2.6.2/res
+ec.edu.monster.conuni.app-material-icons-extended-release-36 /Users/im47/.gradle/caches/transforms-4/f29f8ce2d8cb8bcefe82f2da2a6ea447/transformed/material-icons-extended-release/res
+ec.edu.monster.conuni.app-lifecycle-livedata-core-2.6.2-37 /Users/im47/.gradle/caches/transforms-4/f30d68bf5d48dd0807f7a546945f1205/transformed/lifecycle-livedata-core-2.6.2/res
+ec.edu.monster.conuni.app-startup-runtime-1.1.1-38 /Users/im47/.gradle/caches/transforms-4/f4c7fdf2f9baeb99b7e676eaa46b0b0b/transformed/startup-runtime-1.1.1/res
+ec.edu.monster.conuni.app-foundation-release-39 /Users/im47/.gradle/caches/transforms-4/f8dc0ca9b07ebd989144c1bbf89669ee/transformed/foundation-release/res
+ec.edu.monster.conuni.app-activity-ktx-1.8.0-40 /Users/im47/.gradle/caches/transforms-4/fd893cd37eff08fe628b66ac723e7870/transformed/activity-ktx-1.8.0/res
+ec.edu.monster.conuni.app-resValues-41 /Users/im47/ESPE/Arquitectura/ARQUITECTURA_G6/UNIDAD 1/SOAP_JAVA_CONUNI_GR06/07. CLIMOVIL/cliente_movil_soap_java_conuni_gr06/app/build/generated/res/resValues/debug
+ec.edu.monster.conuni.app-packageDebugResources-42 /Users/im47/ESPE/Arquitectura/ARQUITECTURA_G6/UNIDAD 1/SOAP_JAVA_CONUNI_GR06/07. CLIMOVIL/cliente_movil_soap_java_conuni_gr06/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+ec.edu.monster.conuni.app-packageDebugResources-43 /Users/im47/ESPE/Arquitectura/ARQUITECTURA_G6/UNIDAD 1/SOAP_JAVA_CONUNI_GR06/07. CLIMOVIL/cliente_movil_soap_java_conuni_gr06/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+ec.edu.monster.conuni.app-debug-44 /Users/im47/ESPE/Arquitectura/ARQUITECTURA_G6/UNIDAD 1/SOAP_JAVA_CONUNI_GR06/07. CLIMOVIL/cliente_movil_soap_java_conuni_gr06/app/build/intermediates/merged_res/debug/mergeDebugResources
+ec.edu.monster.conuni.app-debug-45 /Users/im47/ESPE/Arquitectura/ARQUITECTURA_G6/UNIDAD 1/SOAP_JAVA_CONUNI_GR06/07. CLIMOVIL/cliente_movil_soap_java_conuni_gr06/app/src/debug/res
+ec.edu.monster.conuni.app-main-46 /Users/im47/ESPE/Arquitectura/ARQUITECTURA_G6/UNIDAD 1/SOAP_JAVA_CONUNI_GR06/07. CLIMOVIL/cliente_movil_soap_java_conuni_gr06/app/src/main/res

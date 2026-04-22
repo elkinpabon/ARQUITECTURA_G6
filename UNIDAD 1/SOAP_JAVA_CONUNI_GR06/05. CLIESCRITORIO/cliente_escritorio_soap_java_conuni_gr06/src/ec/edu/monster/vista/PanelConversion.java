@@ -1,28 +1,20 @@
 package ec.edu.monster.vista;
 
 import ec.edu.monster.modelo.Resultado;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
-import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 /**
- * Panel parametrizable para las 3 categorias de conversion. El mismo panel se
- * re-configura al entrar a Longitud, Masa o Temperatura via {@link #setCategoria}.
+ * Panel de conversion en formato Matisse (archivo .form emparejado).
+ * Editable en NetBeans -> Design view.
+ *
+ * Es parametrizable: llamar {@link #setCategoria(String)} con "longitud",
+ * "masa" o "temperatura" cambia el titulo y las opciones del combo.
  */
-public class PanelConversion extends JPanel {
+public class PanelConversion extends javax.swing.JPanel {
 
     public static class Opcion {
         public final String clave;
@@ -56,88 +48,30 @@ public class PanelConversion extends JPanel {
         new Opcion("fahrenheitAKelvin",  "Fahrenheit a Kelvin")
     );
 
-    private final JLabel lblEncabezado = new JLabel();
-    private final JComboBox<Opcion> comboOperacion = new JComboBox<>();
-    private final JTextField campoValor = new JTextField();
-    private final JButton btnConvertir = new JButton("Convertir");
-    private final JButton btnVolver = new JButton("Volver al Menu");
-    private final JLabel lblResultado = new JLabel(" ");
-
     private String categoriaActual;
     private BiConsumer<String, Double> accionConvertir;
     private Runnable accionVolver;
 
     public PanelConversion() {
-        setLayout(new BorderLayout());
-        setBackground(Paleta.GRIS_FONDO);
-        setBorder(BorderFactory.createEmptyBorder(24, 40, 24, 40));
-
-        add(construirFormulario(), BorderLayout.CENTER);
+        initComponents();
+        configurarVista();
         conectarEventos();
     }
 
-    private JPanel construirFormulario() {
-        JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(0xD0, 0xD6, 0xDF), 1),
-            BorderFactory.createEmptyBorder(24, 28, 24, 28)
-        ));
+    private void configurarVista() {
+        setBackground(Paleta.GRIS_FONDO);
 
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(6, 0, 6, 0);
-        c.gridx = 0; c.gridy = 0; c.gridwidth = 2;
-
-        lblEncabezado.setFont(Paleta.TITULO);
         lblEncabezado.setForeground(Paleta.AZUL);
-        panel.add(lblEncabezado, c);
+        lblEncabezado.setFont(Paleta.TITULO);
 
-        c.gridy++;
-        JLabel lblOp = new JLabel("Conversion:");
-        lblOp.setFont(Paleta.ETIQUETA);
-        panel.add(lblOp, c);
-
-        c.gridy++;
-        comboOperacion.setFont(Paleta.CAMPO);
-        comboOperacion.setPreferredSize(new Dimension(300, 30));
-        panel.add(comboOperacion, c);
-
-        c.gridy++;
-        JLabel lblVal = new JLabel("Valor:");
-        lblVal.setFont(Paleta.ETIQUETA);
-        panel.add(lblVal, c);
-
-        c.gridy++;
-        campoValor.setFont(Paleta.CAMPO);
-        campoValor.setPreferredSize(new Dimension(300, 30));
-        panel.add(campoValor, c);
-
-        c.gridy++;
         btnConvertir.setBackground(Paleta.AZUL);
         btnConvertir.setForeground(Color.WHITE);
-        btnConvertir.setFont(Paleta.ETIQUETA);
-        btnConvertir.setFocusPainted(false);
         btnConvertir.setOpaque(true);
         btnConvertir.setBorderPainted(false);
-        btnConvertir.setPreferredSize(new Dimension(300, 36));
-        panel.add(btnConvertir, c);
+        btnConvertir.setContentAreaFilled(true);
 
-        c.gridy++;
         lblResultado.setOpaque(true);
-        lblResultado.setFont(Paleta.ETIQUETA);
-        lblResultado.setBorder(BorderFactory.createEmptyBorder(10, 12, 10, 12));
         lblResultado.setBackground(Color.WHITE);
-        lblResultado.setForeground(Color.BLACK);
-        lblResultado.setPreferredSize(new Dimension(300, 40));
-        panel.add(lblResultado, c);
-
-        c.gridy++;
-        btnVolver.setFocusPainted(false);
-        btnVolver.setPreferredSize(new Dimension(300, 30));
-        panel.add(btnVolver, c);
-
-        return panel;
     }
 
     private void conectarEventos() {
@@ -160,7 +94,9 @@ public class PanelConversion extends JPanel {
         }
     }
 
-    /** Re-configura el panel con las opciones y encabezado de la categoria indicada. */
+    // ========= API publica consumida por ControladorEscritorio =========
+
+    @SuppressWarnings("unchecked")
     public void setCategoria(String categoria) {
         this.categoriaActual = categoria;
         List<Opcion> opciones;
@@ -183,7 +119,7 @@ public class PanelConversion extends JPanel {
                 titulo = "Conversiones";
         }
         lblEncabezado.setText(titulo);
-        comboOperacion.setModel(new DefaultComboBoxModel<>(opciones.toArray(new Opcion[0])));
+        comboOperacion.setModel(new DefaultComboBoxModel(opciones.toArray()));
         campoValor.setText("");
         lblResultado.setText(" ");
         lblResultado.setBackground(Color.WHITE);
@@ -218,4 +154,89 @@ public class PanelConversion extends JPanel {
     public void setOnVolver(Runnable accion) {
         this.accionVolver = accion;
     }
+
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    @SuppressWarnings("unchecked")
+    private void initComponents() {
+
+        lblEncabezado = new javax.swing.JLabel();
+        lblConversion = new javax.swing.JLabel();
+        comboOperacion = new javax.swing.JComboBox<>();
+        lblValor = new javax.swing.JLabel();
+        campoValor = new javax.swing.JTextField();
+        btnConvertir = new javax.swing.JButton();
+        lblResultado = new javax.swing.JLabel();
+        btnVolver = new javax.swing.JButton();
+
+        lblEncabezado.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
+        lblEncabezado.setText("Conversiones");
+
+        lblConversion.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
+        lblConversion.setText("Conversion:");
+
+        lblValor.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
+        lblValor.setText("Valor:");
+
+        btnConvertir.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
+        btnConvertir.setText("Convertir");
+        btnConvertir.setFocusPainted(false);
+
+        lblResultado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblResultado.setText(" ");
+        lblResultado.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 12, 10, 12));
+
+        btnVolver.setText("Volver al Menu");
+        btnVolver.setFocusPainted(false);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEncabezado)
+                    .addComponent(lblConversion)
+                    .addComponent(comboOperacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblValor)
+                    .addComponent(campoValor)
+                    .addComponent(btnConvertir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblResultado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(40, 40, 40))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(lblEncabezado)
+                .addGap(16, 16, 16)
+                .addComponent(lblConversion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboOperacion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(lblValor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addComponent(btnConvertir, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(lblResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConvertir;
+    private javax.swing.JButton btnVolver;
+    private javax.swing.JTextField campoValor;
+    private javax.swing.JComboBox<Object> comboOperacion;
+    private javax.swing.JLabel lblConversion;
+    private javax.swing.JLabel lblEncabezado;
+    private javax.swing.JLabel lblResultado;
+    private javax.swing.JLabel lblValor;
+    // End of variables declaration//GEN-END:variables
 }

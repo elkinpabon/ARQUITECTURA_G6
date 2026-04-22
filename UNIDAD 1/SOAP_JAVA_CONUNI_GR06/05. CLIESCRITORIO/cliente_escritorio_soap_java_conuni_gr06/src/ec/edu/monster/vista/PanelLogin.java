@@ -1,172 +1,77 @@
 package ec.edu.monster.vista;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.net.URL;
 import java.util.function.BiConsumer;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 /**
- * Panel de login. Layout en dos columnas (imagen a la izquierda, formulario
- * a la derecha) siguiendo la estetica del cliente web.
+ * Panel de login en formato Matisse (archivo .form emparejado).
+ * Puedes abrirlo en NetBeans con clic derecho -> Open -> pestana "Design"
+ * para editarlo visualmente con drag-and-drop.
  *
- * Publica {@code setOnLogin(BiConsumer)} para que el Controlador reaccione al
- * evento sin que el Panel conozca al modelo. Metodos {@code mostrarError} y
- * {@code limpiar} permiten al Controlador actualizar el estado visual.
+ * El metodo initComponents() es generado/mantenido por NetBeans, no lo
+ * edites a mano. La logica de UI (imagenes, eventos, MVC) vive en
+ * configurarVista() y conectarEventos(), fuera del area generada.
  */
-public class PanelLogin extends JPanel {
-
-    private final JTextField campoUsuario = new JTextField(18);
-    private final JPasswordField campoContrasena = new JPasswordField(18);
-    private final JButton botonMostrar = new JButton("Mostrar");
-    private final JButton botonIngresar = new JButton("Ingresar");
-    private final JLabel lblError = new JLabel(" ");
+public class PanelLogin extends javax.swing.JPanel {
 
     private BiConsumer<String, String> accionLogin;
 
     public PanelLogin() {
-        setLayout(new GridLayout(1, 2));
-        setBackground(Color.WHITE);
-
-        add(construirPanelImagen());
-        add(construirPanelFormulario());
-
+        initComponents();
+        configurarVista();
         conectarEventos();
     }
 
-    private JPanel construirPanelImagen() {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(Paleta.AZUL);
+    /** Carga la imagen y el logo fuera del area generada por Matisse. */
+    private void configurarVista() {
+        setBackground(Color.WHITE);
 
-        JLabel lblImagen = new JLabel();
-        lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
         URL urlImagen = getClass().getResource("/img/login.jpg");
         if (urlImagen != null) {
-            ImageIcon icono = new ImageIcon(urlImagen);
-            Image escalada = icono.getImage().getScaledInstance(380, 480, Image.SCALE_SMOOTH);
-            lblImagen.setIcon(new ImageIcon(escalada));
-        } else {
-            lblImagen.setText("Imagen login.jpg no encontrada en /img");
-            lblImagen.setForeground(Color.WHITE);
+            Image img = new ImageIcon(urlImagen).getImage()
+                    .getScaledInstance(320, 380, Image.SCALE_SMOOTH);
+            lblImagen.setIcon(new ImageIcon(img));
+            lblImagen.setText("");
         }
-        panel.add(lblImagen, BorderLayout.CENTER);
-        return panel;
-    }
 
-    private JPanel construirPanelFormulario() {
-        JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createEmptyBorder(30, 36, 30, 36));
-
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(6, 0, 6, 0);
-        c.gridx = 0;
-        c.gridy = 0;
-        c.gridwidth = 2;
-
-        // Logo redondeado
-        JLabel lblLogo = new JLabel();
-        lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
         URL urlLogo = getClass().getResource("/img/moster.png");
         if (urlLogo != null) {
-            ImageIcon icono = new ImageIcon(urlLogo);
-            Image escalada = icono.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-            lblLogo.setIcon(new ImageIcon(escalada));
+            Image img = new ImageIcon(urlLogo).getImage()
+                    .getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+            lblLogo.setIcon(new ImageIcon(img));
+            lblLogo.setText("");
         }
-        panel.add(lblLogo, c);
 
-        c.gridy++;
-        JLabel lblTitulo = new JLabel("Iniciar Sesion");
-        lblTitulo.setFont(Paleta.TITULO);
         lblTitulo.setForeground(Paleta.AZUL);
-        lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(lblTitulo, c);
+        lblTitulo.setFont(Paleta.TITULO);
+        lblSubtitulo.setForeground(Paleta.TEXTO_SUAVE);
 
-        c.gridy++;
-        JLabel lblSub = new JLabel("Ingresa tus credenciales");
-        lblSub.setFont(Paleta.SUBTITULO);
-        lblSub.setForeground(Paleta.TEXTO_SUAVE);
-        lblSub.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(lblSub, c);
-
-        c.gridy++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        JLabel lblUsuario = new JLabel("Usuario:");
-        lblUsuario.setFont(Paleta.ETIQUETA);
-        panel.add(lblUsuario, c);
-
-        c.gridy++;
-        campoUsuario.setFont(Paleta.CAMPO);
-        campoUsuario.setPreferredSize(new Dimension(240, 30));
-        panel.add(campoUsuario, c);
-
-        c.gridy++;
-        JLabel lblContrasena = new JLabel("Contrasena:");
-        lblContrasena.setFont(Paleta.ETIQUETA);
-        panel.add(lblContrasena, c);
-
-        c.gridy++;
-        JPanel filaContrasena = new JPanel(new BorderLayout(6, 0));
-        filaContrasena.setOpaque(false);
-        campoContrasena.setFont(Paleta.CAMPO);
-        campoContrasena.setPreferredSize(new Dimension(180, 30));
-        filaContrasena.add(campoContrasena, BorderLayout.CENTER);
-        botonMostrar.setFocusPainted(false);
-        filaContrasena.add(botonMostrar, BorderLayout.EAST);
-        panel.add(filaContrasena, c);
-
-        c.gridy++;
         botonIngresar.setBackground(Paleta.AZUL);
         botonIngresar.setForeground(Color.WHITE);
-        botonIngresar.setFont(Paleta.ETIQUETA);
-        botonIngresar.setFocusPainted(false);
         botonIngresar.setOpaque(true);
         botonIngresar.setBorderPainted(false);
-        botonIngresar.setPreferredSize(new Dimension(240, 36));
-        panel.add(botonIngresar, c);
 
-        c.gridy++;
         lblError.setForeground(Paleta.ROJO_ERROR_FG);
-        lblError.setFont(Paleta.SUBTITULO);
-        lblError.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(lblError, c);
-
-        JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        wrapper.setBackground(Color.WHITE);
-        wrapper.add(panel);
-        return wrapper;
     }
 
     private void conectarEventos() {
-        botonMostrar.addActionListener(e -> {
-            if (campoContrasena.getEchoChar() != (char) 0) {
-                campoContrasena.setEchoChar((char) 0);
-                botonMostrar.setText("Ocultar");
-            } else {
-                campoContrasena.setEchoChar('•');
-                botonMostrar.setText("Mostrar");
-            }
-        });
-
+        botonMostrar.addActionListener(e -> toggleVisibilidad());
         botonIngresar.addActionListener(e -> dispararLogin());
         campoUsuario.addActionListener(e -> campoContrasena.requestFocusInWindow());
         campoContrasena.addActionListener(e -> dispararLogin());
+    }
+
+    private void toggleVisibilidad() {
+        if (campoContrasena.getEchoChar() != (char) 0) {
+            campoContrasena.setEchoChar((char) 0);
+            botonMostrar.setText("Ocultar");
+        } else {
+            campoContrasena.setEchoChar('•');
+            botonMostrar.setText("Mostrar");
+        }
     }
 
     private void dispararLogin() {
@@ -177,6 +82,8 @@ public class PanelLogin extends JPanel {
             );
         }
     }
+
+    // ========= API publica consumida por ControladorEscritorio =========
 
     public void setOnLogin(BiConsumer<String, String> accion) {
         this.accionLogin = accion;
@@ -196,4 +103,115 @@ public class PanelLogin extends JPanel {
         campoContrasena.setText("");
         lblError.setText(" ");
     }
+
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        lblImagen = new javax.swing.JLabel();
+        lblLogo = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
+        lblSubtitulo = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
+        campoUsuario = new javax.swing.JTextField();
+        lblContrasena = new javax.swing.JLabel();
+        campoContrasena = new javax.swing.JPasswordField();
+        botonMostrar = new javax.swing.JButton();
+        botonIngresar = new javax.swing.JButton();
+        lblError = new javax.swing.JLabel();
+
+        lblImagen.setBackground(new java.awt.Color(31, 58, 95));
+        lblImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblImagen.setText("Imagen login");
+        lblImagen.setOpaque(true);
+
+        lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLogo.setText("Logo");
+
+        lblTitulo.setFont(new java.awt.Font("SansSerif", 1, 22)); // NOI18N
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("ec/edu/monster/vista/Bundle"); // NOI18N
+        lblTitulo.setText(bundle.getString("PanelLogin.lblTitulo.text")); // NOI18N
+
+        lblSubtitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSubtitulo.setText("Ingresa tus credenciales");
+
+        lblUsuario.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
+        lblUsuario.setText("Usuario:");
+
+        lblContrasena.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
+        lblContrasena.setText("Contrasena:");
+
+        botonMostrar.setText("Mostrar");
+
+        botonIngresar.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
+        botonIngresar.setText("Ingresar");
+        botonIngresar.setFocusPainted(false);
+
+        lblError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblError.setText(" ");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(lblSubtitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(lblUsuario)
+                    .addComponent(campoUsuario)
+                    .addComponent(lblContrasena)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(campoContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(botonIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(115, 115, 115))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(lblTitulo)
+                .addGap(2, 2, 2)
+                .addComponent(lblSubtitulo)
+                .addGap(16, 16, 16)
+                .addComponent(lblUsuario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(lblContrasena)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(campoContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addComponent(botonIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(lblError)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonIngresar;
+    private javax.swing.JButton botonMostrar;
+    private javax.swing.JPasswordField campoContrasena;
+    private javax.swing.JTextField campoUsuario;
+    private javax.swing.JLabel lblContrasena;
+    private javax.swing.JLabel lblError;
+    private javax.swing.JLabel lblImagen;
+    private javax.swing.JLabel lblLogo;
+    private javax.swing.JLabel lblSubtitulo;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblUsuario;
+    // End of variables declaration//GEN-END:variables
 }

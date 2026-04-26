@@ -1,0 +1,64 @@
+@model Ec.Edu.Monster.Modelo.Resultado
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Conversiones de Masa - CONUNI</title>
+    <link rel="stylesheet" href="~/css/estilo.css">
+</head>
+<body>
+    <div class="encabezado">
+        <h1>
+            <img class="logo" src="~/img/moster.webp" alt="Logo CONUNI">
+            Cliente Web CONUNI
+        </h1>
+        <div>
+            <a href="/ControladorMenu/Index">Menu</a>
+            &nbsp;|&nbsp;
+            <form action="/ControladorCerrarSesion/CerrarSesion" method="post" style="display:inline;">
+                <button type="submit" class="enlace-boton">Cerrar Sesion</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="contenedor">
+        <div class="conversion-encabezado">
+            <svg viewBox="0 0 24 24" fill="#1f3a5f" width="64" height="64" style="border-radius:12px;border:3px solid #ffd966;padding:6px;background:#fffbe6;">
+                <path d="M12 3C9.24 3 7 5.24 7 8c0 .85.21 1.65.58 2.35L2 21h20l-5.58-10.65c.37-.7.58-1.5.58-2.35 0-2.76-2.24-5-5-5zm0 2c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/>
+            </svg>
+            <div>
+                <h2>Conversiones de Masa</h2>
+                <p>Convierte entre kilogramos, libras, gramos, onzas, toneladas y mas.</p>
+            </div>
+        </div>
+
+        <form action="/ControladorMasa/Index" method="post">
+            <label for="operacion">Conversion:</label>
+            <select id="operacion" name="operacion" required>
+                @if (ViewBag.OperacionSeleccionada == "kilogramosALibras") { <option value="kilogramosALibras" selected>Kilogramos a Libras</option> } else { <option value="kilogramosALibras">Kilogramos a Libras</option> }
+                @if (ViewBag.OperacionSeleccionada == "gramosAOnzas") { <option value="gramosAOnzas" selected>Gramos a Onzas</option> } else { <option value="gramosAOnzas">Gramos a Onzas</option> }
+                @if (ViewBag.OperacionSeleccionada == "toneladasAKilogramos") { <option value="toneladasAKilogramos" selected>Toneladas a Kilogramos</option> } else { <option value="toneladasAKilogramos">Toneladas a Kilogramos</option> }
+                @if (ViewBag.OperacionSeleccionada == "librasAOnzas") { <option value="librasAOnzas" selected>Libras a Onzas</option> } else { <option value="librasAOnzas">Libras a Onzas</option> }
+                @if (ViewBag.OperacionSeleccionada == "miligramosAGramos") { <option value="miligramosAGramos" selected>Miligramos a Gramos</option> } else { <option value="miligramosAGramos">Miligramos a Gramos</option> }
+            </select>
+
+            <label for="valor">Valor:</label>
+            <input type="number" step="any" id="valor" name="valor" value="@ViewBag.ValorIngresado" required>
+
+            <button type="submit">Convertir</button>
+        </form>
+
+        @if (Model is not null)
+        {
+            if (Model.Exito)
+            {
+                <div class="mensaje-exito">Resultado: @Model.Valor</div>
+            }
+            else
+            {
+                <div class="mensaje-error">@Model.Mensaje</div>
+            }
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+@model Ec.Edu.Monster.Modelo.Resultado
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Temperatura - CONUNI</title>
+    <link rel="stylesheet" href="~/css/estilo.css">
+</head>
+<body>
+    <div class="encabezado">
+        <h1>
+            <img class="logo" src="~/img/moster.webp" alt="Logo CONUNI">
+            Cliente Web CONUNI
+        </h1>
+        <div>
+            <span>Bienvenido, @ViewBag.Usuario</span>
+            &nbsp;|&nbsp;
+            <form action="/ControladorCerrarSesion/CerrarSesion" method="post" style="display:inline;">
+                <button type="submit" class="enlace-boton">Cerrar Sesion</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="contenedor">
+        <div class="conversion-encabezado">
+            <img src="~/img/moster.webp" alt="Logo CONUNI">
+            <div>
+                <h2>Conversion de Temperatura</h2>
+                <p>Celsius, Fahrenheit y Kelvin.</p>
+            </div>
+        </div>
+
+        @if (Model is not null && !string.IsNullOrWhiteSpace(Model.Mensaje))
+        {
+            <div class="@(Model.Exito ? "mensaje-exito" : "mensaje-error")">@Model.Mensaje</div>
+        }
+
+        <form action="/ControladorTemperatura/Index" method="post">
+            <label for="operacion">Conversion:</label>
+            <select id="operacion" name="operacion">
+                <option value="celsiusAFahrenheit">Celsius a Fahrenheit</option>
+                <option value="fahrenheitACelsius">Fahrenheit a Celsius</option>
+                <option value="celsiusAKelvin">Celsius a Kelvin</option>
+                <option value="kelvinACelsius">Kelvin a Celsius</option>
+                <option value="fahrenheitAKelvin">Fahrenheit a Kelvin</option>
+            </select>
+
+            <label for="valor">Valor:</label>
+            <input type="text" id="valor" name="valor" required>
+
+            <button type="submit">Convertir</button>
+        </form>
+
+        <p><a href="/ControladorMenu/Index">Volver al menu</a></p>
+    </div>
+</body>
+</html>

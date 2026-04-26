@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "servidor_rest_dotnet_conuni_gr06": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:57034;http://localhost:57036"
+    }
+  }
+}

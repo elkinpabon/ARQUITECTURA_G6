@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "dEGbszlXHtE=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\elkin\\Desktop\\Repositorios\\ARQUITECTURA_G6\\UNIDAD 1\\SOAP_DOTNET_CONUNI_GR06\\06. CLIWEB\\cliente_web_soap_dotnet_conuni_gr06\\cliente_web_soap_dotnet_conuni_gr06.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\elkin\\.nuget\\packages\\microsoft.extensions.objectpool\\8.0.10\\microsoft.extensions.objectpool.8.0.10.nupkg.sha512",
+    "C:\\Users\\elkin\\.nuget\\packages\\system.security.cryptography.pkcs\\8.0.1\\system.security.cryptography.pkcs.8.0.1.nupkg.sha512",
+    "C:\\Users\\elkin\\.nuget\\packages\\system.security.cryptography.xml\\8.0.2\\system.security.cryptography.xml.8.0.2.nupkg.sha512",
+    "C:\\Users\\elkin\\.nuget\\packages\\system.servicemodel.http\\8.1.2\\system.servicemodel.http.8.1.2.nupkg.sha512",
+    "C:\\Users\\elkin\\.nuget\\packages\\system.servicemodel.primitives\\8.1.2\\system.servicemodel.primitives.8.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}

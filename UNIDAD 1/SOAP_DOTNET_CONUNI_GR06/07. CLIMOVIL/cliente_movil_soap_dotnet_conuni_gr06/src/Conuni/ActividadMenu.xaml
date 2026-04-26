@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Ec.Edu.Monster.Conuni.ActividadMenu"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{StaticResource ConuniGrisFondo}">
+    <Grid RowDefinitions="56,*">
+        <Grid BackgroundColor="{StaticResource ConuniAzul}" Padding="16,0" ColumnDefinitions="Auto,*,Auto">
+            <Frame WidthRequest="32" HeightRequest="32" CornerRadius="16" BackgroundColor="White" Padding="0" HasShadow="False" VerticalOptions="Center">
+                <Image Source="moster.webp" Aspect="AspectFill" />
+            </Frame>
+            <Label x:Name="EtiquetaUsuario" Grid.Column="1" TextColor="White" FontAttributes="Bold" VerticalOptions="Center" Margin="10,0,0,0" />
+            <Button Grid.Column="2" Text="Salir" Clicked="Salir_Clicked" BackgroundColor="{StaticResource ConuniAmarillo}" TextColor="{StaticResource ConuniAzul}" VerticalOptions="Center" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="12">
+                <Label Text="Menu de Conversiones" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource ConuniAzul}" />
+                <Label Text="Elige una categoria" FontSize="14" TextColor="Gray" />
+
+                <Frame BackgroundColor="{StaticResource ConuniAzul}" CornerRadius="12" Padding="18" HasShadow="True">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Longitud_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <Grid ColumnDefinitions="64,*" ColumnSpacing="16">
+                        <Frame BackgroundColor="{StaticResource ConuniAzulClaro}" WidthRequest="56" HeightRequest="56" CornerRadius="12" Padding="0" HasShadow="False" VerticalOptions="Center">
+                            <Label Text="↔" FontSize="30" TextColor="{StaticResource ConuniAmarillo}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                        </Frame>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="Longitud" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                            <Label Text="Metros, pies, millas, pulgadas..." FontSize="13" TextColor="#D0DAE8" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <Frame BackgroundColor="{StaticResource ConuniAzul}" CornerRadius="12" Padding="18" HasShadow="True">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Masa_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <Grid ColumnDefinitions="64,*" ColumnSpacing="16">
+                        <Frame BackgroundColor="{StaticResource ConuniAzulClaro}" WidthRequest="56" HeightRequest="56" CornerRadius="12" Padding="0" HasShadow="False" VerticalOptions="Center">
+                            <Label Text="⚖" FontSize="30" TextColor="{StaticResource ConuniAmarillo}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                        </Frame>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="Masa" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                            <Label Text="Kilogramos, libras, onzas..." FontSize="13" TextColor="#D0DAE8" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <Frame BackgroundColor="{StaticResource ConuniAzul}" CornerRadius="12" Padding="18" HasShadow="True">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Temperatura_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <Grid ColumnDefinitions="64,*" ColumnSpacing="16">
+                        <Frame BackgroundColor="{StaticResource ConuniAzulClaro}" WidthRequest="56" HeightRequest="56" CornerRadius="12" Padding="0" HasShadow="False" VerticalOptions="Center">
+                            <Label Text="🌡" FontSize="30" TextColor="{StaticResource ConuniAmarillo}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                        </Frame>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="Temperatura" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                            <Label Text="Celsius, Fahrenheit y Kelvin" FontSize="13" TextColor="#D0DAE8" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

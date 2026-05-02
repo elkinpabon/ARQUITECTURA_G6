@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="conuni_amarillo">#FFFFD966</color>
+    <color name="conuni_azul">#FF1F3A5F</color>
+    <color name="conuni_azul_claro">#FF2D4F7A</color>
+    <color name="conuni_gris">#FFF2F4F7</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">Cliente Movil CONUNI</string>
+    <string name="title_activity_conversor">Conversor</string>
+    <string name="title_activity_menu">Menu</string>
+    <style name="Theme.ClienteMovil" parent="android:Theme.Material.Light.NoActionBar"/>
+</resources>

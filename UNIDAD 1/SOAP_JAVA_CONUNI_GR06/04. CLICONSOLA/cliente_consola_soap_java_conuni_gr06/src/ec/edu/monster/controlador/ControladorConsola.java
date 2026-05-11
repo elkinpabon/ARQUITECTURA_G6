@@ -1,5 +1,6 @@
 package ec.edu.monster.controlador;
 
+import ec.edu.monster.modelo.FormatoConversion;
 import ec.edu.monster.modelo.Resultado;
 import ec.edu.monster.modelo.ServicioAutenticacion;
 import ec.edu.monster.modelo.ServicioLongitud;
@@ -95,7 +96,7 @@ public class ControladorConsola {
                 case 5 -> { r = servicioLongitud.milimetrosAPulgadas(valor);  orig = "mm"; dest = "in"; }
                 default -> { return Resultado.error("Opcion invalida"); }
             }
-            return Resultado.ok(formatearConversion(valor, orig, r, dest));
+            return Resultado.ok(FormatoConversion.formatear(valor, orig, r, dest));
         } catch (Exception ex) {
             return Resultado.error("Error al invocar el servicio: " + ex.getMessage());
         }
@@ -126,7 +127,7 @@ public class ControladorConsola {
                 case 5 -> { r = servicioMasa.miligramosAGramos(valor);    orig = "mg"; dest = "g";  }
                 default -> { return Resultado.error("Opcion invalida"); }
             }
-            return Resultado.ok(formatearConversion(valor, orig, r, dest));
+            return Resultado.ok(FormatoConversion.formatear(valor, orig, r, dest));
         } catch (Exception ex) {
             return Resultado.error("Error al invocar el servicio: " + ex.getMessage());
         }
@@ -157,26 +158,10 @@ public class ControladorConsola {
                 case 5 -> { r = servicioTemperatura.fahrenheitAKelvin(valor);  orig = "°F"; dest = "K";      }
                 default -> { return Resultado.error("Opcion invalida"); }
             }
-            return Resultado.ok(formatearConversion(valor, orig, r, dest));
+            return Resultado.ok(FormatoConversion.formatear(valor, orig, r, dest));
         } catch (Exception ex) {
             return Resultado.error("Error al invocar el servicio: " + ex.getMessage());
         }
     }
 
-    // ========= Formato de salida =========
-
-    /** Devuelve "<entrada> <origen> = <salida> <destino>" con 4 decimales y sin ceros sobrantes. */
-    private static String formatearConversion(double entrada, String origen, double salida, String destino) {
-        return fmt(entrada) + " " + origen + " = " + fmt(salida) + " " + destino;
-    }
-
-    /** Si el valor es entero, sin decimales; si no, hasta 4 decimales sin ceros sobrantes. */
-    private static String fmt(double v) {
-        if (v == Math.floor(v) && !Double.isInfinite(v) && Math.abs(v) < 1e15) {
-            return String.valueOf((long) v);
-        }
-        String s = String.format(java.util.Locale.US, "%.4f", v);
-        // quitar ceros y punto sobrantes: 273.1500 -> 273.15, 7.0000 -> 7
-        return s.contains(".") ? s.replaceAll("0+$", "").replaceAll("\\.$", "") : s;
-    }
 }

@@ -55,7 +55,7 @@
 
         <% if (resultado != null) { %>
             <% if (resultado.isExito()) { %>
-                <div class="mensaje-exito">Resultado: <%= resultado.getValor() %></div>
+                <div class="mensaje-exito"><%= resultado.getValor() %></div>
             <% } else { %>
                 <div class="mensaje-error"><%= resultado.getMensaje() %></div>
             <% } %>

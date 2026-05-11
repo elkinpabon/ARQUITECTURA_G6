@@ -1,5 +1,6 @@
 package ec.edu.monster.controlador;
 
+import ec.edu.monster.modelo.FormatoConversion;
 import ec.edu.monster.modelo.Resultado;
 import ec.edu.monster.modelo.ServicioAutenticacion;
 import ec.edu.monster.modelo.ServicioLongitud;
@@ -150,7 +151,8 @@ public class ControladorEscritorio {
                 default:
                     return Resultado.error("Categoria desconocida");
             }
-            return Resultado.ok(String.valueOf(r));
+            String[] u = FormatoConversion.unidades(operacion);
+            return Resultado.ok(FormatoConversion.formatear(valor, u[0], r, u[1]));
         } catch (Exception ex) {
             return Resultado.error("Error del servicio: " + ex.getMessage());
         }

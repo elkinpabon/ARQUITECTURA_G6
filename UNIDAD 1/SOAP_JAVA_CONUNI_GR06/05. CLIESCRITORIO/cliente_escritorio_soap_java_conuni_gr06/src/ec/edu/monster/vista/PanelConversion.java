@@ -132,7 +132,7 @@ public class PanelConversion extends javax.swing.JPanel {
     public void mostrarResultado(Resultado resultado) {
         if (resultado == null) return;
         if (resultado.isExito()) {
-            lblResultado.setText("Resultado: " + resultado.getValor());
+            lblResultado.setText(resultado.getValor());
             lblResultado.setBackground(Paleta.VERDE_EXITO_BG);
             lblResultado.setForeground(Paleta.VERDE_EXITO_FG);
         } else {

@@ -1,5 +1,6 @@
 package ec.edu.monster.controlador;
 
+import ec.edu.monster.modelo.FormatoConversion;
 import ec.edu.monster.modelo.Resultado;
 import ec.edu.monster.modelo.ServicioTemperatura;
 
@@ -51,7 +52,9 @@ public class ServletTemperatura extends HttpServlet {
                 default:
                     throw new IllegalArgumentException("Operacion desconocida: " + operacion);
             }
-            resultado = Resultado.ok(String.valueOf(convertido));
+            String[] u = FormatoConversion.unidades(operacion);
+            resultado = Resultado.ok(
+                    FormatoConversion.formatear(valor, u[0], convertido, u[1]));
         } catch (NumberFormatException excepcion) {
             resultado = Resultado.error("El valor ingresado no es un numero valido.");
         } catch (Exception excepcion) {

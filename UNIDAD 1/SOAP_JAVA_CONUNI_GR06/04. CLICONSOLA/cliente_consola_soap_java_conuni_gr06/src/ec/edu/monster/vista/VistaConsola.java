@@ -43,7 +43,7 @@ public class VistaConsola {
             return;
         }
         if (resultado.isExito()) {
-            mostrarExito("Resultado: " + resultado.getValor());
+            mostrarExito(resultado.getValor());
         } else {
             mostrarError(resultado.getMensaje());
         }

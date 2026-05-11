@@ -86,15 +86,16 @@ public class ControladorConsola {
     private Resultado ejecutarLongitud(int opcion, double valor) {
         try {
             double r;
+            String orig, dest;
             switch (opcion) {
-                case 1 -> r = servicioLongitud.metrosAPies(valor);
-                case 2 -> r = servicioLongitud.kilometrosAMillas(valor);
-                case 3 -> r = servicioLongitud.centimetrosAPulgadas(valor);
-                case 4 -> r = servicioLongitud.yardasAMetros(valor);
-                case 5 -> r = servicioLongitud.milimetrosAPulgadas(valor);
+                case 1 -> { r = servicioLongitud.metrosAPies(valor);          orig = "m";  dest = "ft"; }
+                case 2 -> { r = servicioLongitud.kilometrosAMillas(valor);    orig = "km"; dest = "mi"; }
+                case 3 -> { r = servicioLongitud.centimetrosAPulgadas(valor); orig = "cm"; dest = "in"; }
+                case 4 -> { r = servicioLongitud.yardasAMetros(valor);        orig = "yd"; dest = "m";  }
+                case 5 -> { r = servicioLongitud.milimetrosAPulgadas(valor);  orig = "mm"; dest = "in"; }
                 default -> { return Resultado.error("Opcion invalida"); }
             }
-            return Resultado.ok(String.valueOf(r));
+            return Resultado.ok(formatearConversion(valor, orig, r, dest));
         } catch (Exception ex) {
             return Resultado.error("Error al invocar el servicio: " + ex.getMessage());
         }
@@ -116,15 +117,16 @@ public class ControladorConsola {
     private Resultado ejecutarMasa(int opcion, double valor) {
         try {
             double r;
+            String orig, dest;
             switch (opcion) {
-                case 1 -> r = servicioMasa.kilogramosALibras(valor);
-                case 2 -> r = servicioMasa.gramosAOnzas(valor);
-                case 3 -> r = servicioMasa.toneladasAKilogramos(valor);
-                case 4 -> r = servicioMasa.librasAOnzas(valor);
-                case 5 -> r = servicioMasa.miligramosAGramos(valor);
+                case 1 -> { r = servicioMasa.kilogramosALibras(valor);    orig = "kg"; dest = "lb"; }
+                case 2 -> { r = servicioMasa.gramosAOnzas(valor);         orig = "g";  dest = "oz"; }
+                case 3 -> { r = servicioMasa.toneladasAKilogramos(valor); orig = "t";  dest = "kg"; }
+                case 4 -> { r = servicioMasa.librasAOnzas(valor);         orig = "lb"; dest = "oz"; }
+                case 5 -> { r = servicioMasa.miligramosAGramos(valor);    orig = "mg"; dest = "g";  }
                 default -> { return Resultado.error("Opcion invalida"); }
             }
-            return Resultado.ok(String.valueOf(r));
+            return Resultado.ok(formatearConversion(valor, orig, r, dest));
         } catch (Exception ex) {
             return Resultado.error("Error al invocar el servicio: " + ex.getMessage());
         }
@@ -146,17 +148,35 @@ public class ControladorConsola {
     private Resultado ejecutarTemperatura(int opcion, double valor) {
         try {
             double r;
+            String orig, dest;
             switch (opcion) {
-                case 1 -> r = servicioTemperatura.celsiusAFahrenheit(valor);
-                case 2 -> r = servicioTemperatura.fahrenheitACelsius(valor);
-                case 3 -> r = servicioTemperatura.celsiusAKelvin(valor);
-                case 4 -> r = servicioTemperatura.kelvinACelsius(valor);
-                case 5 -> r = servicioTemperatura.fahrenheitAKelvin(valor);
+                case 1 -> { r = servicioTemperatura.celsiusAFahrenheit(valor); orig = "°C"; dest = "°F"; }
+                case 2 -> { r = servicioTemperatura.fahrenheitACelsius(valor); orig = "°F"; dest = "°C"; }
+                case 3 -> { r = servicioTemperatura.celsiusAKelvin(valor);     orig = "°C"; dest = "K";      }
+                case 4 -> { r = servicioTemperatura.kelvinACelsius(valor);     orig = "K";       dest = "°C"; }
+                case 5 -> { r = servicioTemperatura.fahrenheitAKelvin(valor);  orig = "°F"; dest = "K";      }
                 default -> { return Resultado.error("Opcion invalida"); }
             }
-            return Resultado.ok(String.valueOf(r));
+            return Resultado.ok(formatearConversion(valor, orig, r, dest));
         } catch (Exception ex) {
             return Resultado.error("Error al invocar el servicio: " + ex.getMessage());
         }
+    }
+
+    // ========= Formato de salida =========
+
+    /** Devuelve "<entrada> <origen> = <salida> <destino>" con 4 decimales y sin ceros sobrantes. */
+    private static String formatearConversion(double entrada, String origen, double salida, String destino) {
+        return fmt(entrada) + " " + origen + " = " + fmt(salida) + " " + destino;
+    }
+
+    /** Si el valor es entero, sin decimales; si no, hasta 4 decimales sin ceros sobrantes. */
+    private static String fmt(double v) {
+        if (v == Math.floor(v) && !Double.isInfinite(v) && Math.abs(v) < 1e15) {
+            return String.valueOf((long) v);
+        }
+        String s = String.format(java.util.Locale.US, "%.4f", v);
+        // quitar ceros y punto sobrantes: 273.1500 -> 273.15, 7.0000 -> 7
+        return s.contains(".") ? s.replaceAll("0+$", "").replaceAll("\\.$", "") : s;
     }
 }

@@ -98,7 +98,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnCerrarSesion">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cerrar Sesion"/>
+            <Property name="text" type="java.lang.String" value="Cerrar Sesión"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
         </Component>

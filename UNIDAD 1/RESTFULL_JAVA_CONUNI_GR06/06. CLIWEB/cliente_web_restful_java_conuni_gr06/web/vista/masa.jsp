@@ -19,9 +19,9 @@
             Cliente Web CONUNI
         </h1>
         <div>
-            <a href="${pageContext.request.contextPath}/vista/menu.jsp">Menu</a>
+            <a href="${pageContext.request.contextPath}/vista/menu.jsp">Menú</a>
             &nbsp;|&nbsp;
-            <a href="${pageContext.request.contextPath}/cerrarSesion">Cerrar Sesion</a>
+            <a href="${pageContext.request.contextPath}/cerrarSesion">Cerrar Sesión</a>
         </div>
     </div>
 
@@ -32,12 +32,12 @@
             </svg>
             <div>
                 <h2>Conversiones de Masa</h2>
-                <p>Convierte entre kilogramos, libras, gramos, onzas, toneladas y mas.</p>
+                <p>Convierte entre kilogramos, libras, gramos, onzas, toneladas y más.</p>
             </div>
         </div>
 
         <form action="${pageContext.request.contextPath}/masa" method="post">
-            <label for="operacion">Conversion:</label>
+            <label for="operacion">Conversión:</label>
             <select id="operacion" name="operacion" required>
                 <option value="kilogramosALibras"    <%= "kilogramosALibras".equals(operacionSeleccionada)    ? "selected" : "" %>>Kilogramos a Libras</option>
                 <option value="gramosAOnzas"         <%= "gramosAOnzas".equals(operacionSeleccionada)         ? "selected" : "" %>>Gramos a Onzas</option>

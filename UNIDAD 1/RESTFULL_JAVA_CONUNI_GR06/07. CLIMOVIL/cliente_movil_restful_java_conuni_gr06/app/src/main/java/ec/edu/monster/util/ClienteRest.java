@@ -25,7 +25,7 @@ import java.nio.charset.StandardCharsets;
 public class ClienteRest {
 
     public static final String URL_BASE =
-            "http://10.0.2.2:8080/servidor_restful_java_conuni_gr06/api";
+            "http://10.25.36.208:8080/servidor_restful_java_conuni_gr06/api";
 
     /**
      * GET con el parametro {@code valor=...} en query string.

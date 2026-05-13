@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cliente Movil CONUNI</string>
-    <string name="title_activity_menu">Menu</string>
+    <string name="app_name">Cliente Móvil CONUNI</string>
+    <string name="title_activity_menu">Menú</string>
     <string name="title_activity_conversor">Conversor</string>
 </resources>

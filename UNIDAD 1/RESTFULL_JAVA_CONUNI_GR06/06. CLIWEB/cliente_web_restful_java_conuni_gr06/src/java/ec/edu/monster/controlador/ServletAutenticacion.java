@@ -36,7 +36,7 @@ public class ServletAutenticacion extends HttpServlet {
                 respuesta.sendRedirect(peticion.getContextPath() + "/vista/menu.jsp");
                 return;
             }
-            peticion.setAttribute("mensajeError", "Usuario o contrasena incorrectos.");
+            peticion.setAttribute("mensajeError", "Usuario o contraseña incorrectos.");
         } catch (Exception excepcion) {
             peticion.setAttribute("mensajeError",
                     "No se pudo conectar con el servidor REST: " + excepcion.getMessage());

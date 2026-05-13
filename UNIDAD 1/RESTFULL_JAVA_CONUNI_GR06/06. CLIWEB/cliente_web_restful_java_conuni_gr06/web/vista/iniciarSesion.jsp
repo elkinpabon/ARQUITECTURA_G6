@@ -3,7 +3,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Iniciar Sesion - CONUNI</title>
+    <title>Iniciar Sesión - CONUNI</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilo.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
                 <span>Cliente Web CONUNI</span>
             </div>
 
-            <h2>Iniciar Sesion</h2>
+            <h2>Iniciar Sesión</h2>
 
             <% String mensajeError = (String) request.getAttribute("mensajeError"); %>
             <% if (mensajeError != null) { %>
@@ -27,11 +27,11 @@
                 <label for="usuario">Usuario:</label>
                 <input type="text" id="usuario" name="usuario" required autofocus>
 
-                <label for="contrasena">Contrasena:</label>
+                <label for="contrasena">Contraseña:</label>
                 <div class="password-wrapper">
                     <input type="password" id="contrasena" name="contrasena" required>
                     <button type="button" class="password-toggle"
-                            aria-label="Mostrar contrasena"
+                            aria-label="Mostrar contraseña"
                             onclick="alternarContrasena(this)">
                         <svg class="icono-ojo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
@@ -60,12 +60,12 @@
                 input.type = 'text';
                 ojoAbierto.style.display = 'none';
                 ojoCerrado.style.display = 'block';
-                boton.setAttribute('aria-label', 'Ocultar contrasena');
+                boton.setAttribute('aria-label', 'Ocultar contraseña');
             } else {
                 input.type = 'password';
                 ojoAbierto.style.display = 'block';
                 ojoCerrado.style.display = 'none';
-                boton.setAttribute('aria-label', 'Mostrar contrasena');
+                boton.setAttribute('aria-label', 'Mostrar contraseña');
             }
         }
     </script>

@@ -117,7 +117,7 @@ fun PantallaConversor(
                 value = opcionSeleccionada.etiqueta,
                 onValueChange = {},
                 readOnly = true,
-                label = { Text("Conversion") },
+                label = { Text("Conversión") },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandido) },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -157,7 +157,7 @@ fun PantallaConversor(
             onClick = {
                 val valorDouble = valor.replace(',', '.').toDoubleOrNull()
                 if (valorDouble == null) {
-                    Toast.makeText(context, "Ingresa un numero valido", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Ingresa un número válido", Toast.LENGTH_SHORT).show()
                     return@Button
                 }
                 cargando = true
@@ -167,7 +167,7 @@ fun PantallaConversor(
                             "longitud" -> controlador.convertirLongitud(opcionSeleccionada.clave, valorDouble)
                             "masa" -> controlador.convertirMasa(opcionSeleccionada.clave, valorDouble)
                             "temperatura" -> controlador.convertirTemperatura(opcionSeleccionada.clave, valorDouble)
-                            else -> Resultado.error("Categoria desconocida")
+                            else -> Resultado.error("Categoría desconocida")
                         }
                     }
                     resultado = r
@@ -222,8 +222,8 @@ private fun tituloCategoria(categoria: String): String = when (categoria) {
 }
 
 private fun descripcionCategoria(categoria: String): String = when (categoria) {
-    "longitud" -> "Metros, pies, kilometros, millas, pulgadas y mas."
-    "masa" -> "Kilogramos, libras, gramos, onzas, toneladas y mas."
+    "longitud" -> "Metros, pies, kilómetros, millas, pulgadas y más."
+    "masa" -> "Kilogramos, libras, gramos, onzas, toneladas y más."
     "temperatura" -> "Celsius, Fahrenheit y Kelvin."
     else -> ""
 }
@@ -231,10 +231,10 @@ private fun descripcionCategoria(categoria: String): String = when (categoria) {
 private fun opcionesPorCategoria(categoria: String): List<OpcionConversion> = when (categoria) {
     "longitud" -> listOf(
         OpcionConversion("metrosAPies", "Metros a Pies"),
-        OpcionConversion("kilometrosAMillas", "Kilometros a Millas"),
-        OpcionConversion("centimetrosAPulgadas", "Centimetros a Pulgadas"),
+        OpcionConversion("kilometrosAMillas", "Kilómetros a Millas"),
+        OpcionConversion("centimetrosAPulgadas", "Centímetros a Pulgadas"),
         OpcionConversion("yardasAMetros", "Yardas a Metros"),
-        OpcionConversion("milimetrosAPulgadas", "Milimetros a Pulgadas")
+        OpcionConversion("milimetrosAPulgadas", "Milímetros a Pulgadas")
     )
     "masa" -> listOf(
         OpcionConversion("kilogramosALibras", "Kilogramos a Libras"),

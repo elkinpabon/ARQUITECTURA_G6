@@ -28,10 +28,10 @@ public class PanelConversion extends javax.swing.JPanel {
 
     private static final List<Opcion> OPCIONES_LONGITUD = Arrays.asList(
         new Opcion("metrosAPies",          "Metros a Pies"),
-        new Opcion("kilometrosAMillas",    "Kilometros a Millas"),
-        new Opcion("centimetrosAPulgadas", "Centimetros a Pulgadas"),
+        new Opcion("kilometrosAMillas",    "Kilómetros a Millas"),
+        new Opcion("centimetrosAPulgadas", "Centímetros a Pulgadas"),
         new Opcion("yardasAMetros",        "Yardas a Metros"),
-        new Opcion("milimetrosAPulgadas",  "Milimetros a Pulgadas")
+        new Opcion("milimetrosAPulgadas",  "Milímetros a Pulgadas")
     );
     private static final List<Opcion> OPCIONES_MASA = Arrays.asList(
         new Opcion("kilogramosALibras",    "Kilogramos a Libras"),
@@ -90,7 +90,7 @@ public class PanelConversion extends javax.swing.JPanel {
             double valor = Double.parseDouble(texto);
             if (accionConvertir != null) accionConvertir.accept(seleccion.clave, valor);
         } catch (NumberFormatException ex) {
-            mostrarResultado(Resultado.error("Ingresa un numero valido (ej: 12.5)"));
+            mostrarResultado(Resultado.error("Ingresa un número válido (ej: 12.5)"));
         }
     }
 
@@ -172,7 +172,7 @@ public class PanelConversion extends javax.swing.JPanel {
         lblEncabezado.setText("Conversiones");
 
         lblConversion.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
-        lblConversion.setText("Conversion:");
+        lblConversion.setText("Conversión:");
 
         lblValor.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
         lblValor.setText("Valor:");
@@ -185,7 +185,7 @@ public class PanelConversion extends javax.swing.JPanel {
         lblResultado.setText(" ");
         lblResultado.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 12, 10, 12));
 
-        btnVolver.setText("Volver al Menu");
+        btnVolver.setText("Volver al Menú");
         btnVolver.setFocusPainted(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

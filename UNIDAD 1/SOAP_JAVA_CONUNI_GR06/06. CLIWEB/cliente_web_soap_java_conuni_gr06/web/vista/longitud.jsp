@@ -19,9 +19,9 @@
             Cliente Web CONUNI
         </h1>
         <div>
-            <a href="${pageContext.request.contextPath}/vista/menu.jsp">Menu</a>
+            <a href="${pageContext.request.contextPath}/vista/menu.jsp">Menú</a>
             &nbsp;|&nbsp;
-            <a href="${pageContext.request.contextPath}/cerrarSesion">Cerrar Sesion</a>
+            <a href="${pageContext.request.contextPath}/cerrarSesion">Cerrar Sesión</a>
         </div>
     </div>
 
@@ -32,18 +32,18 @@
             </svg>
             <div>
                 <h2>Conversiones de Longitud</h2>
-                <p>Convierte entre metros, pies, kilometros, millas, pulgadas y mas.</p>
+                <p>Convierte entre metros, pies, kilómetros, millas, pulgadas y más.</p>
             </div>
         </div>
 
         <form action="${pageContext.request.contextPath}/longitud" method="post">
-            <label for="operacion">Conversion:</label>
+            <label for="operacion">Conversión:</label>
             <select id="operacion" name="operacion" required>
                 <option value="metrosAPies"         <%= "metrosAPies".equals(operacionSeleccionada)         ? "selected" : "" %>>Metros a Pies</option>
-                <option value="kilometrosAMillas"   <%= "kilometrosAMillas".equals(operacionSeleccionada)   ? "selected" : "" %>>Kilometros a Millas</option>
-                <option value="centimetrosAPulgadas"<%= "centimetrosAPulgadas".equals(operacionSeleccionada)? "selected" : "" %>>Centimetros a Pulgadas</option>
+                <option value="kilometrosAMillas"   <%= "kilometrosAMillas".equals(operacionSeleccionada)   ? "selected" : "" %>>Kilómetros a Millas</option>
+                <option value="centimetrosAPulgadas"<%= "centimetrosAPulgadas".equals(operacionSeleccionada)? "selected" : "" %>>Centímetros a Pulgadas</option>
                 <option value="yardasAMetros"       <%= "yardasAMetros".equals(operacionSeleccionada)       ? "selected" : "" %>>Yardas a Metros</option>
-                <option value="milimetrosAPulgadas" <%= "milimetrosAPulgadas".equals(operacionSeleccionada) ? "selected" : "" %>>Milimetros a Pulgadas</option>
+                <option value="milimetrosAPulgadas" <%= "milimetrosAPulgadas".equals(operacionSeleccionada) ? "selected" : "" %>>Milímetros a Pulgadas</option>
             </select>
 
             <label for="valor">Valor:</label>

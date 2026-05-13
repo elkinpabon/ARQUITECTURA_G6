@@ -50,13 +50,13 @@ public class ServletLongitud extends HttpServlet {
                     convertido = servicioLongitud.milimetrosAPulgadas(valor);
                     break;
                 default:
-                    throw new IllegalArgumentException("Operacion desconocida: " + operacion);
+                    throw new IllegalArgumentException("Operación desconocida: " + operacion);
             }
             String[] u = FormatoConversion.unidades(operacion);
             resultado = Resultado.ok(
                     FormatoConversion.formatear(valor, u[0], convertido, u[1]));
         } catch (NumberFormatException excepcion) {
-            resultado = Resultado.error("El valor ingresado no es un numero valido.");
+            resultado = Resultado.error("El valor ingresado no es un número válido.");
         } catch (Exception excepcion) {
             resultado = Resultado.error("Error al invocar el servicio: " + excepcion.getMessage());
         }

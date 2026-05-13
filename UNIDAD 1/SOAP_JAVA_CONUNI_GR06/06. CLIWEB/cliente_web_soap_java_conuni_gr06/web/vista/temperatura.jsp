@@ -19,9 +19,9 @@
             Cliente Web CONUNI
         </h1>
         <div>
-            <a href="${pageContext.request.contextPath}/vista/menu.jsp">Menu</a>
+            <a href="${pageContext.request.contextPath}/vista/menu.jsp">Menú</a>
             &nbsp;|&nbsp;
-            <a href="${pageContext.request.contextPath}/cerrarSesion">Cerrar Sesion</a>
+            <a href="${pageContext.request.contextPath}/cerrarSesion">Cerrar Sesión</a>
         </div>
     </div>
 
@@ -37,7 +37,7 @@
         </div>
 
         <form action="${pageContext.request.contextPath}/temperatura" method="post">
-            <label for="operacion">Conversion:</label>
+            <label for="operacion">Conversión:</label>
             <select id="operacion" name="operacion" required>
                 <option value="celsiusAFahrenheit" <%= "celsiusAFahrenheit".equals(operacionSeleccionada) ? "selected" : "" %>>Celsius a Fahrenheit</option>
                 <option value="fahrenheitACelsius" <%= "fahrenheitACelsius".equals(operacionSeleccionada) ? "selected" : "" %>>Fahrenheit a Celsius</option>

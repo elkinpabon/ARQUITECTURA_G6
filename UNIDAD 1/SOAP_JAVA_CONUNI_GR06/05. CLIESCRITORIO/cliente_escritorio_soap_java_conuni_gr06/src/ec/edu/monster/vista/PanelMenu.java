@@ -112,7 +112,7 @@ public class PanelMenu extends javax.swing.JPanel {
 
         lblSaludo.setText("Bienvenido");
 
-        btnCerrarSesion.setText("Cerrar Sesion");
+        btnCerrarSesion.setText("Cerrar Sesión");
         btnCerrarSesion.setFocusPainted(false);
 
         javax.swing.GroupLayout panelCabeceraLayout = new javax.swing.GroupLayout(panelCabecera);

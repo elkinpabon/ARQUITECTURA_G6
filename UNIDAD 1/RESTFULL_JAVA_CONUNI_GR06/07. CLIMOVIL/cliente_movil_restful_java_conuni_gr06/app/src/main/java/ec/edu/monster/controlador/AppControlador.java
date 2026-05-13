@@ -21,7 +21,7 @@ public class AppControlador {
     public Resultado iniciarSesion(String usuario, String contrasena) {
         try {
             boolean ok = servicioAutenticacion.iniciarSesion(usuario, contrasena);
-            return ok ? Resultado.ok("true") : Resultado.error("Usuario o contrasena invalidos");
+            return ok ? Resultado.ok("true") : Resultado.error("Usuario o contraseña inválidos");
         } catch (Exception ex) {
             return Resultado.error("No se pudo conectar con el servidor: " + ex.getMessage());
         }
@@ -36,7 +36,7 @@ public class AppControlador {
                 case "centimetrosAPulgadas": r = servicioLongitud.centimetrosAPulgadas(valor); break;
                 case "yardasAMetros":        r = servicioLongitud.yardasAMetros(valor); break;
                 case "milimetrosAPulgadas":  r = servicioLongitud.milimetrosAPulgadas(valor); break;
-                default: return Resultado.error("Operacion invalida: " + operacion);
+                default: return Resultado.error("Operación inválida: " + operacion);
             }
             return Resultado.ok(String.valueOf(r));
         } catch (Exception ex) {
@@ -53,7 +53,7 @@ public class AppControlador {
                 case "toneladasAKilogramos": r = servicioMasa.toneladasAKilogramos(valor); break;
                 case "librasAOnzas":         r = servicioMasa.librasAOnzas(valor); break;
                 case "miligramosAGramos":    r = servicioMasa.miligramosAGramos(valor); break;
-                default: return Resultado.error("Operacion invalida: " + operacion);
+                default: return Resultado.error("Operación inválida: " + operacion);
             }
             return Resultado.ok(String.valueOf(r));
         } catch (Exception ex) {
@@ -70,7 +70,7 @@ public class AppControlador {
                 case "celsiusAKelvin":     r = servicioTemperatura.celsiusAKelvin(valor); break;
                 case "kelvinACelsius":     r = servicioTemperatura.kelvinACelsius(valor); break;
                 case "fahrenheitAKelvin":  r = servicioTemperatura.fahrenheitAKelvin(valor); break;
-                default: return Resultado.error("Operacion invalida: " + operacion);
+                default: return Resultado.error("Operación inválida: " + operacion);
             }
             return Resultado.ok(String.valueOf(r));
         } catch (Exception ex) {

@@ -51,7 +51,7 @@ public class ControladorEscritorio {
 
     private void manejarLogin(String usuario, String contrasena) {
         if (usuario.isEmpty() || contrasena.isEmpty()) {
-            ventana.getPanelLogin().mostrarError("Completa usuario y contrasena");
+            ventana.getPanelLogin().mostrarError("Completa usuario y contraseña");
             return;
         }
         ventana.getPanelLogin().mostrarError(" ");
@@ -85,7 +85,7 @@ public class ControladorEscritorio {
                         ventana.getPanelLogin().limpiar();
                         ventana.mostrar(VentanaPrincipal.TARJETA_MENU);
                     } else {
-                        ventana.getPanelLogin().mostrarError("Usuario o contrasena invalidos");
+                        ventana.getPanelLogin().mostrarError("Usuario o contraseña inválidos");
                     }
                 } catch (Exception ex) {
                     ventana.getPanelLogin().mostrarError("Error inesperado: " + ex.getMessage());
@@ -149,7 +149,7 @@ public class ControladorEscritorio {
                     r = llamarTemperatura(operacion, valor);
                     break;
                 default:
-                    return Resultado.error("Categoria desconocida");
+                    return Resultado.error("Categoría desconocida");
             }
             String[] u = FormatoConversion.unidades(operacion);
             return Resultado.ok(FormatoConversion.formatear(valor, u[0], r, u[1]));
@@ -165,7 +165,7 @@ public class ControladorEscritorio {
             case "centimetrosAPulgadas": return servicioLongitud.centimetrosAPulgadas(v);
             case "yardasAMetros":        return servicioLongitud.yardasAMetros(v);
             case "milimetrosAPulgadas":  return servicioLongitud.milimetrosAPulgadas(v);
-            default: throw new IllegalArgumentException("Operacion invalida: " + op);
+            default: throw new IllegalArgumentException("Operación inválida: " + op);
         }
     }
 
@@ -176,7 +176,7 @@ public class ControladorEscritorio {
             case "toneladasAKilogramos": return servicioMasa.toneladasAKilogramos(v);
             case "librasAOnzas":         return servicioMasa.librasAOnzas(v);
             case "miligramosAGramos":    return servicioMasa.miligramosAGramos(v);
-            default: throw new IllegalArgumentException("Operacion invalida: " + op);
+            default: throw new IllegalArgumentException("Operación inválida: " + op);
         }
     }
 
@@ -187,7 +187,7 @@ public class ControladorEscritorio {
             case "celsiusAKelvin":     return servicioTemperatura.celsiusAKelvin(v);
             case "kelvinACelsius":     return servicioTemperatura.kelvinACelsius(v);
             case "fahrenheitAKelvin":  return servicioTemperatura.fahrenheitAKelvin(v);
-            default: throw new IllegalArgumentException("Operacion invalida: " + op);
+            default: throw new IllegalArgumentException("Operación inválida: " + op);
         }
     }
 }

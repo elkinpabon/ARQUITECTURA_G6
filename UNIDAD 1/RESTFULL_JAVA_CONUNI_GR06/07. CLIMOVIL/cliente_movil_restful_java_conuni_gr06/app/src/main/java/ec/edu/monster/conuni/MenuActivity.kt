@@ -69,7 +69,7 @@ class MenuActivity : ComponentActivity() {
                                 }) {
                                     Icon(
                                         imageVector = Icons.Filled.ExitToApp,
-                                        contentDescription = "Cerrar sesion",
+                                        contentDescription = "Cerrar sesión",
                                         tint = ConuniAmarillo
                                     )
                                 }
@@ -104,13 +104,13 @@ fun PantallaMenu(
             .padding(20.dp)
     ) {
         Text(
-            "Menu de Conversiones",
+            "Menú de Conversiones",
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
             color = ConuniAzul
         )
         Text(
-            "Elige una categoria",
+            "Elige una categoría",
             fontSize = 14.sp,
             color = Color.Gray,
             modifier = Modifier.padding(bottom = 18.dp)

@@ -9,7 +9,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Menu Principal - CONUNI</title>
+    <title>Menú Principal - CONUNI</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/estilo.css">
 </head>
 <body>
@@ -21,13 +21,13 @@
         <div>
             <span>Bienvenido, <%= session.getAttribute("usuario") %></span>
             &nbsp;|&nbsp;
-            <a href="${pageContext.request.contextPath}/cerrarSesion">Cerrar Sesion</a>
+            <a href="${pageContext.request.contextPath}/cerrarSesion">Cerrar Sesión</a>
         </div>
     </div>
 
     <div class="contenedor">
-        <h2>Menu de Conversiones</h2>
-        <p>Elige una categoria para realizar conversiones de unidades.</p>
+        <h2>Menú de Conversiones</h2>
+        <p>Elige una categoría para realizar conversiones de unidades.</p>
 
         <div class="menu-opciones">
             <a href="${pageContext.request.contextPath}/longitud">

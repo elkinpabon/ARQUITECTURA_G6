@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\elkin\\Desktop\\Repositorios\\ARQUITECTURA_G6\\UNIDAD 1\\RESTFULL_DOTNET_CONUNI_GR06\\07. CLIMOVIL\\cliente_movil_rest_dotnet_conuni_gr06\\cliente_movil_rest_dotnet_conuni_gr06.csproj": {}
+    "Z:\\ESPE\\Arquitectura\\ARQUITECTURA_G6\\UNIDAD 1\\RESTFULL_DOTNET_CONUNI_GR06\\07. CLIMOVIL\\cliente_movil_rest_dotnet_conuni_gr06\\cliente_movil_rest_dotnet_conuni_gr06.csproj": {}
   },
   "projects": {
-    "C:\\Users\\elkin\\Desktop\\Repositorios\\ARQUITECTURA_G6\\UNIDAD 1\\RESTFULL_DOTNET_CONUNI_GR06\\07. CLIMOVIL\\cliente_movil_rest_dotnet_conuni_gr06\\cliente_movil_rest_dotnet_conuni_gr06.csproj": {
+    "Z:\\ESPE\\Arquitectura\\ARQUITECTURA_G6\\UNIDAD 1\\RESTFULL_DOTNET_CONUNI_GR06\\07. CLIMOVIL\\cliente_movil_rest_dotnet_conuni_gr06\\cliente_movil_rest_dotnet_conuni_gr06.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\elkin\\Desktop\\Repositorios\\ARQUITECTURA_G6\\UNIDAD 1\\RESTFULL_DOTNET_CONUNI_GR06\\07. CLIMOVIL\\cliente_movil_rest_dotnet_conuni_gr06\\cliente_movil_rest_dotnet_conuni_gr06.csproj",
+        "projectUniqueName": "Z:\\ESPE\\Arquitectura\\ARQUITECTURA_G6\\UNIDAD 1\\RESTFULL_DOTNET_CONUNI_GR06\\07. CLIMOVIL\\cliente_movil_rest_dotnet_conuni_gr06\\cliente_movil_rest_dotnet_conuni_gr06.csproj",
         "projectName": "cliente_movil_rest_dotnet_conuni_gr06",
-        "projectPath": "C:\\Users\\elkin\\Desktop\\Repositorios\\ARQUITECTURA_G6\\UNIDAD 1\\RESTFULL_DOTNET_CONUNI_GR06\\07. CLIMOVIL\\cliente_movil_rest_dotnet_conuni_gr06\\cliente_movil_rest_dotnet_conuni_gr06.csproj",
-        "packagesPath": "C:\\Users\\elkin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\elkin\\Desktop\\Repositorios\\ARQUITECTURA_G6\\UNIDAD 1\\RESTFULL_DOTNET_CONUNI_GR06\\07. CLIMOVIL\\cliente_movil_rest_dotnet_conuni_gr06\\o\\",
+        "projectPath": "Z:\\ESPE\\Arquitectura\\ARQUITECTURA_G6\\UNIDAD 1\\RESTFULL_DOTNET_CONUNI_GR06\\07. CLIMOVIL\\cliente_movil_rest_dotnet_conuni_gr06\\cliente_movil_rest_dotnet_conuni_gr06.csproj",
+        "packagesPath": "C:\\Users\\im47\\.nuget\\packages\\",
+        "outputPath": "Z:\\ESPE\\Arquitectura\\ARQUITECTURA_G6\\UNIDAD 1\\RESTFULL_DOTNET_CONUNI_GR06\\07. CLIMOVIL\\cliente_movil_rest_dotnet_conuni_gr06\\o\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\elkin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\im47\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -46,7 +46,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net9.0-android35.0": {
@@ -59,7 +59,7 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.15, )",
+              "version": "[9.0.14, )",
               "autoReferenced": true
             }
           },
@@ -82,7 +82,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.313/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {

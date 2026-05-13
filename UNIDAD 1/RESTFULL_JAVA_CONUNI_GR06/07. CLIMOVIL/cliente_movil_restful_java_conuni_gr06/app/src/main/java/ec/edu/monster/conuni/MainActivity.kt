@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
                         TopAppBar(
                             title = {
                                 Text(
-                                    "Cliente Movil CONUNI",
+                                    "Cliente Móvil CONUNI",
                                     color = Color.White,
                                     fontWeight = FontWeight.Bold
                                 )
@@ -108,7 +108,7 @@ fun PantallaLogin(
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "Iniciar Sesion",
+            text = "Iniciar Sesión",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = ConuniAzul
@@ -123,7 +123,7 @@ fun PantallaLogin(
         // Imagen ilustrativa (reutilizada del cliente web)
         Image(
             painter = painterResource(id = R.drawable.login),
-            contentDescription = "Ilustracion login",
+            contentDescription = "Ilustración login",
             modifier = Modifier
                 .fillMaxWidth()
                 .height(160.dp)
@@ -145,7 +145,7 @@ fun PantallaLogin(
         OutlinedTextField(
             value = contrasena,
             onValueChange = { contrasena = it },
-            label = { Text("Contrasena") },
+            label = { Text("Contraseña") },
             singleLine = true,
             visualTransformation = if (contrasenaVisible) VisualTransformation.None
                                    else PasswordVisualTransformation(),
@@ -155,8 +155,8 @@ fun PantallaLogin(
                     Icon(
                         imageVector = if (contrasenaVisible) Icons.Filled.VisibilityOff
                                       else Icons.Filled.Visibility,
-                        contentDescription = if (contrasenaVisible) "Ocultar contrasena"
-                                             else "Mostrar contrasena"
+                        contentDescription = if (contrasenaVisible) "Ocultar contraseña"
+                                             else "Mostrar contraseña"
                     )
                 }
             },
@@ -168,7 +168,7 @@ fun PantallaLogin(
         Button(
             onClick = {
                 if (usuario.isBlank() || contrasena.isBlank()) {
-                    Toast.makeText(context, "Completa usuario y contrasena", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Completa usuario y contraseña", Toast.LENGTH_SHORT).show()
                     return@Button
                 }
                 cargando = true

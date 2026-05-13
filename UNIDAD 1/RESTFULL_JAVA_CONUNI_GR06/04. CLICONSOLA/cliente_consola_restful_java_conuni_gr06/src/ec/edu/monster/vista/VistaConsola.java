@@ -51,26 +51,26 @@ public class VistaConsola {
 
     public void mostrarDespedida() {
         System.out.println();
-        System.out.println("Hasta pronto. Sesion cerrada.");
+        System.out.println("Hasta pronto. Sesión cerrada.");
     }
 
     // ========= Menus =========
 
     public void mostrarMenuPrincipal(String usuario) {
-        mostrarTitulo("Menu Principal (usuario: " + usuario + ")");
+        mostrarTitulo("Menú Principal (usuario: " + usuario + ")");
         System.out.println("1. Conversiones de Longitud");
         System.out.println("2. Conversiones de Masa");
         System.out.println("3. Conversiones de Temperatura");
-        System.out.println("0. Cerrar Sesion");
+        System.out.println("0. Cerrar Sesión");
     }
 
     public void mostrarMenuLongitud() {
         mostrarTitulo("Conversiones de Longitud");
         System.out.println("1. Metros a Pies");
-        System.out.println("2. Kilometros a Millas");
-        System.out.println("3. Centimetros a Pulgadas");
+        System.out.println("2. Kilómetros a Millas");
+        System.out.println("3. Centímetros a Pulgadas");
         System.out.println("4. Yardas a Metros");
-        System.out.println("5. Milimetros a Pulgadas");
+        System.out.println("5. Milímetros a Pulgadas");
         System.out.println("0. Volver");
     }
 
@@ -112,7 +112,7 @@ public class VistaConsola {
             char[] caracteres = consola.readPassword(etiqueta + ": ");
             return caracteres == null ? "" : new String(caracteres);
         }
-        System.out.println("(Nota: ejecutando en IDE, la contrasena se mostrara en pantalla)");
+        System.out.println("(Nota: ejecutando en IDE, la contraseña se mostrará en pantalla)");
         return leerTexto(etiqueta);
     }
 
@@ -124,9 +124,9 @@ public class VistaConsola {
                 if (valor >= minimo && valor <= maximo) {
                     return valor;
                 }
-                mostrarError("La opcion debe estar entre " + minimo + " y " + maximo + ".");
+                mostrarError("La opción debe estar entre " + minimo + " y " + maximo + ".");
             } catch (NumberFormatException ex) {
-                mostrarError("Debes ingresar un numero entero.");
+                mostrarError("Debes ingresar un número entero.");
             }
         }
     }
@@ -137,7 +137,7 @@ public class VistaConsola {
             try {
                 return Double.parseDouble(entrada.replace(',', '.'));
             } catch (NumberFormatException ex) {
-                mostrarError("Debes ingresar un numero valido (ejemplo: 12.5).");
+                mostrarError("Debes ingresar un número válido (ejemplo: 12.5).");
             }
         }
     }

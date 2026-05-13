@@ -27,7 +27,7 @@ public class ControladorConsola {
     public void ejecutar() {
         vista.mostrarEncabezado();
         if (!autenticar()) {
-            vista.mostrarError("Se agotaron los intentos de inicio de sesion.");
+            vista.mostrarError("Se agotaron los intentos de inicio de sesión.");
             return;
         }
         bucleMenuPrincipal();
@@ -38,9 +38,9 @@ public class ControladorConsola {
 
     private boolean autenticar() {
         for (int intento = 1; intento <= MAX_INTENTOS_LOGIN; intento++) {
-            vista.mostrarTitulo("Iniciar Sesion (intento " + intento + " de " + MAX_INTENTOS_LOGIN + ")");
+            vista.mostrarTitulo("Iniciar Sesión (intento " + intento + " de " + MAX_INTENTOS_LOGIN + ")");
             String usuario = vista.leerTexto("Usuario");
-            String contrasena = vista.leerContrasena("Contrasena");
+            String contrasena = vista.leerContrasena("Contraseña");
             try {
                 boolean ok = servicioAutenticacion.iniciarSesion(usuario, contrasena);
                 if (ok) {
@@ -48,7 +48,7 @@ public class ControladorConsola {
                     vista.mostrarExito("Bienvenido, " + usuario + ".");
                     return true;
                 }
-                vista.mostrarError("Credenciales invalidas.");
+                vista.mostrarError("Credenciales inválidas.");
             } catch (Exception ex) {
                 vista.mostrarError("No se pudo conectar con el servidor: " + ex.getMessage());
             }
@@ -61,7 +61,7 @@ public class ControladorConsola {
     private void bucleMenuPrincipal() {
         while (true) {
             vista.mostrarMenuPrincipal(usuarioActual);
-            int opcion = vista.leerOpcion("Selecciona una opcion", 0, 3);
+            int opcion = vista.leerOpcion("Selecciona una opción", 0, 3);
             switch (opcion) {
                 case 1 -> bucleMenuLongitud();
                 case 2 -> bucleMenuMasa();
@@ -76,7 +76,7 @@ public class ControladorConsola {
     private void bucleMenuLongitud() {
         while (true) {
             vista.mostrarMenuLongitud();
-            int opcion = vista.leerOpcion("Selecciona una opcion", 0, 5);
+            int opcion = vista.leerOpcion("Selecciona una opción", 0, 5);
             if (opcion == 0) return;
             double valor = vista.leerDouble("Ingresa el valor a convertir");
             Resultado resultado = ejecutarLongitud(opcion, valor);
@@ -94,7 +94,7 @@ public class ControladorConsola {
                 case 3 -> { r = servicioLongitud.centimetrosAPulgadas(valor); orig = "cm"; dest = "in"; }
                 case 4 -> { r = servicioLongitud.yardasAMetros(valor);        orig = "yd"; dest = "m";  }
                 case 5 -> { r = servicioLongitud.milimetrosAPulgadas(valor);  orig = "mm"; dest = "in"; }
-                default -> { return Resultado.error("Opcion invalida"); }
+                default -> { return Resultado.error("Opción inválida"); }
             }
             return Resultado.ok(FormatoConversion.formatear(valor, orig, r, dest));
         } catch (Exception ex) {
@@ -107,7 +107,7 @@ public class ControladorConsola {
     private void bucleMenuMasa() {
         while (true) {
             vista.mostrarMenuMasa();
-            int opcion = vista.leerOpcion("Selecciona una opcion", 0, 5);
+            int opcion = vista.leerOpcion("Selecciona una opción", 0, 5);
             if (opcion == 0) return;
             double valor = vista.leerDouble("Ingresa el valor a convertir");
             Resultado resultado = ejecutarMasa(opcion, valor);
@@ -125,7 +125,7 @@ public class ControladorConsola {
                 case 3 -> { r = servicioMasa.toneladasAKilogramos(valor); orig = "t";  dest = "kg"; }
                 case 4 -> { r = servicioMasa.librasAOnzas(valor);         orig = "lb"; dest = "oz"; }
                 case 5 -> { r = servicioMasa.miligramosAGramos(valor);    orig = "mg"; dest = "g";  }
-                default -> { return Resultado.error("Opcion invalida"); }
+                default -> { return Resultado.error("Opción inválida"); }
             }
             return Resultado.ok(FormatoConversion.formatear(valor, orig, r, dest));
         } catch (Exception ex) {
@@ -138,7 +138,7 @@ public class ControladorConsola {
     private void bucleMenuTemperatura() {
         while (true) {
             vista.mostrarMenuTemperatura();
-            int opcion = vista.leerOpcion("Selecciona una opcion", 0, 5);
+            int opcion = vista.leerOpcion("Selecciona una opción", 0, 5);
             if (opcion == 0) return;
             double valor = vista.leerDouble("Ingresa el valor a convertir");
             Resultado resultado = ejecutarTemperatura(opcion, valor);
@@ -156,7 +156,7 @@ public class ControladorConsola {
                 case 3 -> { r = servicioTemperatura.celsiusAKelvin(valor);     orig = "°C"; dest = "K";      }
                 case 4 -> { r = servicioTemperatura.kelvinACelsius(valor);     orig = "K";       dest = "°C"; }
                 case 5 -> { r = servicioTemperatura.fahrenheitAKelvin(valor);  orig = "°F"; dest = "K";      }
-                default -> { return Resultado.error("Opcion invalida"); }
+                default -> { return Resultado.error("Opción inválida"); }
             }
             return Resultado.ok(FormatoConversion.formatear(valor, orig, r, dest));
         } catch (Exception ex) {

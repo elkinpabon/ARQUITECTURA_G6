@@ -139,7 +139,7 @@ public class PanelLogin extends javax.swing.JPanel {
         lblUsuario.setText("Usuario:");
 
         lblContrasena.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
-        lblContrasena.setText("Contrasena:");
+        lblContrasena.setText("Contraseña:");
 
         botonMostrar.setText("Mostrar");
 

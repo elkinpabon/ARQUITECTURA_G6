@@ -49,11 +49,11 @@ public class ServletTemperatura extends HttpServlet {
                     convertido = servicioTemperatura.fahrenheitAKelvin(valor);
                     break;
                 default:
-                    throw new IllegalArgumentException("Operacion desconocida: " + operacion);
+                    throw new IllegalArgumentException("Operación desconocida: " + operacion);
             }
             resultado = Resultado.ok(String.valueOf(convertido));
         } catch (NumberFormatException excepcion) {
-            resultado = Resultado.error("El valor ingresado no es un numero valido.");
+            resultado = Resultado.error("El valor ingresado no es un número válido.");
         } catch (Exception excepcion) {
             resultado = Resultado.error("Error al invocar el servicio: " + excepcion.getMessage());
         }

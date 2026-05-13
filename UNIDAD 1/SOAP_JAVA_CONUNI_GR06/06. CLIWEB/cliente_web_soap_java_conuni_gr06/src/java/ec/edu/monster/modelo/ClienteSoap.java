@@ -16,7 +16,7 @@ import java.util.Map;
 public class ClienteSoap {
 
     private static final String URL_SERVICIO =
-            "http://localhost:8080/servidor_soap_java_conuni_gr06/CONUNI";
+            "http://192.168.106.129:8080/servidor_soap_java_conuni_gr06/CONUNI";
     private static final String ESPACIO_NOMBRES =
             "http://controlador.monster.edu.ec/";
 

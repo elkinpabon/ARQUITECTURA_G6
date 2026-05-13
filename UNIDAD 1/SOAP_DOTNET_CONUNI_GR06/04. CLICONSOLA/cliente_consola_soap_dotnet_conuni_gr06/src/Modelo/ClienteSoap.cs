@@ -6,7 +6,7 @@ namespace Ec.Edu.Monster.Modelo;
 
 public class ClienteSoap
 {
-    public string DireccionServicio { get; set; } = Environment.GetEnvironmentVariable("CONUNI_SOAP_URL") ?? "http://localhost:5000/CONUNI.svc";
+    public string DireccionServicio { get; set; } = Environment.GetEnvironmentVariable("CONUNI_SOAP_URL") ?? "http://192.168.106.189:5000/CONUNI.svc";
 
     public T Ejecutar<T>(Func<IConuniServicio, T> operacion)
     {

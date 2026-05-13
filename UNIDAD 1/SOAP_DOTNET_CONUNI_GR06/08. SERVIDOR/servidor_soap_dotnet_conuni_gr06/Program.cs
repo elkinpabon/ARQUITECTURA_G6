@@ -5,7 +5,7 @@ using Ec.Edu.Monster.Controlador;
 using Ec.Edu.Monster.Contrato;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.UseUrls("http://0.0.0.0:5000");
+builder.WebHost.UseUrls("http://192.168.106.189:5000");
 
 builder.Services.AddServiceModelServices();
 builder.Services.AddServiceModelMetadata();

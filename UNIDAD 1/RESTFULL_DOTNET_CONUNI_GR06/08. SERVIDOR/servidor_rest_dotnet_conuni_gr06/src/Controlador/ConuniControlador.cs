@@ -70,6 +70,7 @@ public class ConuniControlador : ControllerBase
         "celsiusAKelvin" => new Resultado { Exito = true, Valor = temperatura.CelsiusAKelvin(valor) },
         "kelvinACelsius" => new Resultado { Exito = true, Valor = temperatura.KelvinACelsius(valor) },
         "fahrenheitAKelvin" => new Resultado { Exito = true, Valor = temperatura.FahrenheitAKelvin(valor) },
+        "kelvinAFahrenheit" => new Resultado { Exito = true, Valor = temperatura.KelvinAFahrenheit(valor) },
         _ => new Resultado { Exito = false, Mensaje = "Operacion no valida" }
     };
 }

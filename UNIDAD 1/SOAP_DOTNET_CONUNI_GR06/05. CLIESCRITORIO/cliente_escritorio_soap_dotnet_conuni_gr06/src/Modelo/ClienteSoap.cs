@@ -1,12 +1,13 @@
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using Ec.Edu.Monster.Contrato;
+using Ec.Edu.Monster.Utilidades;
 
 namespace Ec.Edu.Monster.Modelo;
 
 public class ClienteSoap
 {
-    public string DireccionServicio { get; set; } = "http://192.168.106.189:5000/CONUNI.svc";
+    public string DireccionServicio { get; set; } = ConstantesSoap.DireccionServicio;
 
     public T Ejecutar<T>(Func<IConuniServicio, T> operacion)
     {

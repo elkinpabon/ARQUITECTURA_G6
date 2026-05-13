@@ -3,9 +3,10 @@ using CoreWCF.Configuration;
 using CoreWCF.Description;
 using Ec.Edu.Monster.Controlador;
 using Ec.Edu.Monster.Contrato;
+using Ec.Edu.Monster.Utilidades;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.UseUrls("http://192.168.106.189:5000");
+builder.WebHost.UseUrls(ConstantesServidor.UrlBase);
 
 builder.Services.AddServiceModelServices();
 builder.Services.AddServiceModelMetadata();

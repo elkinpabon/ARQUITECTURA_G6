@@ -17,7 +17,7 @@ public final class Configuracion {
 
     /** URL completa del endpoint del WebService CONUNI. */
     public static final String URL_SERVIDOR =
-            "http://192.168.106.129:8080/servidor_soap_java_conuni_gr06/CONUNI";
+            "http://10.0.2.2:8080/servidor_soap_java_conuni_gr06/CONUNI";
 
     /** Namespace del servicio (targetNamespace generado por JAX-WS a partir del paquete del @WebService). */
     public static final String ESPACIO_NOMBRES =

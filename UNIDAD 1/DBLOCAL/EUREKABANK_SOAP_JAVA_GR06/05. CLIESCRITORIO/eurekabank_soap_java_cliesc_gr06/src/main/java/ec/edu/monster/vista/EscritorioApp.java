@@ -18,6 +18,7 @@ public class EscritorioApp extends JFrame {
         setTitle("EUREKABANK GR06 — Cliente Escritorio");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(900, 640);
+        setMinimumSize(new java.awt.Dimension(560, 480));
         setLocationRelativeTo(null);
         getContentPane().setLayout(cards);
 

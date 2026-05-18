@@ -4,14 +4,13 @@ import ec.edu.monster.cliweb.ws.ClienteResumen;
 import ec.edu.monster.cliweb.ws.CuentaResumen;
 import ec.edu.monster.cliweb.ws.Resultado;
 import ec.edu.monster.cliweb.ws.WSCuenta;
-import ec.edu.monster.cliweb.ws.WSCuenta_Service;
 import java.util.List;
 
-/** Wrapper del WSCuenta. Devuelve el Resultado{exito,mensaje,saldo}. */
+/** Wrapper del WSCuenta. Endpoint configurable vía WsFactory/ServidorConfig. */
 public class CuentaClient {
 
     private WSCuenta port() {
-        return new WSCuenta_Service().getWSCuentaPort();
+        return WsFactory.cuenta();
     }
 
     public Resultado depositar(String cuenta, String monto, String moneda) {

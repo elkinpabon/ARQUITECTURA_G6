@@ -414,6 +414,8 @@ public class CuentaActivity extends AppCompatActivity {
         f.setOrientation(LinearLayout.VERTICAL);
         f.setPadding(48, 24, 48, 0);
         final EditText cli = campo(f, "Código cliente");
+        String actual = clienteActual();
+        if (actual != null) cli.setText(actual);   // cliente cargado prefijado
         final Spinner mon = new Spinner(this);
         mon.setAdapter(adapter(java.util.Arrays.asList("Dólares", "Soles")));
         f.addView(mon);
@@ -421,11 +423,38 @@ public class CuentaActivity extends AppCompatActivity {
             .setPositiveButton("Crear", (d, w) -> Async.run(
                 () -> ctrl.registrarCuenta(cli.getText().toString().trim(),
                         mon.getSelectedItemPosition() == 1 ? "01" : "02"),
-                r -> toast(r.getMensaje()), e -> toast("Error: " + e.getMessage())))
+                r -> { toast(r.getMensaje()); recargar(clienteActual()); },
+                e -> toast("Error: " + e.getMessage())))
             .setNegativeButton("Cancelar", null).show();
     }
 
     private void dlgEliminarCuenta() {
+        java.util.List<com.example.eurekabank_soap_java.modelo.CuentaResumen>
+                ct = ctrl.getCuentas();
+        if (ct != null && !ct.isEmpty()) {
+            final java.util.List<String> codigos = new java.util.ArrayList<>();
+            final String[] items = new String[ct.size()];
+            for (int i = 0; i < ct.size(); i++) {
+                com.example.eurekabank_soap_java.modelo.CuentaResumen c = ct.get(i);
+                codigos.add(c.getCodigoCuenta());
+                items[i] = c.getCodigoCuenta() + "  ·  "
+                        + String.format("%,.2f", c.getSaldo()) + " "
+                        + ("02".equals(c.getMoneda()) ? "Dólares" : "Soles")
+                        + "  ·  " + c.getEstado();
+            }
+            final int[] sel = {0};
+            new AlertDialog.Builder(this)
+                .setTitle("Eliminar cuenta de " + ct.get(0).getNombreCliente())
+                .setSingleChoiceItems(items, 0, (d, w) -> sel[0] = w)
+                .setPositiveButton("Eliminar", (d, w) -> {
+                    final String cod = codigos.get(sel[0]);
+                    Async.run(() -> ctrl.eliminarCuenta(cod),
+                        r -> { toast(r.getMensaje()); recargar(clienteActual()); },
+                        e -> toast("Error: " + e.getMessage()));
+                })
+                .setNegativeButton("Cancelar", null).show();
+            return;
+        }
         final EditText cta = dlgField("Código de cuenta a eliminar");
         new AlertDialog.Builder(this).setTitle("Eliminar cuenta").setView(cta)
             .setMessage("Borra la cuenta y sus movimientos.")

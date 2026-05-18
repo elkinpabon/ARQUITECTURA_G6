@@ -1,0 +1,29 @@
+@page
+@model CLIWEB.Pages.MovimientosModel
+@{
+    ViewData["Title"] = "Movimientos";
+}
+<h2>Movimientos</h2>
+<form method="get">
+    <div><label>Cuenta:</label><input type="text" name="Campo1" value="@Model.Campo1" required /></div>
+    <div><button type="submit">Buscar</button></div>
+</form>
+@if(Model.Movimientos.Count > 0)
+{
+    <table border="1" cellpadding="5">
+        <tr><th>#</th><th>Fecha</th><th>Tipo</th><th>Importe</th><th>Ref</th><th>Moneda</th></tr>
+        @foreach(var m in Model.Movimientos)
+        {
+            <tr>
+                <td>@m.NumeroMovimiento</td>
+                <td>@m.FechaMovimiento</td>
+                <td>@m.TipoDescripcion</td>
+                <td>@m.ImporteMovimiento.ToString("F2")</td>
+                <td>@m.CuentaReferencia</td>
+                <td>@m.MonedaOrigen</td>
+            </tr>
+        }
+    </table>
+}
+else if(!string.IsNullOrEmpty(Model.Campo1)) { <p>No hay movimientos.</p> }
+<a href="/Index">Volver</a>

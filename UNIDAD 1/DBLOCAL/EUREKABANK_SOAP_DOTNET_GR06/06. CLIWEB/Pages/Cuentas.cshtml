@@ -1,0 +1,21 @@
+@page
+@model CLIWEB.Pages.CuentasModel
+@{
+    ViewData["Title"] = Model.IsAdmin ? "Listar Cuentas" : "Mis Cuentas";
+}
+<h2>@ViewData["Title"]</h2>
+<table border="1" cellpadding="5">
+    <tr><th>Cuenta</th><th>Moneda</th><th>Saldo</th><th>Estado</th><th>Cliente</th></tr>
+    @foreach(var c in Model.Cuentas)
+    {
+        <tr>
+            <td>@c.CodigoCuenta</td>
+            <td>@c.Moneda</td>
+            <td>@c.Saldo.ToString("F2")</td>
+            <td>@c.Estado</td>
+            <td>@c.NombreCliente</td>
+        </tr>
+    }
+</table>
+@if(Model.Cuentas.Count == 0) { <p>No hay cuentas.</p> }
+<a href="/Index">Volver</a>

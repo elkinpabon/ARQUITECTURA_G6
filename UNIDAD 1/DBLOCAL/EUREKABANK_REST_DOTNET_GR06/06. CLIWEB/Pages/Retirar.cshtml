@@ -1,0 +1,5 @@
+﻿@page
+@model CLIWEB.Pages.RetirarModel
+<h2>Retirar</h2>
+@if(!string.IsNullOrEmpty(Model.Mensaje)) { <p style="color:@(Model.Mensaje.StartsWith("OK")?"green":"red")">@Model.Mensaje</p> }
+<a href="/Index">Volver</a>

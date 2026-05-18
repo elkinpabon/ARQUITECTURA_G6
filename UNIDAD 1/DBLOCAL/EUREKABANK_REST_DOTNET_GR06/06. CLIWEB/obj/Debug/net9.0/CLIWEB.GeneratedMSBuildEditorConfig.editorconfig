@@ -1,0 +1,97 @@
+is_global = true
+build_property.TargetFramework = net9.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = CLIWEB
+build_property.RootNamespace = CLIWEB
+build_property.ProjectDir = C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\06. CLIWEB\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\06. CLIWEB
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/Clientes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xpZW50ZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/ConsultarSaldo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uc3VsdGFyU2FsZG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/Cuentas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3VlbnRhcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/Depositar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVwb3NpdGFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/EliminarCuenta.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWxpbWluYXJDdWVudGEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/Logout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nb3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/Movimientos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW92aW1pZW50b3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/RegistrarCliente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cmFyQ2xpZW50ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/RegistrarCuenta.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cmFyQ3VlbnRhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/Retirar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmV0aXJhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/Transferir.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVHJhbnNmZXJpci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elkin/Desktop/Repositorios/ARQUITECTURA_G6/UNIDAD 1/DBLOCAL/EUREKABANK_REST_DOTNET_GR06/06. CLIWEB/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-u9xqk5jj8s

@@ -1,0 +1,11 @@
+@page
+@model CLIWEB.Pages.DepositarModel
+<h2>Depositar</h2>
+<form method="post">
+    <div><label>Cuenta:</label><input type="text" name="Campo1" required /></div>
+    <div><label>Monto:</label><input type="text" name="Campo2" required /></div>
+    <div><label>Moneda(01/02):</label><input type="text" name="Campo3" value="01" /></div>
+    <div><button type="submit">Depositar</button></div>
+</form>
+@if(!string.IsNullOrEmpty(Model.Mensaje)) { <p style="color:@(Model.Mensaje.StartsWith("OK")?"green":"red")">@Model.Mensaje</p> }
+<a href="/Index">Volver</a>

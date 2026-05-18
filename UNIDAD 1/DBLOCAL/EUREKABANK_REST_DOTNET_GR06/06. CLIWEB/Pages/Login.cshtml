@@ -1,0 +1,9 @@
+@page
+@model CLIWEB.Pages.LoginModel
+<h2>EurekaBank REST - Login</h2>
+<form method="post">
+    <div><label>Usuario:</label><input type="text" name="Usuario" required /></div>
+    <div><label>Clave:</label><input type="password" name="Clave" required /></div>
+    <div><button type="submit">Iniciar Sesion</button></div>
+    @if (!string.IsNullOrEmpty(Model.Error)) { <p style="color:red">@Model.Error</p> }
+</form>

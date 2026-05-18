@@ -1,0 +1,19 @@
+@page
+@model CLIWEB.Pages.ClientesModel
+@{
+    ViewData["Title"] = "Listar Clientes";
+}
+<h2>Listar Clientes</h2>
+<table border="1" cellpadding="5">
+    <tr><th>Codigo</th><th>DNI</th><th>Nombre</th></tr>
+    @foreach(var c in Model.Clientes)
+    {
+        <tr>
+            <td>@c.Codigo</td>
+            <td>@c.Dni</td>
+            <td>@c.Nombre</td>
+        </tr>
+    }
+</table>
+@if(Model.Clientes.Count == 0) { <p>No hay clientes.</p> }
+<a href="/Index">Volver</a>

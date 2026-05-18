@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CLIMOVIL.MainPage" Title="EurekaBank REST">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="EurekaBank REST Mobile" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+            <Label x:Name="lblUser" Text="" FontSize="14" HorizontalOptions="Center" />
+            <Frame x:Name="frmLogin" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <Entry x:Name="txtUsuario" Placeholder="Usuario" />
+                    <Entry x:Name="txtClave" Placeholder="Clave" IsPassword="True" />
+                    <Button Text="Iniciar Sesion" Clicked="OnLoginClicked" />
+                    <Label x:Name="lblError" Text="" TextColor="Red" />
+                </VerticalStackLayout>
+            </Frame>
+            <Frame x:Name="frmMenu" Padding="15" IsVisible="False">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Operaciones" FontSize="18" FontAttributes="Bold" />
+                    <Button Text="Consultar Saldo" Clicked="OnSaldoClicked" />
+                    <Button Text="Retirar" Clicked="OnRetirarClicked" />
+                    <Button Text="Transferir" Clicked="OnTransferirClicked" />
+                    <Button Text="Mis Cuentas" Clicked="OnCuentasClicked" />
+                    <Button Text="Movimientos" Clicked="OnMovimientosClicked" />
+                    <Button Text="Cerrar Sesion" Clicked="OnLogoutClicked" BackgroundColor="Red" />
+                </VerticalStackLayout>
+            </Frame>
+            <Frame x:Name="frmAction" Padding="15" IsVisible="False">
+                <VerticalStackLayout Spacing="10">
+                    <Label x:Name="lblActionTitle" Text="" FontAttributes="Bold" />
+                    <Entry x:Name="txtCampo1" Placeholder="" />
+                    <Entry x:Name="txtCampo2" Placeholder="" />
+                    <Entry x:Name="txtCampo3" Placeholder="" />
+                    <Button x:Name="btnAction" Text="" Clicked="OnActionClicked" />
+                    <Label x:Name="lblActionResult" Text="" />
+                    <Button Text="Volver" Clicked="OnVolverClicked" />
+                </VerticalStackLayout>
+            </Frame>
+            <Frame x:Name="frmList" Padding="15" IsVisible="False">
+                <VerticalStackLayout Spacing="10">
+                    <Label x:Name="lblListTitle" Text="" FontAttributes="Bold" />
+                    <CollectionView x:Name="cvList">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Padding="10" Margin="0,2">
+                                    <Label Text="{Binding DisplayText}" />
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Button Text="Volver" Clicked="OnVolverClicked" />
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

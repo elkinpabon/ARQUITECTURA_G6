@@ -1,0 +1,28 @@
+﻿@page
+@model CLIWEB.Pages.IndexModel
+@{
+    ViewData["Title"] = "EurekaBank";
+}
+<h2>EurekaBank - Bienvenido @Model.User</h2>
+<p>Rol: @(Model.IsAdmin ? "ADMINISTRADOR" : "CLIENTE")</p>
+
+<h3>Operaciones</h3>
+<ul>
+    @if (Model.IsAdmin)
+    {
+        <li><a href="/Depositar">Depositar</a></li>
+    }
+    <li><a href="/Retirar">Retirar</a></li>
+    <li><a href="/ConsultarSaldo">Consultar Saldo</a></li>
+    <li><a href="/Transferir">Transferir</a></li>
+    <li><a href="/Cuentas">@(Model.IsAdmin ? "Listar Cuentas" : "Mis Cuentas")</a></li>
+    @if (Model.IsAdmin)
+    {
+        <li><a href="/Clientes">Listar Clientes</a></li>
+        <li><a href="/RegistrarCliente">Registrar Cliente</a></li>
+        <li><a href="/RegistrarCuenta">Registrar Cuenta</a></li>
+        <li><a href="/EliminarCuenta">Eliminar Cuenta</a></li>
+    }
+    <li><a href="/Movimientos">Movimientos</a></li>
+</ul>
+<a href="/Logout">Cerrar Sesion</a>

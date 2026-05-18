@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Probador del Servicio REST CONUNI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 24px; background:#f5f7fa; }
+        h1 { color:#1f3a5f; }
+        .grupo { background:#fff; border:1px solid #d6dde6; border-radius:6px; padding:14px 18px; margin-bottom:18px; }
+        .grupo h2 { margin-top:0; color:#1f3a5f; font-size:18px; }
+        label { display:inline-block; min-width:90px; }
+        input, select { padding:6px; margin:4px 8px 4px 0; border:1px solid #c3cad6; border-radius:4px; }
+        button { padding:6px 14px; background:#1f3a5f; color:#fff; border:0; border-radius:4px; cursor:pointer; }
+        button:hover { background:#2d4f7a; }
+        .resp { margin-top:8px; padding:8px; background:#eef3f9; border-left:3px solid #1f3a5f; font-family:monospace; }
+    </style>
+</head>
+<body>
+    <h1>Servicio REST CONUNI - Probador</h1>
+    <p>Base: <code>/servidor_restful_java_conuni_gr06/api</code></p>
+
+    <div class="grupo">
+        <h2>Iniciar sesion (POST /sesion)</h2>
+        <label>Usuario:</label> <input id="ses_u" value="MONSTER">
+        <label>Contrasena:</label> <input id="ses_p" type="password" value="MONSTER9">
+        <button onclick="probarSesion()">Probar</button>
+        <div id="ses_r" class="resp"></div>
+    </div>
+
+    <div class="grupo">
+        <h2>Conversion (GET /{categoria}/{operacion}?valor=X)</h2>
+        <label>Categoria:</label>
+        <select id="cat" onchange="actualizarOps()">
+            <option value="longitud">longitud</option>
+            <option value="masa">masa</option>
+            <option value="temperatura">temperatura</option>
+        </select>
+        <label>Operacion:</label>
+        <select id="op"></select>
+        <label>Valor:</label> <input id="val" type="number" step="any" value="1">
+        <button onclick="probarConversion()">Probar</button>
+        <div id="conv_r" class="resp"></div>
+    </div>
+
+    <script>
+        const base = window.location.pathname.split('/').slice(0, 2).join('/') + '/api';
+
+        const operaciones = {
+            longitud: ['metros-a-pies','kilometros-a-millas','centimetros-a-pulgadas','yardas-a-metros','milimetros-a-pulgadas'],
+            masa: ['kilogramos-a-libras','gramos-a-onzas','toneladas-a-kilogramos','libras-a-onzas','miligramos-a-gramos'],
+            temperatura: ['celsius-a-fahrenheit','fahrenheit-a-celsius','celsius-a-kelvin','kelvin-a-celsius','fahrenheit-a-kelvin']
+        };
+
+        function actualizarOps() {
+            const cat = document.getElementById('cat').value;
+            const op = document.getElementById('op');
+            op.innerHTML = '';
+            for (const o of operaciones[cat]) {
+                const e = document.createElement('option');
+                e.value = o; e.textContent = o;
+                op.appendChild(e);
+            }
+        }
+
+        async function probarSesion() {
+            const cuerpo = {
+                usuario: document.getElementById('ses_u').value,
+                contrasena: document.getElementById('ses_p').value
+            };
+            try {
+                const r = await fetch(base + '/sesion', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(cuerpo)
+                });
+                const j = await r.json();
+                document.getElementById('ses_r').textContent = r.status + ' - ' + JSON.stringify(j);
+            } catch (e) {
+                document.getElementById('ses_r').textContent = 'Error: ' + e.message;
+            }
+        }
+
+        async function probarConversion() {
+            const cat = document.getElementById('cat').value;
+            const op = document.getElementById('op').value;
+            const val = document.getElementById('val').value;
+            try {
+                const r = await fetch(`${base}/${cat}/${op}?valor=${encodeURIComponent(val)}`);
+                const j = await r.json();
+                document.getElementById('conv_r').textContent = r.status + ' - ' + JSON.stringify(j);
+            } catch (e) {
+                document.getElementById('conv_r').textContent = 'Error: ' + e.message;
+            }
+        }
+
+        actualizarOps();
+    </script>
+</body>
+</html>

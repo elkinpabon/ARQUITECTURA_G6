@@ -8,14 +8,6 @@
     <build>
         <resources>
             <resource>
-                <targetPath>META-INF</targetPath>
-                <directory>src</directory>
-                <includes>
-                    <include>jax-ws-catalog.xml</include>
-                    <include>wsdl/</include>
-                </includes>
-            </resource>
-            <resource>
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
@@ -116,6 +108,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <exec.mainClass>ec.edu.monster.EUREKABANK_SOAP_JAVA_CLIESC</exec.mainClass>
+        <exec.mainClass>ec.edu.monster.vista.EscritorioApp</exec.mainClass>
     </properties>
 </project>

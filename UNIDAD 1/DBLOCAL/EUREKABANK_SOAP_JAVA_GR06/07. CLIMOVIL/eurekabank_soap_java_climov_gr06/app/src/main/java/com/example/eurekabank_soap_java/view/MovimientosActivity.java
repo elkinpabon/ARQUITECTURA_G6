@@ -1,187 +1,97 @@
 package com.example.eurekabank_soap_java.view;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.Gravity;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.eurekabank_soap_java.R;
-import com.example.eurekabank_soap_java.controller.MovimientoController;
-import com.example.eurekabank_soap_java.models.MovimientoModel;
-import com.example.eurekabank_soap_java.service.MovementService;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.eurekabank_soap_java.controlador.BancoController;
+import com.example.eurekabank_soap_java.modelo.Movimiento;
+import com.example.eurekabank_soap_java.soap.Async;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
+import java.util.Set;
 
+/** Estado de cuenta: ingresos/egresos + botón "ojito" de conversión. */
 public class MovimientosActivity extends AppCompatActivity {
-    private EditText etCuenta;
-    private Button btnBuscar;
-    private FloatingActionButton btnAgregar;
-    private LinearLayout movimientosContainer;
-    private TextView tvNoMovimientos;
-    private MovimientoController movimientoController;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movimientos);
+    private static final Set<String> INGRESOS =
+            new HashSet<>(java.util.Arrays.asList("001", "003", "005", "008"));
+    private final BancoController ctrl = new BancoController();
+    private LinearLayout cont;
 
-        // Initialize views
-        etCuenta = findViewById(R.id.etCuenta);
-        btnBuscar = findViewById(R.id.btnBuscar);
-        btnAgregar = findViewById(R.id.btnAgregar);
-        movimientosContainer = findViewById(R.id.movimientosContainer);
+    @Override protected void onCreate(Bundle b) {
+        super.onCreate(b);
+        final String cuenta = getIntent().getStringExtra("cuenta");
 
-        // Add a no movements view
-        tvNoMovimientos = new TextView(this);
-        tvNoMovimientos.setText("No se encontraron movimientos para esta cuenta");
-        tvNoMovimientos.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        tvNoMovimientos.setTextSize(16);
-        tvNoMovimientos.setPadding(0, 32, 0, 32);
-        tvNoMovimientos.setVisibility(View.GONE);
+        ScrollView sv = new ScrollView(this);
+        cont = new LinearLayout(this);
+        cont.setOrientation(LinearLayout.VERTICAL);
+        cont.setPadding(40, 60, 40, 40);
+        sv.addView(cont);
+        setContentView(sv);
 
-        // Add the no movements view to the container
-        movimientosContainer.addView(tvNoMovimientos);
+        TextView t = new TextView(this);
+        t.setText("Estado de cuenta " + cuenta);
+        t.setTextSize(20);
+        cont.addView(t);
 
-        // Initialize controller
-        movimientoController = new MovimientoController(new MovementService());
-
-        // Set up search button click listener
-        btnBuscar.setOnClickListener(v -> buscarMovimientos());
-
-        btnAgregar.setOnClickListener(v -> {
-            startActivity(new Intent(MovimientosActivity.this, CuentaActivity.class));
-            finish();
-        });
+        Async.run(() -> ctrl.movimientos(cuenta),
+            this::pintar,
+            e -> Toast.makeText(this, "Error: " + e.getMessage(),
+                    Toast.LENGTH_LONG).show());
     }
 
-    private void buscarMovimientos() {
-        String numeroCuenta = etCuenta.getText().toString().trim();
-
-        if (numeroCuenta.isEmpty()) {
-            Toast.makeText(this, "Por favor ingrese un número de cuenta",
-                    Toast.LENGTH_SHORT).show();
+    private void pintar(List<Movimiento> ms) {
+        if (ms == null || ms.isEmpty()) {
+            TextView v = new TextView(this);
+            v.setText("Sin movimientos o sin acceso.");
+            cont.addView(v);
             return;
         }
-
-        // Clear previous results
-        movimientosContainer.removeAllViews();
-        // Re-add the no movements view
-        movimientosContainer.addView(tvNoMovimientos);
-        // Hide the no movements view initially
-        tvNoMovimientos.setVisibility(View.GONE);
-
-        movimientoController.obtenerMovimientos(numeroCuenta, new MovimientoController.MovimientoCallback() {
-            @Override
-            public void onMovimientosSuccess(List<MovimientoModel> movimientos) {
-                runOnUiThread(() -> {
-                    // Clear previous views
-                    movimientosContainer.removeAllViews();
-
-                    if (movimientos == null || movimientos.isEmpty()) {
-                        // Show no movements view
-                        tvNoMovimientos.setVisibility(View.VISIBLE);
-                        movimientosContainer.addView(tvNoMovimientos);
-                        return;
-                    }
-
-                    // Populate movimientos
-                    for (MovimientoModel movimiento : movimientos) {
-                        View movimientoView = LayoutInflater.from(MovimientosActivity.this)
-                                .inflate(R.layout.item_movimiento, movimientosContainer, false);
-
-                        // Bind data to views (same as before)
-                        TextView tvCuenta = movimientoView.findViewById(R.id.tvCuenta);
-                        TextView tvFecha = movimientoView.findViewById(R.id.tvFecha);
-                        TextView tvTipo = movimientoView.findViewById(R.id.tvTipo);
-                        TextView tvAccion = movimientoView.findViewById(R.id.tvAccion);
-                        TextView tvImporte = movimientoView.findViewById(R.id.tvImporte);
-                        TextView tvNumMov = movimientoView.findViewById(R.id.tvNumMovimiento);
-
-                        // Set account number
-                        tvCuenta.setText(String.format("Cuenta: %s",
-                                movimiento.getCodigoCuenta()));
-
-                        // More robust date parsing
-                        try {
-                            // Try multiple date formats
-                            SimpleDateFormat[] possibleFormats = {
-                                    new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()),
-                                    new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()),
-                                    new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
-                            };
-
-                            Date parsedDate = null;
-                            for (SimpleDateFormat format : possibleFormats) {
-                                try {
-                                    parsedDate = format.parse(movimiento.getFechaMovimiento());
-                                    if (parsedDate != null) {
-                                        break;
-                                    }
-                                } catch (Exception ignored) {}
-                            }
-
-                            if (parsedDate != null) {
-                                SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                                String formattedDate = outputFormat.format(parsedDate);
-                                tvFecha.setText(String.format("Fecha: %s", formattedDate));
-                            } else {
-                                // If no parsing works, use the original date
-                                tvFecha.setText(String.format("Fecha: %s", movimiento.getFechaMovimiento()));
-                            }
-                        } catch (Exception e) {
-                            // Fallback to original date if parsing fails
-                            tvFecha.setText(String.format("Fecha: %s", movimiento.getFechaMovimiento()));
-                        }
-
-                        tvNumMov.setText(String.format("Movimiento: %s",
-                                movimiento.getNumeroMovimiento()));
-
-                        // Set transaction type (you might want to map these codes)
-                        tvTipo.setText(String.format("Tipo: %s",
-                                movimiento.getDescTipoMovimiento()));
-
-                        // Determine action (credit/debit) - you might want to customize this logic
-                        String accion = movimiento.getImporteMovimiento() >= 0 ? "Crédito" : "Débito";
-                        tvAccion.setText(String.format("Acción: %s", accion));
-
-                        // Format amount
-                        tvImporte.setText(String.format(Locale.getDefault(),
-                                "Importe: $%.2f",
-                                Math.abs(movimiento.getImporteMovimiento())));
-
-                        // Add to container
-                        movimientosContainer.addView(movimientoView);
-                    }
+        double tin = 0, tout = 0;
+        for (final Movimiento m : ms) {
+            boolean in = INGRESOS.contains(m.getTipoCodigo());
+            if (in) tin += m.getImporte(); else tout += m.getImporte();
+            TextView v = new TextView(this);
+            v.setPadding(0, 16, 0, 4);
+            v.setText("#" + m.getNumero() + "  " + m.getFecha() + "\n"
+                    + m.getTipoDescripcion() + "\n"
+                    + (in ? "INGRESO +" : "EGRESO -")
+                    + String.format("%,.2f", m.getImporte())
+                    + (m.getCuentaReferencia() == null ? ""
+                       : "   Ref: " + m.getCuentaReferencia()));
+            cont.addView(v);
+            if (m.tieneConversion()) {
+                Button ojo = new Button(this);
+                ojo.setText("👁 Ver conversión");
+                ojo.setOnClickListener(x -> {
+                    double io = m.getImporteOrigen() == null ? 0 : m.getImporteOrigen();
+                    String mo = "02".equals(m.getMonedaOrigen()) ? "Dólares" : "Soles";
+                    Toast.makeText(this,
+                        String.format("%,.2f %s  ×  tasa %s  =  %,.2f (moneda de la cuenta)",
+                            io, mo, String.valueOf(m.getTasaAplicada()), m.getImporte()),
+                        Toast.LENGTH_LONG).show();
                 });
+                cont.addView(ojo);
             }
+        }
+        TextView tot = new TextView(this);
+        tot.setGravity(Gravity.END);
+        tot.setPadding(0, 24, 0, 0);
+        tot.setText(String.format("TOTALES  Ingresos %,.2f   Egresos %,.2f   Neto %,.2f",
+                tin, tout, tin - tout));
+        cont.addView(tot);
 
-            @Override
-            public void onMovimientosError(String errorMessage) {
-                runOnUiThread(() -> {
-                    // Clear previous views
-                    movimientosContainer.removeAllViews();
-
-                    // Show no movements view with error message
-                    tvNoMovimientos.setText("Error al obtener movimientos: " + errorMessage);
-                    tvNoMovimientos.setVisibility(View.VISIBLE);
-                    movimientosContainer.addView(tvNoMovimientos);
-
-                    Toast.makeText(MovimientosActivity.this,
-                            "Error al obtener movimientos: " + errorMessage,
-                            Toast.LENGTH_LONG).show();
-                });
-            }
-        });
+        Button volver = new Button(this);
+        volver.setText("Volver");
+        volver.setOnClickListener(x -> finish());
+        cont.addView(volver);
     }
 }

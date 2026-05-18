@@ -6,72 +6,51 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.eurekabank_soap_java.R;
-import com.example.eurekabank_soap_java.controller.LoginController;
-import com.example.eurekabank_soap_java.service.AuthService;
+import com.example.eurekabank_soap_java.controlador.BancoController;
+import com.example.eurekabank_soap_java.soap.Async;
 
+/** Vista de login (usa el layout activity_login existente). */
 public class LoginActivity extends AppCompatActivity {
-    private LoginController loginController;
-    private EditText usernameInput;
-    private EditText passwordInput;
-    private Button loginButton;
+
+    private final BancoController ctrl = new BancoController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        loginController = new LoginController(new AuthService());
+        final EditText user = findViewById(R.id.etUsername);
+        final EditText pass = findViewById(R.id.etPassword);
+        final Button btn = findViewById(R.id.btnLogin);
 
-        usernameInput = findViewById(R.id.etUsername);
-        passwordInput = findViewById(R.id.etPassword);
-        loginButton = findViewById(R.id.btnLogin);
-
-        loginButton.setOnClickListener(v -> attemptLogin());
-    }
-
-    private void attemptLogin(){
-        String username = usernameInput.getText().toString().trim();
-        String password = passwordInput.getText().toString().trim();
-
-        if (username.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Por favor ingrese usuario y contraseña",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Continuar con la autenticación
-        loginController.attemptLogin(username, password, new LoginController.LoginCallback() {
-            @Override
-            public void onLoginSuccess(boolean isAuthenticated) {
-                runOnUiThread(() -> {
-                    if (isAuthenticated) {
-                        startActivity(new Intent(LoginActivity.this, MovimientosActivity.class));
+        btn.setOnClickListener(v -> {
+            final String u = user.getText().toString().trim();
+            final String p = pass.getText().toString().trim();
+            if (u.isEmpty() || p.isEmpty()) {
+                Toast.makeText(this, "Ingrese usuario y clave",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            btn.setEnabled(false);
+            Async.run(() -> ctrl.login(u, p),
+                ok -> {
+                    btn.setEnabled(true);
+                    if (ok) {
+                        startActivity(new Intent(this, CuentaActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(LoginActivity.this,
-                                "Usuario o Contraseña Incorrecto",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Usuario o clave inválidos.",
+                                Toast.LENGTH_LONG).show();
                     }
-                });
-            }
-
-            @Override
-            public void onLoginError(String errorMessage) {
-                runOnUiThread(() -> {
-                    Toast.makeText(LoginActivity.this,
-                            "Error de conexión: " + errorMessage,
+                },
+                e -> {
+                    btn.setEnabled(true);
+                    Toast.makeText(this, "Error de conexión: " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 });
-            }
         });
-
     }
-
 }

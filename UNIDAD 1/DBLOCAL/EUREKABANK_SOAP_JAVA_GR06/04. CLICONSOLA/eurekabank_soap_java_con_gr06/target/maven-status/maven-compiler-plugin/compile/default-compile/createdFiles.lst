@@ -14,6 +14,7 @@ ec/edu/monster/ws/WSCuenta_Service.class
 ec/edu/monster/ws/IniciarSesion.class
 ec/edu/monster/ws/RegistrarClienteResponse.class
 ec/edu/monster/servicio/LoginClient.class
+ec/edu/monster/util/ExportHtml.class
 ec/edu/monster/ws/ListarCuentasPorCliente.class
 ec/edu/monster/ws/ListarMovimientos.class
 ec/edu/monster/ws/ListarClientes.class

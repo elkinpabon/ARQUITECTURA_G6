@@ -186,17 +186,19 @@ public class ConsolaApp {
             System.out.println(">> Sin movimientos o sin acceso.");
             return;
         }
-        System.out.println("\n--- Estado de cuenta " + cuenta + " ---");
-        System.out.printf("%-4s %-12s %-22s %12s %12s%n",
-                "#", "Fecha", "Tipo", "Ingreso", "Egreso");
+        System.out.println("\n--- Estado de cuenta " + cuenta
+                + " (ordenado por fecha, descendente) ---");
+        System.out.printf("%-4s %-12s %-20s %-8s %12s %12s%n",
+                "#", "Fecha", "Tipo", "Mov.", "Crédito", "Débito");
         double tin = 0, tout = 0;
         for (MovimientoModel m : ms) {
             boolean in = INGRESOS.contains(m.getCodigoTipoMovimiento());
             double imp = m.getImporteMovimiento();
             if (in) tin += imp; else tout += imp;
-            System.out.printf("%-4d %-12s %-22s %12s %12s%n",
+            System.out.printf("%-4d %-12s %-20s %-8s %12s %12s%n",
                     m.getNumeroMovimiento(), m.getFechaMovimiento(),
                     m.getTipoDescripcion(),
+                    in ? "CRÉDITO" : "DÉBITO",
                     in ? String.format("%,.2f", imp) : "",
                     in ? "" : String.format("%,.2f", imp));
             if (m.getMonedaOrigen() != null && !m.getMonedaOrigen().isBlank()) {
@@ -206,8 +208,29 @@ public class ConsolaApp {
                         m.getTasaAplicada(), imp);
             }
         }
-        System.out.printf("TOTALES  Ingresos: %,.2f   Egresos: %,.2f   Neto: %,.2f%n",
+        System.out.printf("TOTALES  Créditos: %,.2f   Débitos: %,.2f   Neto: %,.2f%n",
                 tin, tout, tin - tout);
+
+        if ("S".equalsIgnoreCase(pedir(
+                "¿Exportar estado de cuenta a HTML (imprimible a PDF)? (S/N)"))) {
+            String titular = "-", moneda = "-";
+            for (ec.edu.monster.ws.CuentaResumen c : ctrl.getCuentas()) {
+                if (cuenta.equals(c.getCodigoCuenta())) {
+                    titular = c.getNombreCliente();
+                    moneda = c.getMoneda();
+                    break;
+                }
+            }
+            try {
+                String ruta = ec.edu.monster.util.ExportHtml
+                        .estadoCuenta(cuenta, titular, moneda, ms);
+                System.out.println(">> Exportado: " + ruta);
+                System.out.println(">> Ábrelo en el navegador y usa "
+                        + "'Imprimir > Guardar como PDF'.");
+            } catch (Exception e) {
+                System.out.println(">> Error exportando: " + e.getMessage());
+            }
+        }
     }
 
     /* ---------- admin ---------- */

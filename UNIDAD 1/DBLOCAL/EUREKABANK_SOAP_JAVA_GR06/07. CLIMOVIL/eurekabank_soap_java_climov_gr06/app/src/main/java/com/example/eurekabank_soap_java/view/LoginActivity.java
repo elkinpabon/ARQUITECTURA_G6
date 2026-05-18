@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Diferenciar este cliente: Banca SOAP · Java · Móvil
+        TextView tvWelcome = findViewById(R.id.tvWelcome);
+        if (tvWelcome != null) {
+            tvWelcome.setText("EUREKABANK GR06\n"
+                    + "Banca SOAP · Cliente Móvil (Java)");
+        }
 
         final EditText user = findViewById(R.id.etUsername);
         final EditText pass = findViewById(R.id.etPassword);

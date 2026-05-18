@@ -83,9 +83,9 @@
             <div class="summary">
                 <div class="pill"><div class="k">Movimientos</div>
                     <div class="v"><%= movs.size() %></div></div>
-                <div class="pill"><div class="k">Total ingresos</div>
+                <div class="pill"><div class="k">Total créditos</div>
                     <div class="v in">+ <%= String.format("%,.2f", totIn) %></div></div>
-                <div class="pill"><div class="k">Total egresos</div>
+                <div class="pill"><div class="k">Total débitos</div>
                     <div class="v out">- <%= String.format("%,.2f", totOut) %></div></div>
                 <div class="pill"><div class="k">Neto</div>
                     <div class="v"><%= String.format("%,.2f", totIn - totOut) %></div></div>
@@ -95,8 +95,9 @@
             <table>
                 <tr>
                     <th>#</th><th>Fecha</th><th>Cuenta</th><th>Tipo</th>
-                    <th style="text-align:right;">Ingreso</th>
-                    <th style="text-align:right;">Egreso</th>
+                    <th>Mov.</th>
+                    <th style="text-align:right;">Crédito</th>
+                    <th style="text-align:right;">Débito</th>
                     <th>Cta. Ref.</th>
                     <th class="no-print">Detalle</th>
                 </tr>
@@ -112,6 +113,7 @@
                         <td><%= m.getFechaMovimiento() %></td>
                         <td><%= cuentaSel %></td>
                         <td><span class="tag <%= in ? "in" : "out" %>"><%= m.getTipoDescripcion() %></span></td>
+                        <td><strong style="color:<%= in ? "#16a34a" : "#dc2626" %>;"><%= in ? "CRÉDITO" : "DÉBITO" %></strong></td>
                         <td style="text-align:right;color:#4ade80;font-weight:700;">
                             <%= in ? "+ " + imp : "" %></td>
                         <td style="text-align:right;color:#f87171;font-weight:700;">
@@ -129,7 +131,7 @@
                            double io = m.getImporteOrigen() == null ? 0 : m.getImporteOrigen();
                            double tx = m.getTasaAplicada() == null ? 0 : m.getTasaAplicada(); %>
                         <tr id="cv<%= idx %>" class="conv-detail hide">
-                            <td colspan="8">
+                            <td colspan="9">
                                 <strong>Conversión de moneda</strong> &nbsp;·&nbsp;
                                 Monto original: <strong><%= String.format("%,.2f", io) %>
                                 <%= Moneda.nombre(m.getMonedaOrigen()) %></strong>
@@ -142,7 +144,7 @@
                     <% } %>
                 <% } %>
                 <tr style="border-top:2px solid #334155;font-weight:800;">
-                    <td colspan="4">TOTALES</td>
+                    <td colspan="5">TOTALES</td>
                     <td style="text-align:right;color:#4ade80;">+ <%= String.format("%,.2f", totIn) %></td>
                     <td style="text-align:right;color:#f87171;">- <%= String.format("%,.2f", totOut) %></td>
                     <td></td><td class="no-print"></td>

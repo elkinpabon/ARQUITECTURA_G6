@@ -219,7 +219,7 @@ public class MainPanel extends JPanel {
         try {
             List<MovimientoModel> ms = ctrl.movimientos(cuentaSel());
             DefaultTableModel mm = new DefaultTableModel(new Object[]{
-                    "#", "Fecha", "Tipo", "Ingreso", "Egreso",
+                    "#", "Fecha", "Tipo", "Mov.", "Crédito", "Débito",
                     "Cta.Ref.", "Conversión"}, 0);
             double tin = 0, tout = 0;
             for (MovimientoModel m : ms) {
@@ -235,19 +235,45 @@ public class MainPanel extends JPanel {
                 }
                 mm.addRow(new Object[]{m.getNumeroMovimiento(),
                         m.getFechaMovimiento(), m.getTipoDescripcion(),
+                        in ? "CRÉDITO" : "DÉBITO",
                         in ? String.format("%,.2f", imp) : "",
                         in ? "" : String.format("%,.2f", imp),
                         m.getCuentaReferencia() == null ? "-" : m.getCuentaReferencia(),
                         conv});
             }
-            JTable t = new JTable(mm);
+            final JTable t = new JTable(mm);
             JScrollPane sp = new JScrollPane(t);
-            sp.setPreferredSize(new java.awt.Dimension(760, 360));
-            JOptionPane.showMessageDialog(this, sp,
-                    "Movimientos " + cuentaSel()
-                    + "  |  Ingresos " + String.format("%,.2f", tin)
-                    + "  Egresos " + String.format("%,.2f", tout),
-                    JOptionPane.PLAIN_MESSAGE);
+            sp.setPreferredSize(new java.awt.Dimension(820, 360));
+
+            final String cta = cuentaSel();
+            final java.text.MessageFormat header = new java.text.MessageFormat(
+                    "EUREKABANK GR06 - Estado de cuenta " + cta);
+            final java.text.MessageFormat footer = new java.text.MessageFormat(
+                    "Pagina {0}  -  Ingresos " + String.format("%,.2f", tin)
+                    + "  Egresos " + String.format("%,.2f", tout));
+
+            javax.swing.JDialog dlg = new javax.swing.JDialog(
+                    (java.awt.Frame) null, "Movimientos " + cta, true);
+            dlg.setLayout(new BorderLayout(8, 8));
+            dlg.add(sp, BorderLayout.CENTER);
+            JPanel acc = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+            JButton btnPdf = new JButton("Imprimir / Guardar PDF");
+            JButton btnClose = new JButton("Cerrar");
+            acc.add(btnPdf);
+            acc.add(btnClose);
+            dlg.add(acc, BorderLayout.SOUTH);
+            btnPdf.addActionListener(ev -> {
+                try {
+                    // Diálogo de impresión del SO: elegir "Guardar como PDF".
+                    t.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+                } catch (java.awt.print.PrinterException pe) {
+                    error("No se pudo imprimir/exportar: " + pe.getMessage());
+                }
+            });
+            btnClose.addActionListener(ev -> dlg.dispose());
+            dlg.pack();
+            dlg.setLocationRelativeTo(this);
+            dlg.setVisible(true);
         } catch (Exception e) { error(e.getMessage()); }
     }
 

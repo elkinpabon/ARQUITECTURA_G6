@@ -38,6 +38,15 @@ con conversión de moneda** (Dólares preferente), movimientos con ingresos/egre
 y **ojito de conversión**, y para admin: registrar cliente, registrar cuenta,
 eliminar cuenta.
 
+## Interfaz
+
+UI por código con tema oscuro tipo banca (navy `#0F172A`, tarjetas `#1E293B`,
+acento `#38BDF8`), logo `logo_login`, tarjetas redondeadas y botones con
+`button_background`. El **admin elige el cliente desde un Spinner** poblado con
+`listarClientes()` (igual que el combo del cliente web); el cliente normal ve
+directo sus cuentas. Movimientos con tarjetas verde/rojo y botón 👁 que
+despliega el detalle de conversión.
+
 ## Notas técnicas
 
 - Las llamadas SOAP se ejecutan fuera del hilo de UI (`soap.Async`).

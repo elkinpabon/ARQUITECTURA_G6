@@ -24,7 +24,7 @@ public class MovimientoDAO {
                    + "FROM movimiento m "
                    + "INNER JOIN tipomovimiento t ON t.chr_tipocodigo = m.chr_tipocodigo "
                    + "WHERE m.chr_cuencodigo = ? "
-                   + "ORDER BY m.int_movinumero DESC";
+                   + "ORDER BY m.dtt_movifecha DESC, m.int_movinumero DESC";
         List<MovimientoModel> lista = new ArrayList<>();
         Connection cn = null;
         PreparedStatement ps = null;

@@ -1,5 +1,6 @@
 ec/edu/monster/ws/ClienteResumen.class
 ec/edu/monster/ws/ListarMovimientosResponse.class
+ec/edu/monster/vista/WrapLayout.class
 ec/edu/monster/config/ServidorConfig.class
 ec/edu/monster/ws/Resultado.class
 ec/edu/monster/ws/Retirar.class

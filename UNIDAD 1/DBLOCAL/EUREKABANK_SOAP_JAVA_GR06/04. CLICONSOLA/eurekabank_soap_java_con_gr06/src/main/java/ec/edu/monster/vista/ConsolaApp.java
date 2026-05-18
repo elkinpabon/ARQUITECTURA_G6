@@ -246,17 +246,53 @@ public class ConsolaApp {
 
     private static void registrarCuenta() {
         System.out.println("\n--- Registrar cuenta ---");
-        String cli = pedir("Código de cliente");
+        List<CuentaResumen> ct = ctrl.getCuentas();
+        String sugerido = (ct != null && !ct.isEmpty())
+                ? ct.get(0).getCodigoCliente() : null;
+        if (sugerido != null) {
+            System.out.println("Cliente cargado: " + sugerido + " — "
+                    + ct.get(0).getNombreCliente());
+        }
+        String cli = pedir("Código de cliente"
+                + (sugerido != null ? " [Enter = " + sugerido + "]" : ""));
+        if (cli.isEmpty() && sugerido != null) cli = sugerido;
         System.out.println("Moneda: 1) Dólares  2) Soles");
         String mon = "2".equals(pedir("Opción [1]")) ? "01" : "02";
-        msg(ctrl.registrarCuenta(cli, mon));
+        Resultado r = ctrl.registrarCuenta(cli, mon);
+        msg(r);
+        if (r.isExito() && cli.equals(sugerido)) ctrl.cargarCuentas(cli);
     }
 
     private static void eliminarCuenta() {
         System.out.println("\n--- Eliminar cuenta ---");
-        String cta = pedir("Código de cuenta a eliminar");
-        if ("S".equalsIgnoreCase(pedir("¿Confirmar borrado y sus movimientos? (S/N)"))) {
-            msg(ctrl.eliminarCuenta(cta));
+        List<CuentaResumen> ct = ctrl.getCuentas();
+        String cta;
+        if (ct != null && !ct.isEmpty()) {
+            System.out.println("Cuentas de " + ct.get(0).getNombreCliente() + ":");
+            for (int i = 0; i < ct.size(); i++) {
+                CuentaResumen c = ct.get(i);
+                System.out.printf("  %d) %s  %,.2f %s  %s%n", i + 1,
+                        c.getCodigoCuenta(), c.getSaldo(),
+                        Moneda.nombre(c.getMoneda()), c.getEstado());
+            }
+            String sel = pedir("Número de la cuenta a eliminar (o código)");
+            try {
+                int idx = Integer.parseInt(sel);
+                cta = (idx >= 1 && idx <= ct.size())
+                        ? ct.get(idx - 1).getCodigoCuenta() : sel;
+            } catch (NumberFormatException e) {
+                cta = sel;
+            }
+        } else {
+            cta = pedir("Código de cuenta a eliminar");
+        }
+        if ("S".equalsIgnoreCase(pedir("¿Confirmar borrado de " + cta
+                + " y sus movimientos? (S/N)"))) {
+            Resultado r = ctrl.eliminarCuenta(cta);
+            msg(r);
+            String cli = (ct != null && !ct.isEmpty())
+                    ? ct.get(0).getCodigoCliente() : null;
+            if (r.isExito() && cli != null) ctrl.cargarCuentas(cli);
         } else {
             System.out.println(">> Cancelado.");
         }

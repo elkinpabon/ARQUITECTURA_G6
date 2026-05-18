@@ -1,13 +1,12 @@
 package ec.edu.monster.cliweb.servicio;
 
 import ec.edu.monster.cliweb.ws.WSLogin;
-import ec.edu.monster.cliweb.ws.WSLogin_Service;
 
-/** Wrapper del WSLogin (stubs generados por wsimport). */
+/** Wrapper del WSLogin. Endpoint configurable vía WsFactory/ServidorConfig. */
 public class LoginClient {
 
     private WSLogin port() {
-        return new WSLogin_Service().getWSLoginPort();
+        return WsFactory.login();
     }
 
     public boolean iniciarSesion(String usuario, String clave) {

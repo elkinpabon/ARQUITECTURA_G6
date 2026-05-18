@@ -44,7 +44,7 @@ public class MainPanel extends JPanel {
         oeste.add(Img.label("/images/moster.png", 40));
         oeste.add(lblInfo);
         north.add(oeste, BorderLayout.WEST);
-        JPanel northBtns = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel northBtns = new JPanel(new WrapLayout(FlowLayout.RIGHT));
         JButton btnRefrescar = new JButton("Actualizar saldos");
         JButton btnSalir = new JButton("Cerrar sesión");
         northBtns.add(btnRefrescar);
@@ -55,7 +55,7 @@ public class MainPanel extends JPanel {
         // ---- Centro: (admin) buscar cliente + tabla cuentas ----
         JPanel center = new JPanel(new BorderLayout(6, 6));
         if (admin) {
-            JPanel buscar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            JPanel buscar = new JPanel(new WrapLayout(FlowLayout.LEFT));
             buscar.add(new JLabel("Cliente:"));
             buscar.add(cboClientes);
             JButton btnVer = new JButton("Ver cuentas");
@@ -87,7 +87,7 @@ public class MainPanel extends JPanel {
 
         // ---- Sur: operar ----
         JPanel sur = new JPanel(new GridLayout(0, 1, 4, 4));
-        JPanel fila1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel fila1 = new JPanel(new WrapLayout(FlowLayout.LEFT));
         fila1.add(new JLabel("Cuenta:"));
         fila1.add(cboCuenta);
         fila1.add(new JLabel("Monto:"));
@@ -96,7 +96,7 @@ public class MainPanel extends JPanel {
         fila1.add(cboMoneda);
         sur.add(fila1);
 
-        JPanel fila2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel fila2 = new JPanel(new WrapLayout(FlowLayout.LEFT));
         JButton btnSaldo = new JButton("Consultar saldo");
         JButton btnDep = new JButton("Depositar");
         JButton btnRet = new JButton("Retirar");
@@ -306,31 +306,49 @@ public class MainPanel extends JPanel {
     }
 
     private void dialogoRegistrarCuenta() {
-        JTextField cli = new JTextField();
+        JTextField cli = new JTextField(clienteActual() == null
+                ? "" : clienteActual());
         JComboBox<String> mon = new JComboBox<>(new String[]{"Dólares", "Soles"});
         JPanel p = new JPanel(new GridLayout(0, 2, 4, 4));
         p.add(new JLabel("Código cliente")); p.add(cli);
         p.add(new JLabel("Moneda")); p.add(mon);
-        if (JOptionPane.showConfirmDialog(this, p, "Registrar cuenta",
+        if (JOptionPane.showConfirmDialog(this, p,
+                "Registrar cuenta (cliente cargado prefijado)",
                 JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
             try {
-                Resultado r = ctrl.registrarCuenta(cli.getText().trim(),
-                        mon.getSelectedIndex() == 1 ? "01" : "02");
-                JOptionPane.showMessageDialog(this, r.getMensaje());
+                result(ctrl.registrarCuenta(cli.getText().trim(),
+                        mon.getSelectedIndex() == 1 ? "01" : "02"));
             } catch (Exception e) { error(e.getMessage()); }
         }
     }
 
     private void dialogoEliminarCuenta() {
-        String cta = JOptionPane.showInputDialog(this,
-                "Código de cuenta a eliminar (se borran sus movimientos):");
-        if (cta == null || cta.isBlank()) return;
+        java.util.List<CuentaResumen> ct = ctrl.getCuentas();
+        String cta;
+        if (ct != null && !ct.isEmpty()) {
+            String[] items = new String[ct.size()];
+            for (int i = 0; i < ct.size(); i++) {
+                CuentaResumen c = ct.get(i);
+                items[i] = c.getCodigoCuenta() + "  ·  "
+                        + String.format("%,.2f", c.getSaldo()) + " "
+                        + Moneda.nombre(c.getMoneda()) + "  ·  " + c.getEstado();
+            }
+            JComboBox<String> cbo = new JComboBox<>(items);
+            int op = JOptionPane.showConfirmDialog(this, cbo,
+                    "Eliminar cuenta de " + ct.get(0).getNombreCliente(),
+                    JOptionPane.OK_CANCEL_OPTION);
+            if (op != JOptionPane.OK_OPTION || cbo.getSelectedIndex() < 0) return;
+            cta = ct.get(cbo.getSelectedIndex()).getCodigoCuenta();
+        } else {
+            cta = JOptionPane.showInputDialog(this,
+                    "Código de cuenta a eliminar (se borran sus movimientos):");
+            if (cta == null || cta.isBlank()) return;
+        }
         if (JOptionPane.showConfirmDialog(this,
-                "¿Eliminar la cuenta " + cta + " definitivamente?", "Confirmar",
+                "¿Eliminar la cuenta " + cta + " y sus movimientos?", "Confirmar",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try {
-                JOptionPane.showMessageDialog(this,
-                        ctrl.eliminarCuenta(cta.trim()).getMensaje());
+                result(ctrl.eliminarCuenta(cta.trim()));
             } catch (Exception e) { error(e.getMessage()); }
         }
     }

@@ -1,5 +1,6 @@
 using CLICONSOLA.Controlador;
 using CLICONSOLA.Util;
+using System.Globalization;
 
 namespace CLICONSOLA.Vista
 {
@@ -31,11 +32,20 @@ namespace CLICONSOLA.Vista
             Console.WriteLine("        EUREKA BANK - LOGIN");
             Console.WriteLine("========================================");
             Console.WriteLine();
+            Console.WriteLine("Escriba 0 en Usuario para salir.");
             Console.Write("Usuario: ");
             string usuario = Console.ReadLine() ?? string.Empty;
 
+            if (usuario == "0")
+            {
+                Environment.Exit(0);
+            }
+
             if (string.IsNullOrWhiteSpace(usuario))
+            {
+                MostrarError("El usuario no puede estar vacio.");
                 return;
+            }
 
             Console.Write("Clave: ");
             string clave = LeerClave();
@@ -81,13 +91,64 @@ namespace CLICONSOLA.Vista
                         Console.Write("\b \b");
                     }
                 }
-                else
+                else if (!char.IsControl(key.KeyChar))
                 {
                     clave += key.KeyChar;
                     Console.Write("*");
                 }
             }
             return clave;
+        }
+
+        private static string LeerTextoObligatorio(string etiqueta)
+        {
+            while (true)
+            {
+                Console.Write($"{etiqueta}: ");
+                string valor = Console.ReadLine()?.Trim() ?? string.Empty;
+                if (!string.IsNullOrWhiteSpace(valor))
+                {
+                    return valor;
+                }
+
+                MostrarError($"{etiqueta} no puede estar vacio.");
+            }
+        }
+
+        private static string LeerOpcion(string etiqueta, params string[] permitidas)
+        {
+            while (true)
+            {
+                Console.Write($"{etiqueta}: ");
+                string valor = Console.ReadLine()?.Trim() ?? string.Empty;
+                if (Array.Exists(permitidas, x => x == valor))
+                {
+                    return valor;
+                }
+
+                MostrarError($"Opcion invalida. Usa: {string.Join(", ", permitidas)}");
+            }
+        }
+
+        private static decimal LeerDecimalPositivo(string etiqueta)
+        {
+            while (true)
+            {
+                Console.Write($"{etiqueta}: ");
+                string texto = Console.ReadLine()?.Trim() ?? string.Empty;
+                if (decimal.TryParse(texto.Replace(',', '.'), NumberStyles.Number, CultureInfo.InvariantCulture, out decimal valor) && valor > 0)
+                {
+                    return valor;
+                }
+
+                MostrarError("Ingresa un numero valido mayor que cero.");
+            }
+        }
+
+        private static string LeerMoneda()
+        {
+            Console.WriteLine("Moneda del monto: 1) Dolares  2) Soles");
+            return LeerOpcion("Opcion [1]", "1", "2") == "2" ? "01" : "02";
         }
 
         private static void MostrarMenuPrincipal()
@@ -214,14 +275,11 @@ namespace CLICONSOLA.Vista
             Console.WriteLine("========================================");
             Console.WriteLine("        DEPOSITAR");
             Console.WriteLine("========================================");
-            Console.Write("Cuenta: ");
-            string cuenta = Console.ReadLine() ?? string.Empty;
-            Console.Write("Monto: ");
-            string monto = Console.ReadLine() ?? string.Empty;
-            Console.Write("Moneda (01=Soles, 02=Dolares): ");
-            string moneda = Console.ReadLine() ?? string.Empty;
+            string cuenta = LeerTextoObligatorio("Cuenta");
+            decimal monto = LeerDecimalPositivo("Monto");
+            string moneda = LeerMoneda();
 
-            var resultado = _controller.Depositar(cuenta, monto, moneda);
+            var resultado = _controller.Depositar(cuenta, monto.ToString(CultureInfo.InvariantCulture), moneda);
             MostrarResultado(resultado);
         }
 
@@ -231,14 +289,11 @@ namespace CLICONSOLA.Vista
             Console.WriteLine("========================================");
             Console.WriteLine("        RETIRAR");
             Console.WriteLine("========================================");
-            Console.Write("Cuenta: ");
-            string cuenta = Console.ReadLine() ?? string.Empty;
-            Console.Write("Monto: ");
-            string monto = Console.ReadLine() ?? string.Empty;
-            Console.Write("Moneda (01=Soles, 02=Dolares): ");
-            string moneda = Console.ReadLine() ?? string.Empty;
+            string cuenta = LeerTextoObligatorio("Cuenta");
+            decimal monto = LeerDecimalPositivo("Monto");
+            string moneda = LeerMoneda();
 
-            var resultado = _controller.Retirar(cuenta, monto, moneda);
+            var resultado = _controller.Retirar(cuenta, monto.ToString(CultureInfo.InvariantCulture), moneda);
             MostrarResultado(resultado);
         }
 
@@ -248,8 +303,7 @@ namespace CLICONSOLA.Vista
             Console.WriteLine("========================================");
             Console.WriteLine("        CONSULTAR SALDO");
             Console.WriteLine("========================================");
-            Console.Write("Cuenta: ");
-            string cuenta = Console.ReadLine() ?? string.Empty;
+            string cuenta = LeerTextoObligatorio("Cuenta");
 
             var resultado = _controller.ConsultarSaldo(cuenta);
             MostrarResultado(resultado);
@@ -261,16 +315,18 @@ namespace CLICONSOLA.Vista
             Console.WriteLine("========================================");
             Console.WriteLine("        TRANSFERIR");
             Console.WriteLine("========================================");
-            Console.Write("Cuenta origen: ");
-            string origen = Console.ReadLine() ?? string.Empty;
-            Console.Write("Cuenta destino: ");
-            string destino = Console.ReadLine() ?? string.Empty;
-            Console.Write("Monto: ");
-            string monto = Console.ReadLine() ?? string.Empty;
-            Console.Write("Moneda (01=Soles, 02=Dolares): ");
-            string moneda = Console.ReadLine() ?? string.Empty;
+            string origen = LeerTextoObligatorio("Cuenta origen");
+            string destino = LeerTextoObligatorio("Cuenta destino");
+            decimal monto = LeerDecimalPositivo("Monto");
+            string moneda = LeerMoneda();
 
-            var resultado = _controller.Transferir(origen, destino, monto, moneda);
+            if (origen.Equals(destino, StringComparison.OrdinalIgnoreCase))
+            {
+                MostrarError("La cuenta origen y destino no pueden ser iguales.");
+                return;
+            }
+
+            var resultado = _controller.Transferir(origen, destino, monto.ToString(CultureInfo.InvariantCulture), moneda);
             MostrarResultado(resultado);
         }
 
@@ -369,10 +425,8 @@ namespace CLICONSOLA.Vista
             Console.WriteLine("========================================");
             Console.WriteLine("        REGISTRAR CUENTA");
             Console.WriteLine("========================================");
-            Console.Write("Codigo Cliente: ");
-            string cliente = Console.ReadLine() ?? string.Empty;
-            Console.Write("Moneda (01=Soles, 02=Dolares): ");
-            string moneda = Console.ReadLine() ?? string.Empty;
+            string cliente = LeerTextoObligatorio("Codigo Cliente");
+            string moneda = LeerMoneda();
 
             var resultado = _controller.RegistrarCuenta(cliente, moneda);
             MostrarResultado(resultado);
@@ -384,8 +438,7 @@ namespace CLICONSOLA.Vista
             Console.WriteLine("========================================");
             Console.WriteLine("        ELIMINAR CUENTA");
             Console.WriteLine("========================================");
-            Console.Write("Codigo Cuenta: ");
-            string cuenta = Console.ReadLine() ?? string.Empty;
+            string cuenta = LeerTextoObligatorio("Codigo Cuenta");
 
             var resultado = _controller.EliminarCuenta(cuenta);
             MostrarResultado(resultado);
@@ -397,8 +450,7 @@ namespace CLICONSOLA.Vista
             Console.WriteLine("========================================");
             Console.WriteLine("        MOVIMIENTOS");
             Console.WriteLine("========================================");
-            Console.Write("Cuenta: ");
-            string cuenta = Console.ReadLine() ?? string.Empty;
+            string cuenta = LeerTextoObligatorio("Cuenta");
 
             var movimientos = _controller.ListarMovimientos(cuenta);
 

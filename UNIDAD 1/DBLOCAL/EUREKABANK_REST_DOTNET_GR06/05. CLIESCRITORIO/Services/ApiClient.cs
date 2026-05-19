@@ -1,3 +1,4 @@
+using CLIESCRITORIO.Config;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -6,9 +7,9 @@ namespace CLIESCRITORIO.Services;
 public class ApiClient
 {
     private readonly HttpClient _http;
-    public ApiClient(string baseUrl = "http://localhost:5010")
+    public ApiClient()
     {
-        _http = new HttpClient { BaseAddress = new Uri(baseUrl.TrimEnd('/') + "/") };
+        _http = new HttpClient { BaseAddress = new Uri(Constantes.BaseUrl.TrimEnd('/') + "/") };
     }
 
     public async Task<bool> IniciarSesion(string u, string c) { var r = await _http.PostAsJsonAsync("api/auth/login", new { usuario = u, clave = c }); return r.IsSuccessStatusCode && await r.Content.ReadFromJsonAsync<bool>(); }

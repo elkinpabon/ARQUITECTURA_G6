@@ -295,3 +295,5 @@ C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-maccatalyst\maccatalyst-x64\CLIMOVIL.pdb
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-maccatalyst\maccatalyst-x64\CLIMOVIL.genruntimeconfig.cache
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-maccatalyst\maccatalyst-x64\ref\CLIMOVIL.dll
+C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\moster.png
+C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\login.jpg

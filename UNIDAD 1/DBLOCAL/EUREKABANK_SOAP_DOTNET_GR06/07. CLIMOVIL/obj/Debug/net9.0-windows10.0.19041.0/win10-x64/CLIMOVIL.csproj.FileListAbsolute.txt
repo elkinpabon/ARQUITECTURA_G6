@@ -7,6 +7,8 @@ C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\splashSplashScreen.scale-400.png
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\OpenSans-Regular.ttf
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\OpenSans-Semibold.ttf
+C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\login.scale-100.jpg
+C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\moster.scale-100.png
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\appiconLargeTile.scale-400.png
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\appiconLargeTile.scale-200.png
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\appiconLargeTile.scale-150.png
@@ -435,6 +437,8 @@ C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\mauifont.stamp
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\f\OpenSans-Regular.ttf
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\f\OpenSans-Semibold.ttf
+C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\login.scale-100.jpg
+C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\moster.scale-100.png
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-400.png
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-200.png
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-150.png
@@ -514,7 +518,3 @@ C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\qualifiers.txt
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\qualifiers.txt.intermediate
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\MultipleQualifiersPerDimensionFound.txt
-C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\moster.scale-100.png
-C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\login.scale-100.jpg
-C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\moster.scale-100.png
-C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\07. CLIMOVIL\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\login.scale-100.jpg

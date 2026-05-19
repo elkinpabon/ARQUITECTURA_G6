@@ -17,11 +17,12 @@ public class LoginForm : Form
     private void InitializeComponent()
     {
         Text = "EUREKABANK GR06 - Iniciar sesion";
-        Size = new Size(940, 560);
+        Size = new Size(1120, 700);
         StartPosition = FormStartPosition.CenterScreen;
-        FormBorderStyle = FormBorderStyle.FixedDialog;
-        MaximizeBox = false;
-        MinimizeBox = false;
+        FormBorderStyle = FormBorderStyle.Sizable;
+        MaximizeBox = true;
+        MinimizeBox = true;
+        MinimumSize = new Size(980, 620);
         BackColor = Color.FromArgb(15, 23, 42);
         ForeColor = Color.WhiteSmoke;
         Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
@@ -36,32 +37,51 @@ public class LoginForm : Form
         split.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 52F));
         split.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 48F));
 
-        var art = new Panel
+        var art = new TableLayoutPanel
         {
             Dock = DockStyle.Fill,
+            ColumnCount = 1,
+            RowCount = 2,
             BackColor = Color.FromArgb(11, 18, 32),
-            BackgroundImage = UiImages.Load("login.jpg"),
-            BackgroundImageLayout = ImageLayout.Stretch,
-            Padding = new Padding(28)
+            Padding = new Padding(0)
+        };
+        art.RowStyles.Add(new RowStyle(SizeType.Percent, 78F));
+        art.RowStyles.Add(new RowStyle(SizeType.Absolute, 132F));
+
+        var artImage = new PictureBox
+        {
+            Dock = DockStyle.Fill,
+            Image = UiImages.Load("login.jpg"),
+            SizeMode = PictureBoxSizeMode.Zoom,
+            BackColor = Color.FromArgb(11, 18, 32),
+            Margin = new Padding(0)
         };
 
-        var artWrap = new FlowLayoutPanel
+        var artWrap = new Panel
+        {
+            Dock = DockStyle.Fill,
+            BackColor = Color.FromArgb(30, 41, 59),
+            Padding = new Padding(18, 12, 18, 12)
+        };
+
+        var artText = new FlowLayoutPanel
         {
             Dock = DockStyle.Fill,
             FlowDirection = FlowDirection.TopDown,
             WrapContents = false,
-            BackColor = Color.Transparent
+            BackColor = Color.Transparent,
+            Padding = new Padding(4, 2, 4, 0)
         };
-        artWrap.Controls.Add(UiImages.Logo("moster.png", 120));
-        artWrap.Controls.Add(new Label
+        artText.Controls.Add(UiImages.Logo("moster.png", 58));
+        artText.Controls.Add(new Label
         {
             Text = "EUREKABANK GR06",
             AutoSize = true,
-            Font = new Font("Segoe UI", 22F, FontStyle.Bold),
+            Font = new Font("Segoe UI", 20F, FontStyle.Bold),
             ForeColor = Color.White,
-            Margin = new Padding(0, 14, 0, 0)
+            Margin = new Padding(0, 12, 0, 0)
         });
-        artWrap.Controls.Add(new Label
+        artText.Controls.Add(new Label
         {
             Text = "Banca SOAP · Cliente Escritorio .NET",
             AutoSize = true,
@@ -69,7 +89,10 @@ public class LoginForm : Form
             ForeColor = Color.FromArgb(203, 213, 225),
             Margin = new Padding(0, 4, 0, 0)
         });
-        art.Controls.Add(artWrap);
+        artWrap.Controls.Add(artText);
+
+        art.Controls.Add(artImage, 0, 0);
+        art.Controls.Add(artWrap, 0, 1);
 
         var login = new Panel
         {

@@ -6,7 +6,7 @@ namespace CLIWEB.Pages;
 
 public class DepositarModel : PageModel
 {
-    private readonly ApiClient _api = new("http://localhost:5010");
+    private readonly ApiClient _api = new();
     [BindProperty] public string Campo1 { get; set; } = "";
     [BindProperty] public string Campo2 { get; set; } = "";
     [BindProperty] public string Campo3 { get; set; } = "01";

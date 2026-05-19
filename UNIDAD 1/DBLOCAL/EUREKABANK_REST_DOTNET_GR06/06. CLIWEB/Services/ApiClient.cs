@@ -1,3 +1,4 @@
+using CLIWEB.Services;
 using System.Net.Http.Json;
 
 namespace CLIWEB.Services;
@@ -5,7 +6,7 @@ namespace CLIWEB.Services;
 public class ApiClient
 {
     private readonly HttpClient _http;
-    public ApiClient(string baseUrl = "http://localhost:5010") { _http = new HttpClient { BaseAddress = new Uri(baseUrl.TrimEnd('/') + "/") }; }
+    public ApiClient() { _http = new HttpClient { BaseAddress = new Uri(Constantes.BaseUrl.TrimEnd('/') + "/") }; }
 
     public async Task<bool> IniciarSesion(string u, string c) { var r = await _http.PostAsJsonAsync("api/auth/login", new { usuario = u, clave = c }); return r.IsSuccessStatusCode && await r.Content.ReadFromJsonAsync<bool>(); }
     public async Task<string> ClienteDeUsuario(string u) { var r = await _http.GetAsync($"api/auth/cliente/{u}"); return r.IsSuccessStatusCode ? await r.Content.ReadAsStringAsync() : ""; }

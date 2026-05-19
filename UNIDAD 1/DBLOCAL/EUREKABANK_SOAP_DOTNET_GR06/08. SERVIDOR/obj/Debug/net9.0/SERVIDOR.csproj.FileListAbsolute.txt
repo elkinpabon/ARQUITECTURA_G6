@@ -1,3 +1,11 @@
+C:\Users\elkin\AppData\Local\Temp\opencode\servertest\appsettings.Development.json
+C:\Users\elkin\AppData\Local\Temp\opencode\servertest\appsettings.json
+C:\Users\elkin\AppData\Local\Temp\opencode\servertest\SERVIDOR.staticwebassets.endpoints.json
+C:\Users\elkin\AppData\Local\Temp\opencode\servertest\SERVIDOR.exe
+C:\Users\elkin\AppData\Local\Temp\opencode\servertest\SERVIDOR.deps.json
+C:\Users\elkin\AppData\Local\Temp\opencode\servertest\SERVIDOR.runtimeconfig.json
+C:\Users\elkin\AppData\Local\Temp\opencode\servertest\SERVIDOR.dll
+C:\Users\elkin\AppData\Local\Temp\opencode\servertest\SERVIDOR.pdb
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\08. SERVIDOR\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\08. SERVIDOR\bin\Debug\net9.0\appsettings.json
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\08. SERVIDOR\bin\Debug\net9.0\SERVIDOR.staticwebassets.endpoints.json
@@ -104,11 +112,4 @@ C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\08. SERVIDOR\obj\Debug\net9.0\SERVIDOR.pdb
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\08. SERVIDOR\obj\Debug\net9.0\SERVIDOR.genruntimeconfig.cache
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\08. SERVIDOR\obj\Debug\net9.0\ref\SERVIDOR.dll
-C:\Users\elkin\AppData\Local\Temp\opencode\servertest\appsettings.Development.json
-C:\Users\elkin\AppData\Local\Temp\opencode\servertest\appsettings.json
-C:\Users\elkin\AppData\Local\Temp\opencode\servertest\SERVIDOR.staticwebassets.endpoints.json
-C:\Users\elkin\AppData\Local\Temp\opencode\servertest\SERVIDOR.exe
-C:\Users\elkin\AppData\Local\Temp\opencode\servertest\SERVIDOR.deps.json
-C:\Users\elkin\AppData\Local\Temp\opencode\servertest\SERVIDOR.runtimeconfig.json
-C:\Users\elkin\AppData\Local\Temp\opencode\servertest\SERVIDOR.dll
-C:\Users\elkin\AppData\Local\Temp\opencode\servertest\SERVIDOR.pdb
+C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\08. SERVIDOR\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

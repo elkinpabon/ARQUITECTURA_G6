@@ -11,9 +11,9 @@ public class BancoController
     public string CurrentUser { get; private set; } = "";
     public string ClienteAsignado { get; private set; } = "";
 
-    public BancoController(string baseUrl = "http://localhost:5010")
+    public BancoController()
     {
-        _api = new ApiClient(baseUrl);
+        _api = new ApiClient();
     }
 
     public async Task<bool> Login(string usuario, string clave)

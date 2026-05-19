@@ -18,13 +18,6 @@ namespace CLIESCRITORIO.Servicio
             _movimientoUrl = ServidorConfig.WsMovimientoUrl;
         }
 
-        public SoapClient(string baseUrl)
-        {
-            _loginUrl = $"{baseUrl.TrimEnd('/')}/WSLogin.asmx";
-            _cuentaUrl = $"{baseUrl.TrimEnd('/')}/WSCuenta.asmx";
-            _movimientoUrl = $"{baseUrl.TrimEnd('/')}/WSMovimiento.asmx";
-        }
-
         public bool IniciarSesion(string usuario, string clave)
         {
             string soapEnvelope = $@"<?xml version=""1.0"" encoding=""utf-8""?>
@@ -227,9 +220,9 @@ namespace CLIESCRITORIO.Servicio
             var content = new StringContent(soapEnvelope, Encoding.UTF8, "text/xml");
             client.DefaultRequestHeaders.TryAddWithoutValidation("SOAPAction", $"\"http://ws.monster.edu.ec/{action}\"");
 
-            var response = client.PostAsync(url, content).Result;
+            var response = client.PostAsync(url, content).GetAwaiter().GetResult();
             response.EnsureSuccessStatusCode();
-            var body = response.Content.ReadAsStringAsync().Result;
+            var body = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             if (body.Contains("<soap:Fault>") || body.Contains("<Fault>"))
             {
                 throw new InvalidOperationException("El servidor SOAP devolvió un fault.");

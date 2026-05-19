@@ -2,33 +2,11 @@ namespace CLIMOVIL.Services
 {
     public static class Constantes
     {
-        public static string IpServidor { get; set; } = GetDefaultIp();
-        public static int PuertoServidor { get; set; } = 5000;
+        public static string IpServidor { get; set; } = "192.168.1.54";
 
         public static string BaseUrl
         {
-            get => $"http://{IpServidor}:{PuertoServidor}";
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value)) return;
-                var text = value.Trim();
-                if (!text.Contains("://", StringComparison.Ordinal))
-                    text = "http://" + text;
-                if (Uri.TryCreate(text, UriKind.Absolute, out var uri))
-                {
-                    IpServidor = uri.Host;
-                    PuertoServidor = uri.IsDefaultPort ? 5000 : uri.Port;
-                }
-            }
-        }
-
-        private static string GetDefaultIp()
-        {
-#if ANDROID
-            return "192.168.1.54";
-#else
-            return "192.168.1.54";
-#endif
+            get => $"http://{IpServidor}:5000";
         }
     }
 }

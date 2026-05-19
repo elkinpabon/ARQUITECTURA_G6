@@ -8,7 +8,6 @@ namespace CLICONSOLA.Servicio
 {
     public static class SoapClient
     {
-        private static readonly HttpClient _http = new HttpClient();
         private const string Ns = "http://ws.monster.edu.ec/";
 
         private static string Envelope(string body)
@@ -23,15 +22,14 @@ namespace CLICONSOLA.Servicio
 
         private static async Task<string> SendAsync(string url, string action, string bodyXml)
         {
+            using var client = new HttpClient();
+            client.Timeout = TimeSpan.FromSeconds(30);
+
             var envelope = Envelope(bodyXml);
             var content = new StringContent(envelope, Encoding.UTF8, "text/xml");
-            var request = new HttpRequestMessage(HttpMethod.Post, url)
-            {
-                Content = content
-            };
-            request.Headers.TryAddWithoutValidation("SOAPAction", $"\"{Ns}{action}\"");
+            client.DefaultRequestHeaders.TryAddWithoutValidation("SOAPAction", $"\"{Ns}{action}\"");
 
-            var response = await _http.SendAsync(request);
+            var response = await client.PostAsync(url, content);
             response.EnsureSuccessStatusCode();
             var body = await response.Content.ReadAsStringAsync();
             if (body.Contains("<soap:Fault>") || body.Contains("<Fault>"))

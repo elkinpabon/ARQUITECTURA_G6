@@ -37,7 +37,7 @@ public partial class MainPage : ContentPage
 
         try
         {
-            var ok = await Task.Run(() => _soap.IniciarSesion(usuario, clave));
+            var ok = _soap.IniciarSesion(usuario, clave);
             if (!ok)
             {
                 lblError.Text = "Usuario o clave inválidos";
@@ -46,7 +46,7 @@ public partial class MainPage : ContentPage
 
             _usuario = usuario;
             _isAdmin = string.Equals(usuario, "monster", StringComparison.OrdinalIgnoreCase);
-            _clienteCodigo = _isAdmin ? string.Empty : await Task.Run(() => _soap.ClienteDeUsuario(usuario));
+            _clienteCodigo = _isAdmin ? string.Empty : _soap.ClienteDeUsuario(usuario);
 
             ShowDashboard();
             ApplyRole();
@@ -116,7 +116,13 @@ public partial class MainPage : ContentPage
             {
                 case "consultar":
                 {
-                    resultado = await Task.Run(() => _soap.ConsultarSaldo(cuenta));
+                    if (!CuentaCargada(cuenta))
+                    {
+                        await DisplayAlert("Operación", "Seleccione una cuenta válida.", "OK");
+                        return;
+                    }
+
+                    resultado = _soap.ConsultarSaldo(cuenta);
                     lblActionResult.Text = resultado.Exitoso
                         ? $"Saldo actual: {resultado.Saldo:F2}"
                         : resultado.Mensaje;
@@ -125,29 +131,54 @@ public partial class MainPage : ContentPage
 
                 case "retirar":
                 {
+                    if (!CuentaCargada(cuenta))
+                    {
+                        await DisplayAlert("Operación", "Seleccione una cuenta válida.", "OK");
+                        return;
+                    }
+
                     var montoRetiro = await TryGetMontoAsync();
                     if (montoRetiro is null) return;
-                    resultado = await Task.Run(() => _soap.Retirar(cuenta, montoRetiro, GetCurrencyCode()));
+                    resultado = _soap.Retirar(cuenta, montoRetiro, GetCurrencyCode());
                     lblActionResult.Text = FormatResultado(resultado);
                     break;
                 }
 
                 case "depositar":
                 {
+                    if (!CuentaCargada(cuenta))
+                    {
+                        await DisplayAlert("Operación", "Seleccione una cuenta válida.", "OK");
+                        return;
+                    }
+
                     var montoDeposito = await TryGetMontoAsync();
                     if (montoDeposito is null) return;
-                    resultado = await Task.Run(() => _soap.Depositar(cuenta, montoDeposito, GetCurrencyCode()));
+                    resultado = _soap.Depositar(cuenta, montoDeposito, GetCurrencyCode());
                     lblActionResult.Text = FormatResultado(resultado);
                     break;
                 }
 
                 case "transferir":
                 {
+                    if (!CuentaCargada(cuenta))
+                    {
+                        await DisplayAlert("Operación", "Seleccione una cuenta válida.", "OK");
+                        return;
+                    }
+
                     var montoTransferencia = await TryGetMontoAsync();
                     if (montoTransferencia is null) return;
                     var destino = await DisplayPromptAsync("Transferir", "Cuenta destino", "Enviar", "Cancelar", "Cuenta destino");
+                    destino = NormalizeText(destino);
                     if (string.IsNullOrWhiteSpace(destino)) return;
-                    resultado = await Task.Run(() => _soap.Transferir(cuenta, destino.Trim(), montoTransferencia, GetCurrencyCode()));
+                    if (destino.Equals(cuenta, StringComparison.OrdinalIgnoreCase))
+                    {
+                        await DisplayAlert("Transferir", "La cuenta origen y destino no pueden ser iguales.", "OK");
+                        return;
+                    }
+
+                    resultado = _soap.Transferir(cuenta, destino.Trim(), montoTransferencia, GetCurrencyCode());
                     lblActionResult.Text = FormatResultado(resultado);
                     break;
                 }
@@ -226,7 +257,7 @@ public partial class MainPage : ContentPage
             var email = await PromptRequiredAsync("Registrar cliente", "Email", Keyboard.Email);
             if (email is null) return;
 
-            var resultado = await Task.Run(() => _soap.RegistrarCliente(paterno, materno, nombre, dni, ciudad, direccion, telefono, email));
+            var resultado = _soap.RegistrarCliente(paterno, materno, nombre, dni, ciudad, direccion, telefono, email);
             await DisplayAlert("Registrar cliente", FormatResultado(resultado), "OK");
             await LoadClientsAsync();
         }
@@ -256,7 +287,7 @@ public partial class MainPage : ContentPage
             var moneda = await SelectMonedaAsync();
             if (moneda is null) return;
 
-            var resultado = await Task.Run(() => _soap.RegistrarCuenta(cliente.Trim(), moneda));
+            var resultado = _soap.RegistrarCuenta(cliente.Trim(), moneda);
             await DisplayAlert("Registrar cuenta", FormatResultado(resultado), "OK");
             await RefreshAccountsAsync();
         }
@@ -288,7 +319,7 @@ public partial class MainPage : ContentPage
                 return;
             }
 
-            var resultado = await Task.Run(() => _soap.EliminarCuenta(cuenta.Trim()));
+            var resultado = _soap.EliminarCuenta(cuenta.Trim());
             await DisplayAlert("Eliminar cuenta", FormatResultado(resultado), "OK");
             await RefreshAccountsAsync();
         }
@@ -374,7 +405,7 @@ public partial class MainPage : ContentPage
     private async Task LoadClientsAsync()
     {
         _clientes.Clear();
-        var clients = await Task.Run(() => _soap.ListarClientes());
+        var clients = _soap.ListarClientes();
         _clientes.AddRange(clients);
         pkrClientes.ItemsSource = _clientes;
         pkrClientes.SelectedIndex = -1;
@@ -396,7 +427,7 @@ public partial class MainPage : ContentPage
         }
 
         _cuentas.Clear();
-        var cuentas = await Task.Run(() => _soap.ListarCuentasPorCliente(cliente));
+        var cuentas = _soap.ListarCuentasPorCliente(cliente);
         _cuentas.AddRange(cuentas);
         pkrCuentas.ItemsSource = null;
         pkrCuentas.ItemsSource = _cuentas;
@@ -472,7 +503,7 @@ public partial class MainPage : ContentPage
     private async Task LoadMovimientosAsync(string cuenta)
     {
         _movimientos.Clear();
-        var movimientos = await Task.Run(() => _soap.ListarMovimientos(cuenta));
+        var movimientos = _soap.ListarMovimientos(cuenta);
         _movimientos.AddRange(movimientos);
 
         lblListTitle.Text = $"Movimientos - {cuenta}";
@@ -500,7 +531,13 @@ public partial class MainPage : ContentPage
             return null;
         }
 
-        return monto;
+        if (!decimal.TryParse(monto, NumberStyles.Number, CultureInfo.InvariantCulture, out var valor) || valor <= 0)
+        {
+            await DisplayAlert("Operación", "Ingrese un monto válido mayor que cero.", "OK");
+            return null;
+        }
+
+        return valor.ToString(CultureInfo.InvariantCulture);
     }
 
     private string GetActionAccount()
@@ -539,4 +576,7 @@ public partial class MainPage : ContentPage
 
     private string NormalizeNumber(string? value)
         => string.IsNullOrWhiteSpace(value) ? string.Empty : value.Trim().Replace(',', '.');
+
+    private bool CuentaCargada(string cuenta)
+        => _cuentas.Any(x => x.CodigoCuenta.Equals(cuenta, StringComparison.OrdinalIgnoreCase));
 }

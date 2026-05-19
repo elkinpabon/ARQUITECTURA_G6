@@ -6,7 +6,7 @@ namespace CLIWEB.Pages;
 
 public class LoginModel : PageModel
 {
-    private readonly ApiClient _api = new("http://localhost:5010");
+    private readonly ApiClient _api = new();
     [BindProperty] public string Usuario { get; set; } = "";
     [BindProperty] public string Clave { get; set; } = "";
     public string Error { get; set; } = "";
@@ -26,7 +26,7 @@ public class LoginModel : PageModel
                 HttpContext.Session.SetString("ClienteCodigo", cliente);
                 return RedirectToPage("/Index");
             }
-            Error = "Credenciales incorrectas";
+            Error = "Usuario o clave incorrectos";
         }
         catch { Error = "Error conectando al servidor"; }
         return Page();

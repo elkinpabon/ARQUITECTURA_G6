@@ -7,9 +7,9 @@ namespace CLIWEB.Services
     {
         private readonly string _baseUrl;
 
-        public SoapClientService(string? baseUrl = null)
+        public SoapClientService()
         {
-            _baseUrl = (baseUrl ?? Constantes.BaseUrl).TrimEnd('/');
+            _baseUrl = Constantes.BaseUrl.TrimEnd('/');
         }
 
         public bool IniciarSesion(string usuario, string clave)
@@ -111,11 +111,12 @@ namespace CLIWEB.Services
         private string Post(string url, string action, string soap)
         {
             using var client = new HttpClient();
+            client.Timeout = TimeSpan.FromSeconds(30);
             var content = new StringContent(soap, Encoding.UTF8, "text/xml");
             client.DefaultRequestHeaders.TryAddWithoutValidation("SOAPAction", $"\"http://ws.monster.edu.ec/{action}\"");
-            var resp = client.PostAsync(url, content).Result;
+            var resp = client.PostAsync(url, content).GetAwaiter().GetResult();
             resp.EnsureSuccessStatusCode();
-            var body = resp.Content.ReadAsStringAsync().Result;
+            var body = resp.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             if (body.Contains("<soap:Fault>") || body.Contains("<Fault>"))
             {
                 throw new InvalidOperationException("El servidor SOAP devolvió un fault.");

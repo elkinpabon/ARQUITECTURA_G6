@@ -7,9 +7,9 @@ namespace CLIMOVIL.Services
     {
         private readonly string _baseUrl;
 
-        public SoapClientService(string? baseUrl = null)
+        public SoapClientService()
         {
-            _baseUrl = (baseUrl ?? Constantes.BaseUrl).TrimEnd('/');
+            _baseUrl = Constantes.BaseUrl.TrimEnd('/');
         }
 
         public bool IniciarSesion(string usuario, string clave)
@@ -100,15 +100,17 @@ namespace CLIMOVIL.Services
         {
             using var client = new HttpClient();
             client.Timeout = TimeSpan.FromSeconds(30);
+
             var content = new StringContent(soap, Encoding.UTF8, "text/xml");
             client.DefaultRequestHeaders.TryAddWithoutValidation("SOAPAction", $"\"http://ws.monster.edu.ec/{action}\"");
-            var resp = client.PostAsync(url, content).Result;
-            resp.EnsureSuccessStatusCode();
-            var body = resp.Content.ReadAsStringAsync().Result;
-            if (body.Contains("<soap:Fault>") || body.Contains("<Fault>"))
+
+            var resp = client.PostAsync(url, content).GetAwaiter().GetResult();
+            var body = resp.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            if (string.IsNullOrWhiteSpace(body))
             {
-                throw new InvalidOperationException("El servidor SOAP devolvió un fault.");
+                throw new InvalidOperationException($"El servidor SOAP no devolvio respuesta para {action}.");
             }
+
             return body;
         }
 
@@ -119,18 +121,27 @@ namespace CLIMOVIL.Services
         private string Extract(string resp, string tag)
         {
             string s = $"<{tag}>", e = $"</{tag}>";
-            int si = resp.IndexOf(s);
+            int si = resp.IndexOf(s, StringComparison.OrdinalIgnoreCase);
             if (si < 0) return "";
             si += s.Length;
-            int ei = resp.IndexOf(e, si);
+            int ei = resp.IndexOf(e, si, StringComparison.OrdinalIgnoreCase);
             return ei < 0 ? "" : resp.Substring(si, ei - si);
         }
 
         private Resultado ParseResultado(string resp, string tag)
         {
-            int si = resp.IndexOf($"<{tag}>");
-            if (si < 0) return new Resultado { Exitoso = false, Mensaje = "Respuesta invalida" };
-            int ei = resp.IndexOf($"</{tag}>", si);
+            if (resp.Contains("<Fault>", StringComparison.OrdinalIgnoreCase) || resp.Contains("<soap:Fault>", StringComparison.OrdinalIgnoreCase))
+            {
+                return new Resultado { Exitoso = false, Mensaje = FirstNonEmpty(resp, "faultstring", "faultcode", "Mensaje") };
+            }
+
+            int si = resp.IndexOf($"<{tag}>", StringComparison.OrdinalIgnoreCase);
+            int ei = resp.IndexOf($"</{tag}>", si < 0 ? 0 : si, StringComparison.OrdinalIgnoreCase);
+            if (si < 0 || ei < 0 || ei <= si)
+            {
+                return new Resultado { Exitoso = false, Mensaje = "Respuesta invalida" };
+            }
+
             string inner = resp.Substring(si, ei - si + $"</{tag}>".Length);
             return new Resultado
             {

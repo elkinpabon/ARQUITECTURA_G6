@@ -42,11 +42,12 @@ public class MainForm : Form
     private void InitializeComponent()
     {
         Text = $"EUREKABANK GR06 - {_ctrl.Sesion.Usuario}";
-        Size = new Size(900, 640);
+        Size = new Size(1200, 780);
         StartPosition = FormStartPosition.CenterScreen;
-        FormBorderStyle = FormBorderStyle.FixedDialog;
-        MaximizeBox = false;
-        MinimizeBox = false;
+        FormBorderStyle = FormBorderStyle.Sizable;
+        MaximizeBox = true;
+        MinimizeBox = true;
+        MinimumSize = new Size(1060, 700);
         BackColor = Color.FromArgb(15, 23, 42);
         ForeColor = Color.WhiteSmoke;
         Font = new Font("Segoe UI", 9.5F, FontStyle.Regular, GraphicsUnit.Point);

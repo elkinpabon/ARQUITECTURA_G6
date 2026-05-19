@@ -1,7 +1,8 @@
+using CLICONSOLA.Config;
+using CLICONSOLA.Models;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
-using CLICONSOLA.Models;
 
 namespace CLICONSOLA.Services;
 
@@ -9,9 +10,9 @@ public class ApiClient
 {
     private readonly HttpClient _http;
 
-    public ApiClient(string baseUrl = "http://localhost:5010")
+    public ApiClient()
     {
-        _http = new HttpClient { BaseAddress = new Uri(baseUrl.TrimEnd('/') + "/") };
+        _http = new HttpClient { BaseAddress = new Uri(Constantes.BaseUrl.TrimEnd('/') + "/") };
     }
 
     public async Task<bool> IniciarSesion(string usuario, string clave)

@@ -228,7 +228,13 @@ namespace CLIESCRITORIO.Servicio
             client.DefaultRequestHeaders.TryAddWithoutValidation("SOAPAction", $"\"http://ws.monster.edu.ec/{action}\"");
 
             var response = client.PostAsync(url, content).Result;
-            return response.Content.ReadAsStringAsync().Result;
+            response.EnsureSuccessStatusCode();
+            var body = response.Content.ReadAsStringAsync().Result;
+            if (body.Contains("<soap:Fault>") || body.Contains("<Fault>"))
+            {
+                throw new InvalidOperationException("El servidor SOAP devolvió un fault.");
+            }
+            return body;
         }
 
         private string XmlEscape(string s)

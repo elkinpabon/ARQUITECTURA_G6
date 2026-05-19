@@ -10,7 +10,7 @@ namespace CLIWEB.Pages
 
         public LoginModel()
         {
-            _soap = new SoapClientService("http://localhost:5000");
+            _soap = new SoapClientService();
         }
 
         [BindProperty] public string Usuario { get; set; } = "";

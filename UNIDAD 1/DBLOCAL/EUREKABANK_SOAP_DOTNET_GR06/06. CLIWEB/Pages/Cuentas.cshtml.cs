@@ -6,21 +6,19 @@ namespace CLIWEB.Pages
 {
     public class CuentasModel : PageModel
     {
-        private readonly SoapClientService _soap = new("http://localhost:5000");
+        private readonly SoapClientService _soap = new();
         public List<CuentaResumen> Cuentas { get; set; } = new();
         public bool IsAdmin => HttpContext.Session.GetString("EsAdmin") == "true";
-        public string User => HttpContext.Session.GetString("Usuario") ?? "";
+        public new string User => HttpContext.Session.GetString("Usuario") ?? "";
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(string? cliente)
         {
             if (string.IsNullOrEmpty(User)) return RedirectToPage("/Login");
+            if (!IsAdmin) return RedirectToPage("/Index");
             try
             {
-                if (IsAdmin)
-                    Cuentas = _soap.ListarCuentasPorCliente("");
-                else
+                if (!string.IsNullOrWhiteSpace(cliente))
                 {
-                    string cliente = HttpContext.Session.GetString("ClienteCodigo") ?? "";
                     Cuentas = _soap.ListarCuentasPorCliente(cliente);
                 }
             }

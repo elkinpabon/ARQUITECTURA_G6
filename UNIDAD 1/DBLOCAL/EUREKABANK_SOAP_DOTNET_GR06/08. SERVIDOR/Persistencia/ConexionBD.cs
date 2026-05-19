@@ -4,10 +4,22 @@ namespace SERVIDOR.Persistencia
 {
     public class ConexionBD
     {
-        private static readonly string ConnectionString = "Server=.\\SQLEXPRESS;Database=EurekaBank;User Id=sa;Password=admin123;TrustServerCertificate=True;";
+        private static string ConnectionString = string.Empty;
+
+        public static void Configure(string? connectionString)
+        {
+            ConnectionString = string.IsNullOrWhiteSpace(connectionString)
+                ? "Server=.\\SQLEXPRESS;Database=EurekaBank;User Id=sa;Password=admin123;TrustServerCertificate=True;"
+                : connectionString;
+        }
 
         public static SqlConnection Conectar()
         {
+            if (string.IsNullOrWhiteSpace(ConnectionString))
+            {
+                Configure(null);
+            }
+
             var cn = new SqlConnection(ConnectionString);
             cn.Open();
             return cn;

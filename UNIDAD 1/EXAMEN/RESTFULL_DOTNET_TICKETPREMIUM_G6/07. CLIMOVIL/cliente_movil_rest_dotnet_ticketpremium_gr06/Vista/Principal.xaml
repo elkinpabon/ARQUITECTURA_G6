@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="cliente_movil_rest_dotnet_ticketpremium_gr06.Vista.Principal"
+             BackgroundColor="#F8FAFC">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="18" Spacing="16">
+            <Border StrokeShape="RoundRectangle 24" Background="#0F172A" Padding="20">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="TicketPremium" FontSize="30" TextColor="White" FontAttributes="Bold" />
+                    <Label Text="Partidos de futbol ecuatorianos, boletos claros y compra simple" TextColor="#CBD5E1" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border StrokeShape="RoundRectangle 20" Background="White" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Partidos disponibles" FontSize="20" FontAttributes="Bold" TextColor="#0F172A" />
+
+                    <CollectionView ItemsSource="{Binding Partidos}" SelectionMode="Single" SelectedItem="{Binding PartidoSeleccionado, Mode=TwoWay}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border StrokeShape="RoundRectangle 16" Background="#EFF6FF" Margin="0,0,0,10" Padding="14">
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="{Binding Descripcion}" FontAttributes="Bold" TextColor="#0F172A" />
+                                        <Label Text="{Binding Fecha, StringFormat='{0:dd/MM/yyyy HH:mm}'}" TextColor="#334155" />
+                                        <Label Text="{Binding Lugar}" FontSize="12" TextColor="#64748B" />
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border StrokeShape="RoundRectangle 20" Background="White" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Comprar boletos" FontSize="20" FontAttributes="Bold" TextColor="#0F172A" />
+
+                    <Picker Title="Seleccione localidad"
+                            ItemsSource="{Binding Localidades}"
+                            ItemDisplayBinding="{Binding CodigoLocalidad}"
+                            SelectedItem="{Binding LocalidadSeleccionada, Mode=TwoWay}" />
+
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto" ColumnSpacing="12">
+                        <Label Text="Cantidad" VerticalOptions="Center" />
+                        <Entry Grid.Column="1" Text="{Binding Cantidad}" Keyboard="Numeric" />
+                    </Grid>
+
+                    <Button Text="Comprar" Command="{Binding ComprarCommand}" BackgroundColor="#16A34A" TextColor="White" CornerRadius="14" />
+                    <Label Text="{Binding Mensaje}" TextColor="#0F172A" FontAttributes="Bold" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border StrokeShape="RoundRectangle 20" Background="White" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Reporte de ventas" FontSize="20" FontAttributes="Bold" TextColor="#0F172A" />
+                    <Button Text="Actualizar reporte" Command="{Binding CargarReporteCommand}" BackgroundColor="#2563EB" TextColor="White" CornerRadius="14" />
+
+                    <CollectionView ItemsSource="{Binding Reportes}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border StrokeShape="RoundRectangle 14" Background="#F8FAFC" Margin="0,0,0,10" Padding="12">
+                                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                                        <Label Text="{Binding Localidad}" FontAttributes="Bold" TextColor="#0F172A" />
+                                        <Label Grid.Column="1" Text="{Binding Vendidos}" FontAttributes="Bold" TextColor="#2563EB" />
+                                        <Label Grid.Row="1" Text="{Binding TotalRecaudado, StringFormat='Q{0:N2}'}" TextColor="#475569" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

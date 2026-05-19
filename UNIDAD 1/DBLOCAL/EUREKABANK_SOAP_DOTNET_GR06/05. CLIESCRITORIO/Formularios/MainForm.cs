@@ -319,7 +319,7 @@ namespace CLIESCRITORIO.Formularios
             var monto = txtMonto.Text.Trim();
             if (string.IsNullOrWhiteSpace(monto)) return;
 
-            using var dlg = BuildPrompt("Transferir", "Cuenta destino", string.Empty);
+            var dlg = BuildPrompt("Transferir", "Cuenta destino", string.Empty);
             if (dlg == null) return;
 
             try

@@ -50,6 +50,8 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Include="..\05. CLIESCRITORIO\img\login.jpg" />
+		<MauiImage Include="..\05. CLIESCRITORIO\img\moster.png" />
 		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 		
 		<!-- Custom Fonts -->

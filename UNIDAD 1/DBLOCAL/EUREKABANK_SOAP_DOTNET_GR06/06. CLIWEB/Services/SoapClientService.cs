@@ -7,9 +7,9 @@ namespace CLIWEB.Services
     {
         private readonly string _baseUrl;
 
-        public SoapClientService(string baseUrl = "http://localhost:5000")
+        public SoapClientService(string? baseUrl = null)
         {
-            _baseUrl = baseUrl.TrimEnd('/');
+            _baseUrl = (baseUrl ?? Constantes.BaseUrl).TrimEnd('/');
         }
 
         public bool IniciarSesion(string usuario, string clave)
@@ -114,7 +114,13 @@ namespace CLIWEB.Services
             var content = new StringContent(soap, Encoding.UTF8, "text/xml");
             client.DefaultRequestHeaders.TryAddWithoutValidation("SOAPAction", $"\"http://ws.monster.edu.ec/{action}\"");
             var resp = client.PostAsync(url, content).Result;
-            return resp.Content.ReadAsStringAsync().Result;
+            resp.EnsureSuccessStatusCode();
+            var body = resp.Content.ReadAsStringAsync().Result;
+            if (body.Contains("<soap:Fault>") || body.Contains("<Fault>"))
+            {
+                throw new InvalidOperationException("El servidor SOAP devolvió un fault.");
+            }
+            return body;
         }
 
         private string Esc(string s) => string.IsNullOrEmpty(s) ? "" : s.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
@@ -182,7 +188,7 @@ namespace CLIWEB.Services
                 int ep = resp.IndexOf("</MovimientoModel>", p);
                 if (ep < 0) break;
                 string item = resp.Substring(p, ep - p + 18);
-                list.Add(new MovimientoModel { CodigoCuenta = Extract(item, "CodigoCuenta"), NumeroMovimiento = int.TryParse(Extract(item, "NumeroMovimiento"), out var n) ? n : 0, FechaMovimiento = Extract(item, "FechaMovimiento"), CodigoEmpleado = Extract(item, "CodigoEmpleado"), CodigoTipoMovimiento = Extract(item, "CodigoTipoMovimiento"), TipoDescripcion = Extract(item, "TipoDescripcion"), ImporteMovimiento = double.TryParse(Extract(item, "ImporteMovimiento"), out var imp) ? imp : 0, CuentaReferencia = Extract(item, "CuentaReferencia"), MonedaOrigen = Extract(item, "MonedaOrigen") });
+                list.Add(new MovimientoModel { CodigoCuenta = Extract(item, "CodigoCuenta"), NumeroMovimiento = int.TryParse(Extract(item, "NumeroMovimiento"), out var n) ? n : 0, FechaMovimiento = Extract(item, "FechaMovimiento"), CodigoEmpleado = Extract(item, "CodigoEmpleado"), CodigoTipoMovimiento = Extract(item, "CodigoTipoMovimiento"), TipoDescripcion = Extract(item, "TipoDescripcion"), ImporteMovimiento = double.TryParse(Extract(item, "ImporteMovimiento"), out var imp) ? imp : 0, CuentaReferencia = Extract(item, "CuentaReferencia"), MonedaOrigen = Extract(item, "MonedaOrigen"), ImporteOrigen = double.TryParse(Extract(item, "ImporteOrigen"), out var io) ? io : null, TasaAplicada = double.TryParse(Extract(item, "TasaAplicada"), out var ta) ? ta : null });
                 p = ep + 18;
             }
             return list;
@@ -192,5 +198,5 @@ namespace CLIWEB.Services
     public class Resultado { public bool Exitoso { get; set; } public string Mensaje { get; set; } = ""; public double Saldo { get; set; } }
     public class CuentaResumen { public string CodigoCuenta { get; set; } = ""; public string Moneda { get; set; } = ""; public double Saldo { get; set; } public string Estado { get; set; } = ""; public string CodigoCliente { get; set; } = ""; public string NombreCliente { get; set; } = ""; }
     public class ClienteResumen { public string Codigo { get; set; } = ""; public string Dni { get; set; } = ""; public string Nombre { get; set; } = ""; }
-    public class MovimientoModel { public string CodigoCuenta { get; set; } = ""; public int NumeroMovimiento { get; set; } public string FechaMovimiento { get; set; } = ""; public string CodigoEmpleado { get; set; } = ""; public string CodigoTipoMovimiento { get; set; } = ""; public string TipoDescripcion { get; set; } = ""; public double ImporteMovimiento { get; set; } public string CuentaReferencia { get; set; } = ""; public string MonedaOrigen { get; set; } = ""; }
+    public class MovimientoModel { public string CodigoCuenta { get; set; } = ""; public int NumeroMovimiento { get; set; } public string FechaMovimiento { get; set; } = ""; public string CodigoEmpleado { get; set; } = ""; public string CodigoTipoMovimiento { get; set; } = ""; public string TipoDescripcion { get; set; } = ""; public double ImporteMovimiento { get; set; } public string CuentaReferencia { get; set; } = ""; public string MonedaOrigen { get; set; } = ""; public double? ImporteOrigen { get; set; } public double? TasaAplicada { get; set; } }
 }

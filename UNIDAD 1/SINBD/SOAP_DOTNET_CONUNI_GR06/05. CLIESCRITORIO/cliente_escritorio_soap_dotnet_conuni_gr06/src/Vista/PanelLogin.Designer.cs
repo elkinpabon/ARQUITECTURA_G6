@@ -50,7 +50,7 @@ partial class PanelLogin
         panelImagen.Dock = DockStyle.Left;
         panelImagen.Location = new Point(0, 0);
         panelImagen.Name = "panelImagen";
-        panelImagen.Size = new Size(568, 620);
+        panelImagen.Size = new Size(340, 620);
         panelImagen.TabIndex = 0;
         panelImagen.Paint += panelImagen_Paint;
         // 
@@ -68,7 +68,7 @@ partial class PanelLogin
         panelFormulario.Controls.Add(lblTitulo);
         panelFormulario.Controls.Add(picLogo);
         panelFormulario.Dock = DockStyle.Fill;
-        panelFormulario.Location = new Point(568, 0);
+        panelFormulario.Location = new Point(340, 0);
         panelFormulario.Name = "panelFormulario";
         panelFormulario.Padding = new Padding(36, 24, 36, 24);
         panelFormulario.Size = new Size(612, 620);

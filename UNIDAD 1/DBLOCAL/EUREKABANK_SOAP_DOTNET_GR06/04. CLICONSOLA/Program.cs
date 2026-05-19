@@ -6,7 +6,7 @@ Console.WriteLine("========================================");
 Console.WriteLine("     EUREKA BANK - Console Client");
 Console.WriteLine("========================================");
 Console.WriteLine();
-Console.Write("URL del servidor (default: http://localhost:5000): ");
+Console.Write($"URL del servidor (default: {ServidorConfig.BaseUrl}): ");
 string input = Console.ReadLine() ?? string.Empty;
 
 if (!string.IsNullOrWhiteSpace(input))

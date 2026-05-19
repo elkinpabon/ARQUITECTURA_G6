@@ -1,0 +1,37 @@
+@model cliente_web_rest_dotnet_ticketpremium_gr06.Modelo.CompraViewModel
+@{
+    ViewData["Title"] = "Confirmacion";
+}
+
+<div class="tp-hero p-4 p-lg-5 mb-4">
+    <span class="badge tp-badge rounded-pill mb-3">Compra exitosa</span>
+    <h1 class="display-6 fw-semibold mb-2">Boletos registrados correctamente.</h1>
+    <p class="mb-0 text-white-75">La factura fue emitida y el inventario fue actualizado.</p>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card tp-card tp-card-hover h-100">
+            <div class="card-body p-4">
+                <div class="tp-kicker mb-1">Factura</div>
+                <div class="display-6 fw-semibold mb-0">#@Model.Resultado?.IdFactura</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card tp-card tp-card-hover h-100">
+            <div class="card-body p-4">
+                <div class="tp-kicker mb-1">Subtotal</div>
+                <div class="tp-price">Q@Model.Resultado?.Subtotal.ToString("N2")</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card tp-card tp-card-hover h-100">
+            <div class="card-body p-4">
+                <div class="tp-kicker mb-1">Total</div>
+                <div class="tp-price">Q@Model.Resultado?.Total.ToString("N2")</div>
+            </div>
+        </div>
+    </div>
+</div>

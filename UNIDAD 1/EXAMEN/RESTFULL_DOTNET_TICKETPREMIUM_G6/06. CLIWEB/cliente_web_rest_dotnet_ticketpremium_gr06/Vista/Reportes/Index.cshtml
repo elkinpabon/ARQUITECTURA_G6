@@ -1,0 +1,67 @@
+@model cliente_web_rest_dotnet_ticketpremium_gr06.Modelo.ReporteViewModel
+@{
+    ViewData["Title"] = "Reportes";
+}
+
+<div class="card tp-card tp-card-hover mb-4">
+    <div class="card-body p-4">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-md-6">
+                <label class="form-label">Partido</label>
+                <select name="codigoPartido" class="form-select tp-input">
+                    @foreach (var partido in Model.Partidos)
+                    {
+                        if (partido.Codigo == Model.CodigoPartido)
+                        {
+                            <option value="@partido.Codigo" selected>@partido.Descripcion</option>
+                        }
+                        else
+                        {
+                            <option value="@partido.Codigo">@partido.Descripcion</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-primary w-100">Ver reporte</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card tp-card tp-card-hover">
+    <div class="card-body p-4">
+        <h2 class="h4 mb-3">Resumen de ventas</h2>
+        <div class="table-responsive">
+            <table class="table align-middle tp-table mb-0">
+                <thead>
+                    <tr>
+                        <th>Partido</th>
+                        <th>Fecha</th>
+                        <th>Localidad</th>
+                        <th>Vendidos</th>
+                        <th>Total recaudado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var registro in Model.Registros)
+                    {
+                        <tr>
+                            <td>@registro.Partido</td>
+                            <td>@registro.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@registro.Localidad</td>
+                            <td>@registro.Vendidos</td>
+                            <td>Q@registro.TotalRecaudado.ToString("N2")</td>
+                        </tr>
+                    }
+                    @if (!Model.Registros.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center tp-muted py-4">Sin ventas registradas para este partido.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

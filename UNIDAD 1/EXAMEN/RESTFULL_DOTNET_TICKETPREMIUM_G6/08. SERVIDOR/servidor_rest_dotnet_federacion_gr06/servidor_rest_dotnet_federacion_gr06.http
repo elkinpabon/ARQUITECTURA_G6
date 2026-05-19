@@ -1,0 +1,6 @@
+@servidor_rest_dotnet_federacion_gr06_HostAddress = http://localhost:5137
+
+GET {{servidor_rest_dotnet_federacion_gr06_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

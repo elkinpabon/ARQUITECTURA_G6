@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="cliente_movil_rest_dotnet_ticketpremium_gr06.Vista.Registro"
+             BackgroundColor="#F8FAFC">
+    <ScrollView>
+        <VerticalStackLayout Padding="18" Spacing="16">
+            <Border StrokeShape="RoundRectangle 24" Background="#0F172A" Padding="20">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="TicketPremium" FontSize="30" TextColor="White" FontAttributes="Bold" />
+                    <Label Text="Crea tu cuenta" TextColor="#CBD5E1" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border StrokeShape="RoundRectangle 20" Background="White" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Registro" FontSize="20" FontAttributes="Bold" TextColor="#0F172A" />
+                    <Entry x:Name="TxtNombre" Placeholder="Nombre completo" />
+                    <Entry x:Name="TxtUsuario" Placeholder="Usuario" />
+                    <Entry x:Name="TxtCorreo" Placeholder="Correo" Keyboard="Email" />
+                    <Entry x:Name="TxtPassword" Placeholder="Contraseña" IsPassword="True" />
+                    <Entry x:Name="TxtConfirmar" Placeholder="Confirmar contraseña" IsPassword="True" />
+                    <Button Text="Registrarme" Clicked="OnRegisterClicked" BackgroundColor="#16A34A" TextColor="White" CornerRadius="14" />
+                    <Button Text="Volver al login" Clicked="OnBackClicked" BackgroundColor="#E2E8F0" TextColor="#0F172A" CornerRadius="14" />
+                    <Label x:Name="LblMensaje" TextColor="#0F172A" FontAttributes="Bold" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

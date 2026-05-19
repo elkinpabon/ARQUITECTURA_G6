@@ -33,7 +33,12 @@ namespace CLICONSOLA.Servicio
 
             var response = await _http.SendAsync(request);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsStringAsync();
+            var body = await response.Content.ReadAsStringAsync();
+            if (body.Contains("<soap:Fault>") || body.Contains("<Fault>"))
+            {
+                throw new InvalidOperationException("El servidor SOAP devolvió un fault.");
+            }
+            return body;
         }
 
         private static XElement GetBody(string responseXml)

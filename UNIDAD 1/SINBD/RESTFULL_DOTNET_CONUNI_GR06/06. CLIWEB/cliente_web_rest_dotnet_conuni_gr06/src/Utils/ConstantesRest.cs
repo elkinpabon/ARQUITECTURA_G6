@@ -2,5 +2,23 @@ namespace Ec.Edu.Monster.Utils;
 
 public static class ConstantesRest
 {
-    public const string DireccionServicio = "http://10.25.36.189:5000/api/conuni";
+    public static string IpServidor { get; set; } = "192.168.1.54";
+    public static int PuertoServidor { get; set; } = 5000;
+
+    public static string DireccionServicio
+    {
+        get => $"http://{IpServidor}:{PuertoServidor}/api/conuni";
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value)) return;
+            var text = value.Trim();
+            if (!text.Contains("://", StringComparison.Ordinal))
+                text = "http://" + text;
+            if (Uri.TryCreate(text, UriKind.Absolute, out var uri))
+            {
+                IpServidor = uri.Host;
+                PuertoServidor = uri.IsDefaultPort ? 5000 : uri.Port;
+            }
+        }
+    }
 }

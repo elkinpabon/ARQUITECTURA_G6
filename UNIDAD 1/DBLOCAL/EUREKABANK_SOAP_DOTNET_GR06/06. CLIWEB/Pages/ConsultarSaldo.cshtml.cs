@@ -6,10 +6,10 @@ namespace CLIWEB.Pages
 {
     public class ConsultarSaldoModel : PageModel
     {
-        private readonly SoapClientService _soap = new("http://localhost:5000");
+        private readonly SoapClientService _soap = new();
         [BindProperty] public string Campo1 { get; set; } = "";
         public string Mensaje { get; set; } = "";
-        public string User => HttpContext.Session.GetString("Usuario") ?? "";
+        public new string User => HttpContext.Session.GetString("Usuario") ?? "";
 
         public IActionResult OnGet() => string.IsNullOrEmpty(User) ? RedirectToPage("/Login") : Page();
 

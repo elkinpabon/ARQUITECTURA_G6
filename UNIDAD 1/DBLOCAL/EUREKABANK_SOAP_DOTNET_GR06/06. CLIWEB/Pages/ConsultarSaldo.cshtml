@@ -3,10 +3,33 @@
 @{
     ViewData["Title"] = "Consultar Saldo";
 }
-<h2>Consultar Saldo</h2>
-<form method="post">
-    <div><label>Cuenta:</label><input type="text" name="Campo1" required /></div>
-    <div><button type="submit">Consultar</button></div>
-</form>
-@if(!string.IsNullOrEmpty(Model.Mensaje)) { <p style="color:@(Model.Mensaje.StartsWith("OK") ? "green" : "red")">@Model.Mensaje</p> }
-<a href="/Index">Volver</a>
+
+<div class="wrap">
+    <div class="card">
+        <div class="topbar">
+            <div class="brand">
+                <img src="/img/moster.webp" alt="Monster" />
+                <h1>EUREKABANK GR06</h1>
+            </div>
+            <span class="user">Usuario: <strong>@Model.User</strong> &middot; <a class="link" href="/Logout">Salir</a></span>
+        </div>
+
+        <h2>Consultar saldo</h2>
+
+        <form method="post">
+            <fieldset class="fieldset">
+                <legend>Cuenta</legend>
+                <label for="Campo1">Código de cuenta</label>
+                <input id="Campo1" type="text" name="Campo1" required />
+                <button type="submit">Consultar</button>
+            </fieldset>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.Mensaje))
+        {
+            <div class="alert @(Model.Mensaje.StartsWith("OK") ? "ok" : "err")">@Model.Mensaje</div>
+        }
+
+        <a class="link" href="/Index">&larr; Volver al menú</a>
+    </div>
+</div>

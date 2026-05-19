@@ -2,5 +2,8 @@ namespace Ec.Edu.Monster.Utils;
 
 public static class ConstantesPruebas
 {
-    public const string DireccionServicio = "http://192.168.1.54:5000/api/conuni";
+    public static string IpServidor { get; set; } = "192.168.1.54";
+    public static int PuertoServidor { get; set; } = 5000;
+
+    public static string DireccionServicio => $"http://{IpServidor}:{PuertoServidor}/api/conuni";
 }

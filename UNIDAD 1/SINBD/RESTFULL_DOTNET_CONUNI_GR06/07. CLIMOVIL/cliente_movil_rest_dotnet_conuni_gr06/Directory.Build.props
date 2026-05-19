@@ -1,5 +1,6 @@
 <Project>
   <PropertyGroup>
-    <BaseIntermediateOutputPath>o\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>C:\Users\elkin\AppData\Local\Temp\opencode\maui\</BaseIntermediateOutputPath>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(BaseIntermediateOutputPath)**</DefaultItemExcludes>
   </PropertyGroup>
 </Project>

@@ -6,9 +6,9 @@ namespace CLIWEB.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly SoapClientService _soap = new("http://localhost:5000");
+        private readonly SoapClientService _soap = new();
 
-        public string User => HttpContext.Session.GetString("Usuario") ?? "";
+        public new string User => HttpContext.Session.GetString("Usuario") ?? "";
         public bool IsAdmin => HttpContext.Session.GetString("EsAdmin") == "true";
         public string SelectedCliente { get; set; } = "";
         public string ClienteNombre { get; set; } = "";
@@ -26,7 +26,7 @@ namespace CLIWEB.Pages
                 if (IsAdmin)
                 {
                     Clientes = _soap.ListarClientes();
-                    SelectedCliente = cliente ?? Clientes.FirstOrDefault()?.Codigo ?? "";
+                    SelectedCliente = cliente ?? string.Empty;
                 }
                 else
                 {

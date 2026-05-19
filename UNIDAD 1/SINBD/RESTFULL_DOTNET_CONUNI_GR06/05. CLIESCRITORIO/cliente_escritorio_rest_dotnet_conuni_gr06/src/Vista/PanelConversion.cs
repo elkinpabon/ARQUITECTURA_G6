@@ -62,6 +62,56 @@ public partial class PanelConversion : UserControl
         };
         btnConvertir.Click += (_, _) => Convertir();
         CargarOpciones();
+
+        ReorganizarLayout();
+    }
+
+    private void ReorganizarLayout()
+    {
+        var contenido = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            ColumnCount = 1,
+            RowCount = 6,
+            Padding = new Padding(240, 52, 240, 32)
+        };
+
+        for (var i = 0; i < 6; i++)
+        {
+            contenido.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        }
+
+        lblEncabezado.Dock = DockStyle.Fill;
+        lblEncabezado.TextAlign = ContentAlignment.MiddleCenter;
+        lblEncabezado.Margin = new Padding(0, 0, 0, 10);
+        contenido.Controls.Add(lblEncabezado, 0, 0);
+
+        lblDescripcion.Dock = DockStyle.Fill;
+        lblDescripcion.TextAlign = ContentAlignment.MiddleCenter;
+        lblDescripcion.Margin = new Padding(0, 0, 0, 18);
+        contenido.Controls.Add(lblDescripcion, 0, 1);
+
+        comboOperacion.Dock = DockStyle.Fill;
+        comboOperacion.Margin = new Padding(0, 0, 0, 14);
+        contenido.Controls.Add(comboOperacion, 0, 2);
+
+        campoValor.Dock = DockStyle.Fill;
+        campoValor.Margin = new Padding(0, 0, 0, 18);
+        contenido.Controls.Add(campoValor, 0, 3);
+
+        btnConvertir.Dock = DockStyle.Fill;
+        btnConvertir.Margin = new Padding(0, 0, 0, 18);
+        contenido.Controls.Add(btnConvertir, 0, 4);
+
+        lblResultado.Dock = DockStyle.Fill;
+        lblResultado.MinimumSize = new Size(0, 52);
+        lblResultado.TextAlign = ContentAlignment.MiddleLeft;
+        lblResultado.Margin = new Padding(0);
+        contenido.Controls.Add(lblResultado, 0, 5);
+
+        Controls.Clear();
+        Controls.Add(contenido);
+        Controls.Add(panelEncabezado);
     }
 
     private void CargarOpciones()

@@ -6,13 +6,13 @@ namespace CLIWEB.Pages
 {
     public class TransferirModel : PageModel
     {
-        private readonly SoapClientService _soap = new("http://localhost:5000");
+        private readonly SoapClientService _soap = new();
         [BindProperty] public string Campo1 { get; set; } = "";
         [BindProperty] public string Campo2 { get; set; } = "";
         [BindProperty] public string Campo3 { get; set; } = "";
         [BindProperty] public string Campo4 { get; set; } = "01";
         public string Mensaje { get; set; } = "";
-        public string User => HttpContext.Session.GetString("Usuario") ?? "";
+        public new string User => HttpContext.Session.GetString("Usuario") ?? "";
 
         public IActionResult OnGet() => string.IsNullOrEmpty(User) ? RedirectToPage("/Login") : Page();
 

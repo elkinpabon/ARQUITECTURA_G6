@@ -2,12 +2,16 @@ namespace CLIESCRITORIO.Config
 {
     public static class ServidorConfig
     {
-        private static string _baseUrl = "http://localhost:5000";
+        private static string _baseUrl = Constantes.BaseUrl;
 
         public static string BaseUrl
         {
             get => _baseUrl;
-            set => _baseUrl = value.TrimEnd('/');
+            set
+            {
+                Constantes.BaseUrl = value;
+                _baseUrl = Constantes.BaseUrl;
+            }
         }
 
         public static string WsLoginUrl => $"{_baseUrl}/WSLogin.asmx";

@@ -1,0 +1,82 @@
+@model cliente_web_rest_dotnet_ticketpremium_gr06.Modelo.CompraViewModel
+@{
+    ViewData["Title"] = "Comprar";
+}
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="card tp-card tp-card-hover h-100">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <div class="tp-kicker mb-1">Compra</div>
+                        <h2 class="h4 mb-0">Boletos disponibles</h2>
+                    </div>
+                    <span class="tp-chip">Partido #@Model.Partido?.Codigo</span>
+                </div>
+                <form asp-action="Comprar" method="post">
+                    <input type="hidden" asp-for="Partido.Codigo" value="@Model.Partido?.Codigo" />
+                    <div class="mb-3">
+                        <label class="form-label">Partido</label>
+                        <div class="form-control tp-input bg-light">@Model.Partido?.Descripcion</div>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="CodigoLocalidad" class="form-label">Localidad</label>
+                        <select asp-for="CodigoLocalidad" class="form-select tp-input">
+                            <option value="">Seleccione...</option>
+                            @foreach (var localidad in Model.Localidades)
+                            {
+                                <option value="@localidad.CodigoLocalidad">@localidad.CodigoLocalidad - Q@localidad.Precio.ToString("N2")</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Cantidad" class="form-label">Cantidad</label>
+                        <input asp-for="Cantidad" class="form-control tp-input" min="1" />
+                    </div>
+                    <button class="btn btn-success w-100">Registrar compra</button>
+                </form>
+                @if (!string.IsNullOrWhiteSpace(Model.Mensaje))
+                {
+                    <div class="alert alert-warning mt-3 mb-0">@Model.Mensaje</div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        <div class="card tp-card tp-card-hover h-100">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <div class="tp-kicker mb-1">Referencia</div>
+                        <h3 class="h5 mb-0">Localidades y precios</h3>
+                    </div>
+                    <span class="tp-chip">@Model.Localidades.Count opciones</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table align-middle tp-table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Localidad</th>
+                                <th>Disponible</th>
+                                <th>Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var localidad in Model.Localidades)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">@localidad.CodigoLocalidad</td>
+                                    <td>@localidad.Disponibilidad</td>
+                                    <td class="tp-price">Q@localidad.Precio.ToString("N2")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

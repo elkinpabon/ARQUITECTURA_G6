@@ -3,26 +3,38 @@
 @{
     ViewData["Title"] = "EurekaBank";
 }
-<h2>EurekaBank - Bienvenido @Model.User</h2>
-<p>Rol: @(Model.IsAdmin ? "ADMINISTRADOR" : "CLIENTE")</p>
+<div class="wrap">
+    <div class="card">
+        <div class="topbar">
+            <div class="brand">
+                <div class="logo">EB</div>
+                <h1>EurekaBank</h1>
+            </div>
+            <span class="user">Usuario: <strong>@Model.User</strong> &middot; <a class="link" href="/Logout">Salir</a></span>
+        </div>
 
-<h3>Operaciones</h3>
-<ul>
-    @if (Model.IsAdmin)
-    {
-        <li><a href="/Depositar">Depositar</a></li>
-    }
-    <li><a href="/Retirar">Retirar</a></li>
-    <li><a href="/ConsultarSaldo">Consultar Saldo</a></li>
-    <li><a href="/Transferir">Transferir</a></li>
-    <li><a href="/Cuentas">@(Model.IsAdmin ? "Listar Cuentas" : "Mis Cuentas")</a></li>
-    @if (Model.IsAdmin)
-    {
-        <li><a href="/Clientes">Listar Clientes</a></li>
-        <li><a href="/RegistrarCliente">Registrar Cliente</a></li>
-        <li><a href="/RegistrarCuenta">Registrar Cuenta</a></li>
-        <li><a href="/EliminarCuenta">Eliminar Cuenta</a></li>
-    }
-    <li><a href="/Movimientos">Movimientos</a></li>
-</ul>
-<a href="/Logout">Cerrar Sesion</a>
+        <h2 class="menu-title">
+            Operaciones bancarias
+            @if (Model.IsAdmin)
+            {
+                <span class="admin-chip">ADMIN</span>
+            }
+        </h2>
+
+        <div class="menu-grid">
+            @if (Model.IsAdmin)
+            {
+                <a href="/Depositar">Depositar</a>
+                <a href="/RegistrarCliente">Registrar cliente</a>
+                <a href="/RegistrarCuenta">Registrar cuenta</a>
+                <a href="/EliminarCuenta">Eliminar cuenta</a>
+                <a href="/Cuentas">Cuentas</a>
+                <a href="/Clientes">Clientes</a>
+            }
+            <a href="/Retirar">Retirar</a>
+            <a href="/ConsultarSaldo">Consultar saldo</a>
+            <a href="/Transferir">Transferir</a>
+            <a href="/Movimientos">Movimientos</a>
+        </div>
+    </div>
+</div>

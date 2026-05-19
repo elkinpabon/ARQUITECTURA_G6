@@ -1,0 +1,65 @@
+@model cliente_web_rest_dotnet_ticketpremium_gr06.Modelo.InicioViewModel
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<section class="tp-hero p-4 p-lg-5 mb-4">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+            <span class="badge tp-badge rounded-pill mb-3">TicketPremium Web</span>
+            <h1 class="display-5 fw-semibold mb-3">Gestiona partidos y boletos desde una sola vista.</h1>
+            <p class="lead mb-4 text-white-75">Consulta disponibilidad, compara precios por localidad y completa compras sin salir del flujo MVC.</p>
+            <div class="d-flex flex-wrap gap-2">
+                <a class="btn btn-light btn-lg" asp-controller="Partidos" asp-action="Index">Ver partidos</a>
+                <a class="btn btn-outline-light btn-lg" asp-controller="Ventas" asp-action="Index">Comprar ahora</a>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="tp-hero-panel p-4 h-100">
+                <div class="tp-kicker mb-2 text-white-50">Resumen</div>
+                <div class="d-flex align-items-end justify-content-between mb-2">
+                    <div>
+                        <div class="display-5 fw-semibold mb-0">@Model.Partidos.Count</div>
+                        <div class="text-white-75">partidos cargados</div>
+                    </div>
+                    <span class="tp-chip bg-white text-primary">Actualizado</span>
+                </div>
+                <p class="mb-0 text-white-75">Acceso directo a partidos, localidades, compras y reportes.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="d-flex flex-wrap gap-2 mb-3">
+    <span class="tp-chip">Compra segura</span>
+    <span class="tp-chip">Precios por localidad</span>
+    <span class="tp-chip">Reportes en tiempo real</span>
+</div>
+
+<div class="row g-4">
+    @if (Model.Partidos.Count == 0)
+    {
+        <div class="col-12">
+            <div class="tp-empty p-4 text-center">No hay partidos disponibles en este momento.</div>
+        </div>
+    }
+    else
+    {
+        @foreach (var partido in Model.Partidos)
+        {
+            <div class="col-md-4">
+                <div class="card tp-card tp-card-hover h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <span class="tp-chip">@partido.Fecha.ToString("dd/MM HH:mm")</span>
+                            <span class="tp-muted small text-end">@partido.Lugar</span>
+                        </div>
+                        <h5 class="card-title fw-semibold">@partido.Descripcion</h5>
+                        <p class="card-text tp-muted mb-4">@partido.EquipoLocal vs @partido.EquipoVisita</p>
+                        <a class="btn btn-sm btn-outline-primary" asp-controller="Partidos" asp-action="Localidades" asp-route-codigoPartido="@partido.Codigo">Ver localidades</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

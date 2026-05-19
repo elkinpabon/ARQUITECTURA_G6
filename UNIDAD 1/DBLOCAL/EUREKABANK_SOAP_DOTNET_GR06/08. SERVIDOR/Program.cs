@@ -2,6 +2,8 @@ using SoapCore;
 using SERVIDOR.Controlador;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseUrls("http://0.0.0.0:5000");
+SERVIDOR.Persistencia.ConexionBD.Configure(builder.Configuration.GetConnectionString("EurekaBank"));
 
 builder.Services.AddSingleton<WSLoginService>();
 builder.Services.AddSingleton<WSCuentaService>();
@@ -20,4 +22,4 @@ app.UseEndpoints(endpoints =>
 
 app.MapGet("/", () => "EurekaBank SOAP Server - GR06");
 
-app.Run("http://localhost:5000");
+app.Run();

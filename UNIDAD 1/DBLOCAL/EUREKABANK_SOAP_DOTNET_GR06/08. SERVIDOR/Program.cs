@@ -4,6 +4,7 @@ using SERVIDOR.Controlador;
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls("http://0.0.0.0:5000");
 SERVIDOR.Persistencia.ConexionBD.Configure(builder.Configuration.GetConnectionString("EurekaBank"));
+SERVIDOR.Persistencia.EsquemaBD.Asegurar();
 
 builder.Services.AddSingleton<WSLoginService>();
 builder.Services.AddSingleton<WSCuentaService>();

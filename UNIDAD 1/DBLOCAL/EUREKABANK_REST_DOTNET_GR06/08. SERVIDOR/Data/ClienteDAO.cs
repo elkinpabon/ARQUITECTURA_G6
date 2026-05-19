@@ -36,6 +36,8 @@ public class ClienteDAO
     {
         using var cn = ConexionBD.CrearConexion();
         cn.Open();
+        EsquemaBD.Asegurar();
+        dni = NormalizarDni(dni);
 
         string codigo;
         using (var pm = new SqlCommand(
@@ -51,17 +53,31 @@ public class ClienteDAO
             VALUES (@codigo, @paterno, @materno, @nombre, @dni, @ciudad, @direccion, @telefono, @email)
             """;
         using var ps = new SqlCommand(sql, cn);
-        ps.Parameters.AddWithValue("@codigo", codigo);
-        ps.Parameters.AddWithValue("@paterno", paterno);
-        ps.Parameters.AddWithValue("@materno", materno);
-        ps.Parameters.AddWithValue("@nombre", nombre);
-        ps.Parameters.AddWithValue("@dni", dni);
-        ps.Parameters.AddWithValue("@ciudad", ciudad);
-        ps.Parameters.AddWithValue("@direccion", direccion);
-        ps.Parameters.AddWithValue("@telefono", telefono);
-        ps.Parameters.AddWithValue("@email", email);
-        ps.ExecuteNonQuery();
+        ps.Parameters.Add("@codigo", System.Data.SqlDbType.Char, 5).Value = codigo;
+        ps.Parameters.Add("@paterno", System.Data.SqlDbType.VarChar, 25).Value = paterno;
+        ps.Parameters.Add("@materno", System.Data.SqlDbType.VarChar, 25).Value = materno;
+        ps.Parameters.Add("@nombre", System.Data.SqlDbType.VarChar, 30).Value = nombre;
+        ps.Parameters.Add("@dni", System.Data.SqlDbType.Char, 8).Value = dni;
+        ps.Parameters.Add("@ciudad", System.Data.SqlDbType.VarChar, 30).Value = ciudad;
+        ps.Parameters.Add("@direccion", System.Data.SqlDbType.VarChar, 50).Value = direccion;
+        ps.Parameters.Add("@telefono", System.Data.SqlDbType.VarChar, 20).Value = telefono;
+        ps.Parameters.Add("@email", System.Data.SqlDbType.VarChar, 50).Value = email;
+        try
+        {
+            ps.ExecuteNonQuery();
+        }
+        catch (SqlException ex) when (ex.Number is 8152 or 2628)
+        {
+            EsquemaBD.Asegurar();
+            ps.ExecuteNonQuery();
+        }
         return codigo;
+    }
+
+    private static string NormalizarDni(string dni)
+    {
+        var limpio = new string((dni ?? string.Empty).Where(char.IsDigit).ToArray());
+        return limpio.Length > 8 ? limpio[..8] : limpio;
     }
 
     public bool Existe(string codigo)

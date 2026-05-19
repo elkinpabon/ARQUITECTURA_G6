@@ -24,6 +24,8 @@ builder.Services.AddSingleton<SERVIDOR.Services.MovimientoService>();
 
 var app = builder.Build();
 
+SERVIDOR.Data.EsquemaBD.Asegurar();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

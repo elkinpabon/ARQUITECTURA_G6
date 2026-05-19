@@ -548,16 +548,29 @@ public class MainForm : Form
             var grid = new DataGridView
             {
                 Dock = DockStyle.Fill,
-                DataSource = list,
                 ReadOnly = true,
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
-                BackgroundColor = Color.FromArgb(15, 23, 42),
-                ForeColor = Color.WhiteSmoke,
+                BackgroundColor = Color.White,
+                ForeColor = Color.Black,
                 RowHeadersVisible = false,
                 BorderStyle = BorderStyle.None,
                 AllowUserToAddRows = false,
-                AllowUserToDeleteRows = false
+                AllowUserToDeleteRows = false,
+                AutoGenerateColumns = false,
+                EnableHeadersVisualStyles = false
             };
+            grid.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Cuenta", DataPropertyName = nameof(MovimientoModel.CodigoCuenta) });
+            grid.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Nro.", DataPropertyName = nameof(MovimientoModel.NumeroMovimiento) });
+            grid.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Fecha", DataPropertyName = nameof(MovimientoModel.FechaMovimiento) });
+            grid.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Tipo", DataPropertyName = nameof(MovimientoModel.TipoDescripcion) });
+            grid.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Importe", DataPropertyName = nameof(MovimientoModel.ImporteMovimiento) });
+            grid.DataSource = list;
+            grid.DefaultCellStyle.BackColor = Color.White;
+            grid.DefaultCellStyle.ForeColor = Color.Black;
+            grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+            grid.ColumnHeadersDefaultCellStyle.BackColor = Color.WhiteSmoke;
+            grid.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            grid.Dock = DockStyle.Fill;
             dlg.Controls.Add(grid);
             dlg.ShowDialog(this);
         }

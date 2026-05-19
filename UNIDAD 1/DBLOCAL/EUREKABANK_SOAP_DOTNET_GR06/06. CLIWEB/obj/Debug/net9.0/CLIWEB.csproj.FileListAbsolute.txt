@@ -95,3 +95,4 @@ C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\06. CLIWEB\obj\Debug\net9.0\CLIWEB.pdb
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\06. CLIWEB\obj\Debug\net9.0\CLIWEB.genruntimeconfig.cache
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\06. CLIWEB\obj\Debug\net9.0\ref\CLIWEB.dll
+C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_SOAP_DOTNET_GR06\06. CLIWEB\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

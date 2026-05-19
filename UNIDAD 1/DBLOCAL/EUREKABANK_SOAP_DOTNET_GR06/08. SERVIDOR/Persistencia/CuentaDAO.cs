@@ -5,13 +5,14 @@ namespace SERVIDOR.Persistencia
 {
     public class CuentaDAO
     {
-        public Dictionary<string, object>? ObtenerParaActualizar(SqlConnection cn, string codigoCuenta)
+        public Dictionary<string, object>? ObtenerParaActualizar(SqlConnection cn, string codigoCuenta, SqlTransaction? tx = null)
         {
             string sql = "SELECT chr_cuencodigo, chr_monecodigo, chr_cliecodigo, dec_cuensaldo, int_cuencontmov, vch_cuenestado FROM dbo.cuenta WHERE chr_cuencodigo = @codigo FOR UPDATE";
             // SQL Server no tiene FOR UPDATE, usamos UPDLOCK, ROWLOCK
             sql = "SELECT chr_cuencodigo, chr_monecodigo, chr_cliecodigo, dec_cuensaldo, int_cuencontmov, vch_cuenestado FROM dbo.cuenta WITH (UPDLOCK, ROWLOCK) WHERE chr_cuencodigo = @codigo";
 
             using var cmd = new SqlCommand(sql, cn);
+            if (tx != null) cmd.Transaction = tx;
             cmd.Parameters.AddWithValue("@codigo", codigoCuenta);
             using var dr = cmd.ExecuteReader();
 
@@ -31,10 +32,11 @@ namespace SERVIDOR.Persistencia
             return null;
         }
 
-        public void ActualizarSaldo(SqlConnection cn, string codigoCuenta, double delta)
+        public void ActualizarSaldo(SqlConnection cn, string codigoCuenta, double delta, SqlTransaction? tx = null)
         {
             string sql = "UPDATE dbo.cuenta SET dec_cuensaldo = dec_cuensaldo + @delta, int_cuencontmov = int_cuencontmov + 1 WHERE chr_cuencodigo = @codigo";
             using var cmd = new SqlCommand(sql, cn);
+            if (tx != null) cmd.Transaction = tx;
             cmd.Parameters.AddWithValue("@delta", delta);
             cmd.Parameters.AddWithValue("@codigo", codigoCuenta);
             cmd.ExecuteNonQuery();
@@ -97,6 +99,8 @@ namespace SERVIDOR.Persistencia
 
         public string Insertar(string clienteCodigo, string moneda)
         {
+            EsquemaBD.Asegurar();
+
             string sql = "SELECT ISNULL(MAX(CAST(chr_cuencodigo AS INT)), 0) + 1 FROM dbo.cuenta";
             string nuevoCodigo;
 

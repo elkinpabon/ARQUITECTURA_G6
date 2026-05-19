@@ -136,4 +136,3 @@ C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\08. SERVIDOR\obj\Debug\net9.0\SERVIDOR.pdb
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\08. SERVIDOR\obj\Debug\net9.0\SERVIDOR.genruntimeconfig.cache
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\08. SERVIDOR\obj\Debug\net9.0\ref\SERVIDOR.dll
-C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\08. SERVIDOR\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

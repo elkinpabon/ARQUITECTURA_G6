@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text;
+using System.Globalization;
 
 namespace CLIWEB.Services
 {
@@ -189,7 +190,7 @@ namespace CLIWEB.Services
                 int ep = resp.IndexOf("</MovimientoModel>", p);
                 if (ep < 0) break;
                 string item = resp.Substring(p, ep - p + 18);
-                list.Add(new MovimientoModel { CodigoCuenta = Extract(item, "CodigoCuenta"), NumeroMovimiento = int.TryParse(Extract(item, "NumeroMovimiento"), out var n) ? n : 0, FechaMovimiento = Extract(item, "FechaMovimiento"), CodigoEmpleado = Extract(item, "CodigoEmpleado"), CodigoTipoMovimiento = Extract(item, "CodigoTipoMovimiento"), TipoDescripcion = Extract(item, "TipoDescripcion"), ImporteMovimiento = double.TryParse(Extract(item, "ImporteMovimiento"), out var imp) ? imp : 0, CuentaReferencia = Extract(item, "CuentaReferencia"), MonedaOrigen = Extract(item, "MonedaOrigen"), ImporteOrigen = double.TryParse(Extract(item, "ImporteOrigen"), out var io) ? io : null, TasaAplicada = double.TryParse(Extract(item, "TasaAplicada"), out var ta) ? ta : null });
+                list.Add(new MovimientoModel { CodigoCuenta = Extract(item, "CodigoCuenta"), NumeroMovimiento = int.TryParse(Extract(item, "NumeroMovimiento"), out var n) ? n : 0, FechaMovimiento = Extract(item, "FechaMovimiento"), CodigoEmpleado = Extract(item, "CodigoEmpleado"), CodigoTipoMovimiento = Extract(item, "CodigoTipoMovimiento"), TipoDescripcion = Extract(item, "TipoDescripcion"), ImporteMovimiento = double.TryParse(Extract(item, "ImporteMovimiento"), NumberStyles.Any, CultureInfo.InvariantCulture, out var imp) ? imp : 0, CuentaReferencia = Extract(item, "CuentaReferencia"), MonedaOrigen = Extract(item, "MonedaOrigen"), ImporteOrigen = double.TryParse(Extract(item, "ImporteOrigen"), NumberStyles.Any, CultureInfo.InvariantCulture, out var io) ? io : null, TasaAplicada = double.TryParse(Extract(item, "TasaAplicada"), NumberStyles.Any, CultureInfo.InvariantCulture, out var ta) ? ta : null });
                 p = ep + 18;
             }
             return list;

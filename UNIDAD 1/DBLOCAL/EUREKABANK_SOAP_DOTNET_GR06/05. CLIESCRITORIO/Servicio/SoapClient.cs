@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text;
 using System.Xml;
+using System.Globalization;
 using CLIESCRITORIO.Config;
 
 namespace CLIESCRITORIO.Servicio
@@ -336,11 +337,11 @@ namespace CLIESCRITORIO.Servicio
                     CodigoEmpleado = ExtractStringValue(item, "CodigoEmpleado"),
                     CodigoTipoMovimiento = ExtractStringValue(item, "CodigoTipoMovimiento"),
                     TipoDescripcion = ExtractStringValue(item, "TipoDescripcion"),
-                    ImporteMovimiento = double.TryParse(ExtractStringValue(item, "ImporteMovimiento"), out var imp) ? imp : 0.0,
+                    ImporteMovimiento = double.TryParse(ExtractStringValue(item, "ImporteMovimiento"), NumberStyles.Any, CultureInfo.InvariantCulture, out var imp) ? imp : 0.0,
                     CuentaReferencia = ExtractStringValue(item, "CuentaReferencia"),
                     MonedaOrigen = ExtractStringValue(item, "MonedaOrigen"),
-                    ImporteOrigen = string.IsNullOrEmpty(importeOrigenStr) ? null : double.TryParse(importeOrigenStr, out var io) ? io : null,
-                    TasaAplicada = string.IsNullOrEmpty(tasaAplicadaStr) ? null : double.TryParse(tasaAplicadaStr, out var ta) ? ta : null
+                    ImporteOrigen = string.IsNullOrEmpty(importeOrigenStr) ? null : double.TryParse(importeOrigenStr, NumberStyles.Any, CultureInfo.InvariantCulture, out var io) ? io : null,
+                    TasaAplicada = string.IsNullOrEmpty(tasaAplicadaStr) ? null : double.TryParse(tasaAplicadaStr, NumberStyles.Any, CultureInfo.InvariantCulture, out var ta) ? ta : null
                 });
                 pos = endPos + 18;
             }

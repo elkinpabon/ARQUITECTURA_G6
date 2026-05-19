@@ -5,7 +5,7 @@ namespace SERVIDOR.Data;
 
 public class CuentaDAO
 {
-    public Dictionary<string, object>? ObtenerParaActualizar(SqlConnection cn, string codigoCuenta)
+    public Dictionary<string, object>? ObtenerParaActualizar(SqlConnection cn, string codigoCuenta, SqlTransaction? tx = null)
     {
         const string sql = """
             SELECT chr_cuencodigo, chr_monecodigo, dec_cuensaldo, vch_cuenestado,
@@ -13,6 +13,7 @@ public class CuentaDAO
             FROM cuenta WITH (UPDLOCK, ROWLOCK) WHERE chr_cuencodigo = @codigo
             """;
         using var ps = new SqlCommand(sql, cn);
+        if (tx != null) ps.Transaction = tx;
         ps.Parameters.AddWithValue("@codigo", codigoCuenta);
         using var rs = ps.ExecuteReader();
         if (rs.Read())
@@ -30,7 +31,7 @@ public class CuentaDAO
         return null;
     }
 
-    public int ActualizarSaldo(SqlConnection cn, string codigoCuenta, double delta)
+    public int ActualizarSaldo(SqlConnection cn, string codigoCuenta, double delta, SqlTransaction? tx = null)
     {
         const string sql = """
             UPDATE cuenta
@@ -39,6 +40,7 @@ public class CuentaDAO
             WHERE chr_cuencodigo = @codigo
             """;
         using var ps = new SqlCommand(sql, cn);
+        if (tx != null) ps.Transaction = tx;
         ps.Parameters.AddWithValue("@delta", delta);
         ps.Parameters.AddWithValue("@codigo", codigoCuenta);
         return ps.ExecuteNonQuery();
@@ -105,6 +107,8 @@ public class CuentaDAO
 
     public string Insertar(string clienteCodigo, string moneda)
     {
+        EsquemaBD.Asegurar();
+
         using var cn = ConexionBD.CrearConexion();
         cn.Open();
 

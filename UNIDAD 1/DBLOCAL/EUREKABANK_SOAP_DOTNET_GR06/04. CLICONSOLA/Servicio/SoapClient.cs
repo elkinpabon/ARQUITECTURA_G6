@@ -1,6 +1,7 @@
 using System.Net.Http;
 using System.Text;
 using System.Xml.Linq;
+using System.Globalization;
 using CLICONSOLA.Config;
 using CLICONSOLA.Servicio;
 
@@ -119,11 +120,11 @@ namespace CLICONSOLA.Servicio
                     CodigoEmpleado = item.Element("CodigoEmpleado")?.Value ?? string.Empty,
                     CodigoTipoMovimiento = item.Element("CodigoTipoMovimiento")?.Value ?? string.Empty,
                     TipoDescripcion = item.Element("TipoDescripcion")?.Value ?? string.Empty,
-                    ImporteMovimiento = double.TryParse(item.Element("ImporteMovimiento")?.Value, out var im) ? im : 0,
+                    ImporteMovimiento = double.TryParse(item.Element("ImporteMovimiento")?.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var im) ? im : 0,
                     CuentaReferencia = item.Element("CuentaReferencia")?.Value ?? string.Empty,
                     MonedaOrigen = item.Element("MonedaOrigen")?.Value ?? string.Empty,
-                    ImporteOrigen = double.TryParse(item.Element("ImporteOrigen")?.Value, out var io) ? io : null,
-                    TasaAplicada = double.TryParse(item.Element("TasaAplicada")?.Value, out var ta) ? ta : null
+                    ImporteOrigen = double.TryParse(item.Element("ImporteOrigen")?.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var io) ? io : null,
+                    TasaAplicada = double.TryParse(item.Element("TasaAplicada")?.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var ta) ? ta : null
                 });
             }
             return list;

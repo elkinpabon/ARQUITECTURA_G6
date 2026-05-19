@@ -178,7 +178,7 @@ public class CuentaService
         using var tx = cn.BeginTransaction();
         try
         {
-            var cuenta = _cuentaDAO.ObtenerParaActualizar(cn, codigoCuenta);
+            var cuenta = _cuentaDAO.ObtenerParaActualizar(cn, codigoCuenta, tx);
             if (cuenta == null)
             {
                 tx.Rollback();
@@ -192,7 +192,7 @@ public class CuentaService
 
             var monedaCuenta = cuenta["chr_monecodigo"].ToString()!;
             var monIn = string.IsNullOrWhiteSpace(monedaMonto) ? monedaCuenta : monedaMonto;
-            var tasa = _tasaDAO.Tasa(cn, monIn, monedaCuenta);
+            var tasa = _tasaDAO.Tasa(cn, monIn, monedaCuenta, tx);
             var monto = Redondear2(montoIngresado * tasa);
             var huboConversion = monIn != monedaCuenta;
 
@@ -214,7 +214,7 @@ public class CuentaService
                 tipo = TIPO_RETIRO;
             }
 
-            var filas = _cuentaDAO.ActualizarSaldo(cn, codigoCuenta, delta);
+            var filas = _cuentaDAO.ActualizarSaldo(cn, codigoCuenta, delta, tx);
             if (filas == 0)
             {
                 tx.Rollback();
@@ -224,7 +224,7 @@ public class CuentaService
             var mov = new MovimientoModel
             {
                 CodigoCuenta = codigoCuenta,
-                NumeroMovimiento = _movimientoDAO.SiguienteNumero(cn, codigoCuenta),
+                NumeroMovimiento = _movimientoDAO.SiguienteNumero(cn, codigoCuenta, tx),
                 FechaMovimiento = DateOnly.FromDateTime(DateTime.Now).ToString(),
                 CodigoEmpleado = EMPLEADO_CAJA,
                 CodigoTipoMovimiento = tipo,
@@ -237,7 +237,7 @@ public class CuentaService
                 mov.ImporteOrigen = Redondear2(montoIngresado);
                 mov.TasaAplicada = tasa;
             }
-            _movimientoDAO.Insertar(cn, mov);
+            _movimientoDAO.Insertar(cn, mov, tx);
 
             tx.Commit();
             var nuevoSaldo = (double)cuenta["dec_cuensaldo"] + delta;
@@ -287,8 +287,8 @@ public class CuentaService
         {
             var first = origen.CompareTo(destino) < 0 ? origen : destino;
             var second = origen.CompareTo(destino) < 0 ? destino : origen;
-            var cFirst = _cuentaDAO.ObtenerParaActualizar(cn, first);
-            var cSecond = _cuentaDAO.ObtenerParaActualizar(cn, second);
+            var cFirst = _cuentaDAO.ObtenerParaActualizar(cn, first, tx);
+            var cSecond = _cuentaDAO.ObtenerParaActualizar(cn, second, tx);
             var cOrig = origen == first ? cFirst : cSecond;
             var cDest = destino == first ? cFirst : cSecond;
 
@@ -316,8 +316,8 @@ public class CuentaService
             var monOrig = cOrig["chr_monecodigo"].ToString()!;
             var monDest = cDest["chr_monecodigo"].ToString()!;
             var monIn = string.IsNullOrWhiteSpace(monedaMonto) ? monOrig : monedaMonto;
-            var tasaOrig = _tasaDAO.Tasa(cn, monIn, monOrig);
-            var tasaDest = _tasaDAO.Tasa(cn, monIn, monDest);
+            var tasaOrig = _tasaDAO.Tasa(cn, monIn, monOrig, tx);
+            var tasaDest = _tasaDAO.Tasa(cn, monIn, monDest, tx);
             var montoOrigen = Redondear2(montoIngresado * tasaOrig);
             var montoDestino = Redondear2(montoIngresado * tasaDest);
             var convOrig = monIn != monOrig;
@@ -329,8 +329,8 @@ public class CuentaService
                 return Resultado.Error($"Saldo insuficiente. Saldo actual: {cOrig["dec_cuensaldo"]}");
             }
 
-            if (_cuentaDAO.ActualizarSaldo(cn, origen, -montoOrigen) == 0
-                || _cuentaDAO.ActualizarSaldo(cn, destino, montoDestino) == 0)
+            if (_cuentaDAO.ActualizarSaldo(cn, origen, -montoOrigen, tx) == 0
+                || _cuentaDAO.ActualizarSaldo(cn, destino, montoDestino, tx) == 0)
             {
                 tx.Rollback();
                 return Resultado.Error("No se pudo actualizar el saldo.");
@@ -341,7 +341,7 @@ public class CuentaService
             var salida = new MovimientoModel
             {
                 CodigoCuenta = origen,
-                NumeroMovimiento = _movimientoDAO.SiguienteNumero(cn, origen),
+                NumeroMovimiento = _movimientoDAO.SiguienteNumero(cn, origen, tx),
                 FechaMovimiento = hoy,
                 CodigoEmpleado = EMPLEADO_CAJA,
                 CodigoTipoMovimiento = TIPO_TRANSF_OUT,
@@ -354,12 +354,12 @@ public class CuentaService
                 salida.ImporteOrigen = Redondear2(montoIngresado);
                 salida.TasaAplicada = tasaOrig;
             }
-            _movimientoDAO.Insertar(cn, salida);
+            _movimientoDAO.Insertar(cn, salida, tx);
 
             var ingreso = new MovimientoModel
             {
                 CodigoCuenta = destino,
-                NumeroMovimiento = _movimientoDAO.SiguienteNumero(cn, destino),
+                NumeroMovimiento = _movimientoDAO.SiguienteNumero(cn, destino, tx),
                 FechaMovimiento = hoy,
                 CodigoEmpleado = EMPLEADO_CAJA,
                 CodigoTipoMovimiento = TIPO_TRANSF_IN,
@@ -372,7 +372,7 @@ public class CuentaService
                 ingreso.ImporteOrigen = Redondear2(montoIngresado);
                 ingreso.TasaAplicada = tasaDest;
             }
-            _movimientoDAO.Insertar(cn, ingreso);
+            _movimientoDAO.Insertar(cn, ingreso, tx);
 
             tx.Commit();
             var det = (convOrig || convDest)

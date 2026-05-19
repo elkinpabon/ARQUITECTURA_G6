@@ -44,21 +44,23 @@ namespace SERVIDOR.Persistencia
             return lista;
         }
 
-        public int SiguienteNumero(SqlConnection cn, string codigoCuenta)
+        public int SiguienteNumero(SqlConnection cn, string codigoCuenta, SqlTransaction? tx = null)
         {
             string sql = "SELECT ISNULL(MAX(int_movinumero), 0) + 1 FROM dbo.movimiento WHERE chr_cuencodigo = @codigo";
             using var cmd = new SqlCommand(sql, cn);
+            if (tx != null) cmd.Transaction = tx;
             cmd.Parameters.AddWithValue("@codigo", codigoCuenta);
             return Convert.ToInt32(cmd.ExecuteScalar());
         }
 
-        public void Insertar(SqlConnection cn, MovimientoModel m)
+        public void Insertar(SqlConnection cn, MovimientoModel m, SqlTransaction? tx = null)
         {
             string sql = @"INSERT INTO dbo.movimiento (chr_cuencodigo, int_movinumero, dtt_movifecha, chr_emplcodigo,
                               chr_tipocodigo, dec_moviimporte, chr_cuenreferencia, chr_movimonori, dec_moviimporteori, dec_movitasa)
                            VALUES (@cuenta, @numero, @fecha, @empleado, @tipo, @importe, @referencia, @monedaOri, @importeOri, @tasa)";
 
             using var cmd = new SqlCommand(sql, cn);
+            if (tx != null) cmd.Transaction = tx;
             cmd.Parameters.AddWithValue("@cuenta", m.CodigoCuenta);
             cmd.Parameters.AddWithValue("@numero", m.NumeroMovimiento);
             cmd.Parameters.AddWithValue("@fecha", DateTime.Parse(m.FechaMovimiento));

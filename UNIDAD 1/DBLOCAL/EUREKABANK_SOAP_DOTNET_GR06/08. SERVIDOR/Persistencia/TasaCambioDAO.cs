@@ -4,12 +4,13 @@ namespace SERVIDOR.Persistencia
 {
     public class TasaCambioDAO
     {
-        public double Tasa(SqlConnection cn, string origen, string destino)
+        public double Tasa(SqlConnection cn, string origen, string destino, SqlTransaction? tx = null)
         {
             if (origen == destino) return 1.0;
 
             string sql = "SELECT dec_tasa FROM dbo.tasacambio WHERE chr_origen = @origen AND chr_destino = @destino";
             using var cmd = new SqlCommand(sql, cn);
+            if (tx != null) cmd.Transaction = tx;
             cmd.Parameters.AddWithValue("@origen", origen);
             cmd.Parameters.AddWithValue("@destino", destino);
 

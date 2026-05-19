@@ -4,7 +4,7 @@ namespace SERVIDOR.Data;
 
 public class TasaCambioDAO
 {
-    public double Tasa(SqlConnection cn, string origen, string destino)
+    public double Tasa(SqlConnection cn, string origen, string destino, SqlTransaction? tx = null)
     {
         if (string.IsNullOrEmpty(origen) || string.IsNullOrEmpty(destino) || origen == destino)
             return 1.0;
@@ -14,6 +14,7 @@ public class TasaCambioDAO
             WHERE chr_origen = @origen AND chr_destino = @destino
             """;
         using var ps = new SqlCommand(sql, cn);
+        if (tx != null) ps.Transaction = tx;
         ps.Parameters.AddWithValue("@origen", origen);
         ps.Parameters.AddWithValue("@destino", destino);
         using var rs = ps.ExecuteReader();

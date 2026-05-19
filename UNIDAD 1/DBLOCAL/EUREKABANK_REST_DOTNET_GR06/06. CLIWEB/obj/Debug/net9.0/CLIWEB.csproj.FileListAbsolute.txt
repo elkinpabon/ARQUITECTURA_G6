@@ -192,3 +192,4 @@ C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\06. CLIWEB\obj\Debug\net9.0\compressed\4r0x8ev66v-jjsuc0puko.gz
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\06. CLIWEB\obj\Debug\net9.0\compressed\x26qm8erj6-9vr69e8ynj.gz
 C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\06. CLIWEB\obj\Debug\net9.0\compressed\th7egxyv3j-swluq6z2o6.gz
+C:\Users\elkin\Desktop\Repositorios\ARQUITECTURA_G6\UNIDAD 1\DBLOCAL\EUREKABANK_REST_DOTNET_GR06\06. CLIWEB\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

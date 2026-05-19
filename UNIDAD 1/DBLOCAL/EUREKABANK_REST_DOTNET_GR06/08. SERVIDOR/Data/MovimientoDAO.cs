@@ -46,18 +46,19 @@ public class MovimientoDAO
         return lista;
     }
 
-    public int SiguienteNumero(SqlConnection cn, string codigoCuenta)
+    public int SiguienteNumero(SqlConnection cn, string codigoCuenta, SqlTransaction? tx = null)
     {
         const string sql = """
             SELECT COALESCE(MAX(int_movinumero), 0) + 1 AS sig
             FROM movimiento WHERE chr_cuencodigo = @codigo
             """;
         using var ps = new SqlCommand(sql, cn);
+        if (tx != null) ps.Transaction = tx;
         ps.Parameters.AddWithValue("@codigo", codigoCuenta);
         return (int)ps.ExecuteScalar()!;
     }
 
-    public void Insertar(SqlConnection cn, MovimientoModel m)
+    public void Insertar(SqlConnection cn, MovimientoModel m, SqlTransaction? tx = null)
     {
         const string sql = """
             INSERT INTO movimiento (chr_cuencodigo, int_movinumero, dtt_movifecha,
@@ -67,6 +68,7 @@ public class MovimientoDAO
                     @monedaOrigen, @importeOrigen, @tasa)
             """;
         using var ps = new SqlCommand(sql, cn);
+        if (tx != null) ps.Transaction = tx;
         ps.Parameters.AddWithValue("@cuenta", m.CodigoCuenta);
         ps.Parameters.AddWithValue("@numero", m.NumeroMovimiento);
         ps.Parameters.AddWithValue("@fecha", DateTime.Parse(m.FechaMovimiento));

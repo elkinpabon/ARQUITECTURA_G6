@@ -24,7 +24,7 @@ namespace SERVIDOR.Servicio
 
             try
             {
-                var cuentaData = cuentaDAO.ObtenerParaActualizar(cn, cuenta);
+                var cuentaData = cuentaDAO.ObtenerParaActualizar(cn, cuenta, tx);
                 if (cuentaData == null)
                 {
                     tx.Rollback();
@@ -39,15 +39,15 @@ namespace SERVIDOR.Servicio
                 }
 
                 string monedaCuenta = cuentaData["chr_monecodigo"].ToString()!;
-                double tasa = tasaCambioDAO.Tasa(cn, moneda, monedaCuenta);
+                double tasa = tasaCambioDAO.Tasa(cn, moneda, monedaCuenta, tx);
                 double montoConvertido = monto * tasa;
 
-                cuentaDAO.ActualizarSaldo(cn, cuenta, montoConvertido);
+                cuentaDAO.ActualizarSaldo(cn, cuenta, montoConvertido, tx);
 
                 var movimiento = new MovimientoModel
                 {
                     CodigoCuenta = cuenta,
-                    NumeroMovimiento = movimientoDAO.SiguienteNumero(cn, cuenta),
+                    NumeroMovimiento = movimientoDAO.SiguienteNumero(cn, cuenta, tx),
                     FechaMovimiento = DateTime.Now.ToString("yyyy-MM-dd"),
                     CodigoEmpleado = "9999",
                     CodigoTipoMovimiento = "003",
@@ -56,7 +56,7 @@ namespace SERVIDOR.Servicio
                     ImporteOrigen = moneda != monedaCuenta ? monto : null,
                     TasaAplicada = moneda != monedaCuenta ? tasa : null
                 };
-                movimientoDAO.Insertar(cn, movimiento);
+                movimientoDAO.Insertar(cn, movimiento, tx);
 
                 tx.Commit();
 
@@ -85,7 +85,7 @@ namespace SERVIDOR.Servicio
 
             try
             {
-                var cuentaData = cuentaDAO.ObtenerParaActualizar(cn, cuenta);
+                var cuentaData = cuentaDAO.ObtenerParaActualizar(cn, cuenta, tx);
                 if (cuentaData == null)
                 {
                     tx.Rollback();
@@ -101,7 +101,7 @@ namespace SERVIDOR.Servicio
 
                 double saldo = Convert.ToDouble(cuentaData["dec_cuensaldo"]);
                 string monedaCuenta = cuentaData["chr_monecodigo"].ToString()!;
-                double tasa = tasaCambioDAO.Tasa(cn, moneda, monedaCuenta);
+                double tasa = tasaCambioDAO.Tasa(cn, moneda, monedaCuenta, tx);
                 double montoConvertido = monto * tasa;
 
                 if (saldo < montoConvertido)
@@ -110,12 +110,12 @@ namespace SERVIDOR.Servicio
                     return Resultado.Error("Saldo insuficiente");
                 }
 
-                cuentaDAO.ActualizarSaldo(cn, cuenta, -montoConvertido);
+                cuentaDAO.ActualizarSaldo(cn, cuenta, -montoConvertido, tx);
 
                 var movimiento = new MovimientoModel
                 {
                     CodigoCuenta = cuenta,
-                    NumeroMovimiento = movimientoDAO.SiguienteNumero(cn, cuenta),
+                    NumeroMovimiento = movimientoDAO.SiguienteNumero(cn, cuenta, tx),
                     FechaMovimiento = DateTime.Now.ToString("yyyy-MM-dd"),
                     CodigoEmpleado = "9999",
                     CodigoTipoMovimiento = "004",
@@ -124,7 +124,7 @@ namespace SERVIDOR.Servicio
                     ImporteOrigen = moneda != monedaCuenta ? monto : null,
                     TasaAplicada = moneda != monedaCuenta ? tasa : null
                 };
-                movimientoDAO.Insertar(cn, movimiento);
+                movimientoDAO.Insertar(cn, movimiento, tx);
 
                 tx.Commit();
 
@@ -177,14 +177,14 @@ namespace SERVIDOR.Servicio
 
             try
             {
-                var origenData = cuentaDAO.ObtenerParaActualizar(cn, origen);
+                var origenData = cuentaDAO.ObtenerParaActualizar(cn, origen, tx);
                 if (origenData == null)
                 {
                     tx.Rollback();
                     return Resultado.Error("Cuenta origen no existe");
                 }
 
-                var destinoData = cuentaDAO.ObtenerParaActualizar(cn, destino);
+                var destinoData = cuentaDAO.ObtenerParaActualizar(cn, destino, tx);
                 if (destinoData == null)
                 {
                     tx.Rollback();
@@ -204,7 +204,7 @@ namespace SERVIDOR.Servicio
                 string monedaOrigenCuenta = origenData["chr_monecodigo"].ToString()!;
                 string monedaDestinoCuenta = destinoData["chr_monecodigo"].ToString()!;
 
-                double tasaOrigen = tasaCambioDAO.Tasa(cn, moneda, monedaOrigenCuenta);
+                double tasaOrigen = tasaCambioDAO.Tasa(cn, moneda, monedaOrigenCuenta, tx);
                 double montoEnOrigen = monto * tasaOrigen;
 
                 if (saldoOrigen < montoEnOrigen)
@@ -213,14 +213,14 @@ namespace SERVIDOR.Servicio
                     return Resultado.Error("Saldo insuficiente en cuenta origen");
                 }
 
-                double tasaDestino = tasaCambioDAO.Tasa(cn, moneda, monedaDestinoCuenta);
+                double tasaDestino = tasaCambioDAO.Tasa(cn, moneda, monedaDestinoCuenta, tx);
                 double montoEnDestino = monto * tasaDestino;
 
-                cuentaDAO.ActualizarSaldo(cn, origen, -montoEnOrigen);
-                cuentaDAO.ActualizarSaldo(cn, destino, montoEnDestino);
+                cuentaDAO.ActualizarSaldo(cn, origen, -montoEnOrigen, tx);
+                cuentaDAO.ActualizarSaldo(cn, destino, montoEnDestino, tx);
 
-                int numOrigen = movimientoDAO.SiguienteNumero(cn, origen);
-                int numDestino = movimientoDAO.SiguienteNumero(cn, destino);
+                int numOrigen = movimientoDAO.SiguienteNumero(cn, origen, tx);
+                int numDestino = movimientoDAO.SiguienteNumero(cn, destino, tx);
                 string fecha = DateTime.Now.ToString("yyyy-MM-dd");
 
                 bool conversionOrigen = moneda != monedaOrigenCuenta;
@@ -239,7 +239,7 @@ namespace SERVIDOR.Servicio
                     ImporteOrigen = conversionOrigen ? monto : null,
                     TasaAplicada = conversionOrigen ? tasaOrigen : null
                 };
-                movimientoDAO.Insertar(cn, movSalida);
+                movimientoDAO.Insertar(cn, movSalida, tx);
 
                 var movIngreso = new MovimientoModel
                 {
@@ -254,7 +254,7 @@ namespace SERVIDOR.Servicio
                     ImporteOrigen = conversionDestino ? monto : null,
                     TasaAplicada = conversionDestino ? tasaDestino : null
                 };
-                movimientoDAO.Insertar(cn, movIngreso);
+                movimientoDAO.Insertar(cn, movIngreso, tx);
 
                 tx.Commit();
 

@@ -24,14 +24,23 @@ public class BancoController
             LoggedIn = true;
             CurrentUser = usuario;
             ClienteAsignado = await _api.ClienteDeUsuario(usuario);
-            IsAdmin = string.IsNullOrEmpty(ClienteAsignado);
+            IsAdmin = usuario.Equals("monster", StringComparison.OrdinalIgnoreCase)
+                || string.IsNullOrWhiteSpace(ClienteAsignado);
         }
         return ok;
     }
 
     public void Logout() { LoggedIn = false; IsAdmin = false; CurrentUser = ""; ClienteAsignado = ""; }
 
-    public async Task<Resultado> Depositar(string cuenta, string monto, string moneda) => await _api.Depositar(cuenta, monto, moneda);
+    public async Task<Resultado> Depositar(string cuenta, string monto, string moneda)
+    {
+        if (!IsAdmin)
+        {
+            return new Resultado { Exitoso = false, Mensaje = "Solo administradores pueden depositar desde consola." };
+        }
+
+        return await _api.Depositar(cuenta, monto, moneda);
+    }
     public async Task<Resultado> Retirar(string cuenta, string monto, string moneda) => await _api.Retirar(cuenta, monto, moneda);
     public async Task<Resultado> ConsultarSaldo(string cuenta) => await _api.ConsultarSaldo(cuenta);
     public async Task<Resultado> Transferir(string origen, string destino, string monto, string moneda) => await _api.Transferir(origen, destino, monto, moneda);

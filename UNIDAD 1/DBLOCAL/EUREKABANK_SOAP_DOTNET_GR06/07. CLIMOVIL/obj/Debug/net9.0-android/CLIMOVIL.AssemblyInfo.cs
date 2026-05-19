@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CLIMOVIL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+876be7580eea48c5fd99fad3bee691e6366a7fd5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+8b3c1a18bdeaca26bcc7ce985bca93ff7f19715f")]
 [assembly: System.Reflection.AssemblyProductAttribute("CLIMOVIL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CLIMOVIL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

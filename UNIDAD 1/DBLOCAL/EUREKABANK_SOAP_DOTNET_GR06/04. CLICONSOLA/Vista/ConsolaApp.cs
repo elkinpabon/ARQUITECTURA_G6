@@ -115,6 +115,12 @@ namespace CLICONSOLA.Vista
             }
         }
 
+        private static string LeerTextoOpcional(string etiqueta)
+        {
+            Console.Write($"{etiqueta}: ");
+            return Console.ReadLine()?.Trim() ?? string.Empty;
+        }
+
         private static string LeerOpcion(string etiqueta, params string[] permitidas)
         {
             while (true)
@@ -338,7 +344,10 @@ namespace CLICONSOLA.Vista
             Console.WriteLine("========================================");
             Console.WriteLine();
 
-            var cuentas = _controller.ListarCuentas();
+            string criterio = _controller.IsAdmin ? LeerTextoOpcional("Cliente o DNI (Enter = todos)") : _controller.ClienteAsignado;
+            var cuentas = string.IsNullOrWhiteSpace(criterio)
+                ? _controller.ListarCuentas()
+                : _controller.ListarCuentas(criterio);
 
             if (cuentas.Count == 0)
             {

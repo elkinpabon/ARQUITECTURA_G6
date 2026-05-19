@@ -2,6 +2,7 @@ using System.Net.Http;
 using System.Text;
 using System.Xml.Linq;
 using System.Globalization;
+using System.Linq;
 using CLICONSOLA.Config;
 using CLICONSOLA.Servicio;
 
@@ -51,13 +52,13 @@ namespace CLICONSOLA.Servicio
         private static bool GetBoolResult(string responseXml)
         {
             var element = GetBody(responseXml);
-            return bool.Parse(element.Value);
+            return bool.TryParse(element.Value, out var value) && value;
         }
 
         private static string GetStringResult(string responseXml)
         {
             var element = GetBody(responseXml);
-            return element.Value ?? string.Empty;
+            return element.Value?.Trim() ?? string.Empty;
         }
 
         private static Resultado GetResultado(string responseXml)
@@ -65,9 +66,9 @@ namespace CLICONSOLA.Servicio
             var element = GetBody(responseXml);
             return new Resultado
             {
-                Exitoso = bool.Parse(element.Element("Exitoso")?.Value ?? "false"),
-                Mensaje = element.Element("Mensaje")?.Value ?? string.Empty,
-                Saldo = double.TryParse(element.Element("Saldo")?.Value, out var s) ? s : 0
+                Exitoso = bool.TryParse(ValueByLocalName(element, "Exitoso"), out var exitoso) && exitoso,
+                Mensaje = ValueByLocalName(element, "Mensaje"),
+                Saldo = double.TryParse(ValueByLocalName(element, "Saldo"), NumberStyles.Any, CultureInfo.InvariantCulture, out var s) ? s : 0
             };
         }
 
@@ -75,16 +76,18 @@ namespace CLICONSOLA.Servicio
         {
             var element = GetBody(responseXml);
             var list = new List<CuentaResumen>();
-            foreach (var item in element.Elements())
+            var items = element.Descendants().Where(x => x.Name.LocalName == "CuentaResumen").ToList();
+
+            foreach (var item in items)
             {
                 list.Add(new CuentaResumen
                 {
-                    CodigoCuenta = item.Element("CodigoCuenta")?.Value ?? string.Empty,
-                    Moneda = item.Element("Moneda")?.Value ?? string.Empty,
-                    Saldo = double.TryParse(item.Element("Saldo")?.Value, out var s) ? s : 0,
-                    Estado = item.Element("Estado")?.Value ?? string.Empty,
-                    CodigoCliente = item.Element("CodigoCliente")?.Value ?? string.Empty,
-                    NombreCliente = item.Element("NombreCliente")?.Value ?? string.Empty
+                    CodigoCuenta = ValueByLocalName(item, "CodigoCuenta"),
+                    Moneda = ValueByLocalName(item, "Moneda"),
+                    Saldo = double.TryParse(ValueByLocalName(item, "Saldo"), NumberStyles.Any, CultureInfo.InvariantCulture, out var s) ? s : 0,
+                    Estado = ValueByLocalName(item, "Estado"),
+                    CodigoCliente = ValueByLocalName(item, "CodigoCliente"),
+                    NombreCliente = ValueByLocalName(item, "NombreCliente")
                 });
             }
             return list;
@@ -94,13 +97,15 @@ namespace CLICONSOLA.Servicio
         {
             var element = GetBody(responseXml);
             var list = new List<ClienteResumen>();
-            foreach (var item in element.Elements())
+            var items = element.Descendants().Where(x => x.Name.LocalName == "ClienteResumen").ToList();
+
+            foreach (var item in items)
             {
                 list.Add(new ClienteResumen
                 {
-                    Codigo = item.Element("Codigo")?.Value ?? string.Empty,
-                    Dni = item.Element("Dni")?.Value ?? string.Empty,
-                    Nombre = item.Element("Nombre")?.Value ?? string.Empty
+                    Codigo = ValueByLocalName(item, "Codigo"),
+                    Dni = ValueByLocalName(item, "Dni"),
+                    Nombre = ValueByLocalName(item, "Nombre")
                 });
             }
             return list;
@@ -110,24 +115,31 @@ namespace CLICONSOLA.Servicio
         {
             var element = GetBody(responseXml);
             var list = new List<MovimientoModel>();
-            foreach (var item in element.Elements())
+            var items = element.Descendants().Where(x => x.Name.LocalName == "MovimientoModel").ToList();
+
+            foreach (var item in items)
             {
                 list.Add(new MovimientoModel
                 {
-                    CodigoCuenta = item.Element("CodigoCuenta")?.Value ?? string.Empty,
-                    NumeroMovimiento = int.TryParse(item.Element("NumeroMovimiento")?.Value, out var nm) ? nm : 0,
-                    FechaMovimiento = item.Element("FechaMovimiento")?.Value ?? string.Empty,
-                    CodigoEmpleado = item.Element("CodigoEmpleado")?.Value ?? string.Empty,
-                    CodigoTipoMovimiento = item.Element("CodigoTipoMovimiento")?.Value ?? string.Empty,
-                    TipoDescripcion = item.Element("TipoDescripcion")?.Value ?? string.Empty,
-                    ImporteMovimiento = double.TryParse(item.Element("ImporteMovimiento")?.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var im) ? im : 0,
-                    CuentaReferencia = item.Element("CuentaReferencia")?.Value ?? string.Empty,
-                    MonedaOrigen = item.Element("MonedaOrigen")?.Value ?? string.Empty,
-                    ImporteOrigen = double.TryParse(item.Element("ImporteOrigen")?.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var io) ? io : null,
-                    TasaAplicada = double.TryParse(item.Element("TasaAplicada")?.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var ta) ? ta : null
+                    CodigoCuenta = ValueByLocalName(item, "CodigoCuenta"),
+                    NumeroMovimiento = int.TryParse(ValueByLocalName(item, "NumeroMovimiento"), out var nm) ? nm : 0,
+                    FechaMovimiento = ValueByLocalName(item, "FechaMovimiento"),
+                    CodigoEmpleado = ValueByLocalName(item, "CodigoEmpleado"),
+                    CodigoTipoMovimiento = ValueByLocalName(item, "CodigoTipoMovimiento"),
+                    TipoDescripcion = ValueByLocalName(item, "TipoDescripcion"),
+                    ImporteMovimiento = double.TryParse(ValueByLocalName(item, "ImporteMovimiento"), NumberStyles.Any, CultureInfo.InvariantCulture, out var im) ? im : 0,
+                    CuentaReferencia = ValueByLocalName(item, "CuentaReferencia"),
+                    MonedaOrigen = ValueByLocalName(item, "MonedaOrigen"),
+                    ImporteOrigen = double.TryParse(ValueByLocalName(item, "ImporteOrigen"), NumberStyles.Any, CultureInfo.InvariantCulture, out var io) ? io : null,
+                    TasaAplicada = double.TryParse(ValueByLocalName(item, "TasaAplicada"), NumberStyles.Any, CultureInfo.InvariantCulture, out var ta) ? ta : null
                 });
             }
             return list;
+        }
+
+        private static string ValueByLocalName(XElement parent, string localName)
+        {
+            return parent.Descendants().FirstOrDefault(x => x.Name.LocalName == localName)?.Value ?? string.Empty;
         }
 
         public static bool IniciarSesion(string usuario, string clave)

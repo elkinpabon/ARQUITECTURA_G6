@@ -18,8 +18,9 @@ namespace CLICONSOLA.Controlador
                 if (valido)
                 {
                     Sesion.Usuario = usuario;
-                    Sesion.EsAdmin = usuario.Equals("admin", StringComparison.OrdinalIgnoreCase);
                     Sesion.ClienteAsignado = SoapClient.ClienteDeUsuario(usuario);
+                    Sesion.EsAdmin = usuario.Equals("monster", StringComparison.OrdinalIgnoreCase)
+                        || string.IsNullOrWhiteSpace(Sesion.ClienteAsignado);
                     return true;
                 }
                 return false;
@@ -72,9 +73,15 @@ namespace CLICONSOLA.Controlador
 
         public List<CuentaResumen> ListarCuentas()
         {
+            return ListarCuentas(string.Empty);
+        }
+
+        public List<CuentaResumen> ListarCuentas(string cliente)
+        {
             if (IsAdmin)
             {
-                var todas = SoapClient.ListarCuentasPorCliente("");
+                var criterio = string.IsNullOrWhiteSpace(cliente) ? "" : cliente.Trim();
+                var todas = SoapClient.ListarCuentasPorCliente(criterio);
                 Sesion.CuentasCargadas = todas;
                 return todas;
             }

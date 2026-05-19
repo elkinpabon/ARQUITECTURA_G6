@@ -24,7 +24,7 @@ public class ApiClient
     public async Task<string> ClienteDeUsuario(string usuario)
     {
         var resp = await _http.GetAsync($"api/auth/cliente/{usuario}");
-        return resp.IsSuccessStatusCode ? await resp.Content.ReadAsStringAsync() : "";
+        return resp.IsSuccessStatusCode ? await resp.Content.ReadFromJsonAsync<string>() ?? "" : "";
     }
 
     public async Task<Resultado> Depositar(string cuenta, string monto, string moneda)

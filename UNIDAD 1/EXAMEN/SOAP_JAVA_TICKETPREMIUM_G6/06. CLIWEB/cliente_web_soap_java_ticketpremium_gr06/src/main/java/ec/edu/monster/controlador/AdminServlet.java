@@ -68,18 +68,34 @@ public class AdminServlet extends HttpServlet {
         String partido = req.getParameter("partido");
         String reportePartido = req.getParameter("reportePartido");
         String adminPartido = req.getParameter("adminPartido");
-        StringBuilder redirect = new StringBuilder(req.getContextPath()).append("/home");
+        String volver = req.getParameter("volver");
+
+        StringBuilder redirect = new StringBuilder(req.getContextPath());
         boolean first = true;
-        if (partido != null && !partido.isBlank()) {
-            redirect.append(first ? "?" : "&").append("partido=").append(partido);
+        if ("admin".equalsIgnoreCase(volver)) {
+            // Vuelve al panel de administracion dedicado
+            redirect.append("/admin-panel");
+            String tab = (accion != null && accion.toLowerCase().contains("localidad"))
+                    ? "localidades" : "partidos";
+            redirect.append("?tab=").append(tab);
             first = false;
-        }
-        if (reportePartido != null && !reportePartido.isBlank()) {
-            redirect.append(first ? "?" : "&").append("reportePartido=").append(reportePartido);
-            first = false;
-        }
-        if (adminPartido != null && !adminPartido.isBlank()) {
-            redirect.append(first ? "?" : "&").append("adminPartido=").append(adminPartido);
+            if (adminPartido != null && !adminPartido.isBlank()) {
+                redirect.append("&adminPartido=").append(adminPartido);
+            }
+        } else {
+            // Vuelve al home (comportamiento legado)
+            redirect.append("/home");
+            if (partido != null && !partido.isBlank()) {
+                redirect.append(first ? "?" : "&").append("partido=").append(partido);
+                first = false;
+            }
+            if (reportePartido != null && !reportePartido.isBlank()) {
+                redirect.append(first ? "?" : "&").append("reportePartido=").append(reportePartido);
+                first = false;
+            }
+            if (adminPartido != null && !adminPartido.isBlank()) {
+                redirect.append(first ? "?" : "&").append("adminPartido=").append(adminPartido);
+            }
         }
         resp.sendRedirect(redirect.toString());
     }

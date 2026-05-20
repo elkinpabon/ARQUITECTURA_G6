@@ -1,6 +1,8 @@
 package ec.edu.monster.vista;
 
 import ec.edu.monster.controlador.TicketController;
+import ec.edu.monster.modelo.ComprobanteCompra;
+import ec.edu.monster.servicio.GeneradorComprobantePDF;
 import ec.edu.monster.util.Moneda;
 import ec.edu.monster.ws.Factura;
 import ec.edu.monster.ws.Localidad;
@@ -9,17 +11,26 @@ import ec.edu.monster.ws.Resultado;
 import ec.edu.monster.ws.ResumenLocalidad;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,6 +41,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -41,8 +53,13 @@ import javax.swing.table.DefaultTableModel;
 public class MainPanel extends JPanel {
 
     private static final BigDecimal TASA_IVA = new BigDecimal("0.15");
+    private static final DateTimeFormatter FECHA_FORMATO =
+            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     private final TicketController ctrl;
+
+    /** Comprobantes generados en esta sesion (clave = idFactura). */
+    private final Map<Integer, ComprobanteCompra> comprobantes = new HashMap<>();
 
     // --- Tab Comprar ---
     private final JComboBox<PartidoItem> cboPartido = new JComboBox<>();
@@ -123,11 +140,10 @@ public class MainPanel extends JPanel {
         JPanel p = new JPanel(new BorderLayout(8, 8));
         p.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
-        // Seleccion del partido
-        JPanel arriba = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 4));
-        arriba.add(new JLabel("Partido:"));
-        cboPartido.setPreferredSize(new Dimension(420, 28));
-        arriba.add(cboPartido);
+        // Seleccion del partido (combo se ajusta al ancho disponible)
+        JPanel arriba = new JPanel(new BorderLayout(8, 4));
+        arriba.add(new JLabel("Partido:"), BorderLayout.WEST);
+        arriba.add(cboPartido, BorderLayout.CENTER);
         p.add(arriba, BorderLayout.NORTH);
 
         // Tabla de localidades
@@ -135,29 +151,34 @@ public class MainPanel extends JPanel {
         tblLoc.setRowHeight(24);
         p.add(new JScrollPane(tblLoc), BorderLayout.CENTER);
 
-        // Resumen + accion
+        // Resumen + accion (2 filas para que sea responsive)
         JPanel sur = new JPanel(new GridLayout(0, 1, 4, 4));
         sur.setBorder(BorderFactory.createTitledBorder("Resumen de la compra"));
 
-        JPanel filaCantidad = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 4));
-        filaCantidad.add(new JLabel("Cantidad:"));
+        // Fila 1: cantidad (izq) + boton comprar (der)
+        JPanel fila1 = new JPanel(new BorderLayout(8, 4));
+        JPanel cantPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 0));
+        cantPanel.add(new JLabel("Cantidad:"));
         spCantidad.setPreferredSize(new Dimension(80, 26));
-        filaCantidad.add(spCantidad);
-        filaCantidad.add(new JLabel("    Subtotal:"));
-        filaCantidad.add(lblSubtotal);
-        filaCantidad.add(new JLabel("    IVA (15%):"));
-        filaCantidad.add(lblIva);
-        filaCantidad.add(new JLabel("    Total:"));
-        lblTotal.setFont(lblTotal.getFont().deriveFont(Font.BOLD, 14f));
-        lblTotal.setForeground(new Color(20, 100, 20));
-        filaCantidad.add(lblTotal);
-        sur.add(filaCantidad);
+        cantPanel.add(spCantidad);
+        fila1.add(cantPanel, BorderLayout.WEST);
 
-        JPanel filaBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 4));
         JButton btnComprar = new JButton("Comprar boletos");
         btnComprar.setFont(btnComprar.getFont().deriveFont(Font.BOLD));
-        filaBotones.add(btnComprar);
-        sur.add(filaBotones);
+        JPanel botonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 0));
+        botonPanel.add(btnComprar);
+        fila1.add(botonPanel, BorderLayout.EAST);
+        sur.add(fila1);
+
+        // Fila 2: subtotal / iva / total en grid uniforme
+        lblTotal.setFont(lblTotal.getFont().deriveFont(Font.BOLD, 14f));
+        lblTotal.setForeground(new Color(20, 100, 20));
+        JPanel fila2 = new JPanel(new GridLayout(1, 3, 8, 0));
+        fila2.add(panelMonto("Subtotal:", lblSubtotal));
+        fila2.add(panelMonto("IVA (15%):", lblIva));
+        fila2.add(panelMonto("Total:", lblTotal));
+        sur.add(fila2);
+
         p.add(sur, BorderLayout.SOUTH);
 
         // Listeners
@@ -253,14 +274,21 @@ public class MainPanel extends JPanel {
             Resultado r = ctrl.comprar(partido.partido.getCodigo(), localidad, cantidad);
             if (r.isExito()) {
                 Factura f = r.getFactura();
-                JOptionPane.showMessageDialog(this,
-                        String.format(
-                            "%s\n\nFactura #%d\nSubtotal: %s\nIVA: %s\nTotal: %s",
-                            r.getMensaje(), f.getIdFactura(),
-                            Moneda.fmt(f.getSubtotal()),
-                            Moneda.fmt(f.getIva()),
-                            Moneda.fmt(f.getTotal())),
-                        "Compra exitosa", JOptionPane.INFORMATION_MESSAGE);
+                ComprobanteCompra comp = construirComprobante(partido, localidad, cantidad, f);
+                comprobantes.put(f.getIdFactura(), comp);
+
+                String mensaje = String.format(
+                        "%s\n\nComprobante: %s\nFactura #%d\nSubtotal: %s\nIVA: %s\nTotal: %s",
+                        r.getMensaje(), comp.getCodigoR(), f.getIdFactura(),
+                        Moneda.fmt(f.getSubtotal()),
+                        Moneda.fmt(f.getIva()),
+                        Moneda.fmt(f.getTotal()));
+                int op = JOptionPane.showOptionDialog(this, mensaje,
+                        "Compra exitosa", JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE, null,
+                        new Object[]{"Descargar comprobante PDF", "Cerrar"}, "Descargar comprobante PDF");
+                if (op == 0) descargarComprobantePDF(comp);
+
                 cargarLocalidades();   // refresca stock
                 cargarFacturas();      // refresca historial
             } else {
@@ -271,6 +299,64 @@ public class MainPanel extends JPanel {
         }
     }
 
+    private ComprobanteCompra construirComprobante(PartidoItem partido, String localidad,
+                                                   int cantidad, Factura f) {
+        ComprobanteCompra c = new ComprobanteCompra();
+        c.setIdFactura(f.getIdFactura());
+        c.setCodigoR(generarCodigoR());
+        c.setFecha(LocalDateTime.now().format(FECHA_FORMATO));
+        c.setUsuario(ctrl.getSesion().getNombre());
+        c.setPartido(partido.partido.getEquipoLocal() + " vs " + partido.partido.getEquipoVisita());
+        c.setLocalidad(localidad);
+        c.setCantidad(cantidad);
+        c.setSubtotal(f.getSubtotal());
+        c.setIva(f.getIva());
+        c.setTotal(f.getTotal());
+        return c;
+    }
+
+    private static String generarCodigoR() {
+        String fecha = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"));
+        int rand = ThreadLocalRandom.current().nextInt(1000, 10000);
+        return "R-" + fecha + "-" + rand;
+    }
+
+    private void descargarComprobantePDF(ComprobanteCompra comp) {
+        String sugerido = (comp.getCodigoR() + "-" + comp.getIdFactura())
+                .replaceAll("[^A-Za-z0-9_-]", "_") + ".pdf";
+        File dest = elegirArchivoPDF(sugerido);
+        if (dest == null) return;
+        try {
+            byte[] pdf = GeneradorComprobantePDF.comprobante(comp);
+            try (FileOutputStream fos = new FileOutputStream(dest)) {
+                fos.write(pdf);
+            }
+            abrirArchivo(dest);
+        } catch (Exception ex) {
+            error("No se pudo generar el comprobante:\n" + ex.getMessage());
+        }
+    }
+
+    private File elegirArchivoPDF(String nombreSugerido) {
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Guardar como PDF");
+        fc.setSelectedFile(new File(nombreSugerido));
+        fc.setFileFilter(new FileNameExtensionFilter("Documento PDF (*.pdf)", "pdf"));
+        int op = fc.showSaveDialog(this);
+        if (op != JFileChooser.APPROVE_OPTION) return null;
+        File f = fc.getSelectedFile();
+        if (!f.getName().toLowerCase().endsWith(".pdf")) {
+            f = new File(f.getParentFile(), f.getName() + ".pdf");
+        }
+        return f;
+    }
+
+    private void abrirArchivo(File f) {
+        try {
+            if (Desktop.isDesktopSupported()) Desktop.getDesktop().open(f);
+        } catch (Exception ignore) { }
+    }
+
     // ============================================================================
     // TAB 2 - FACTURAS
     // ============================================================================
@@ -279,13 +365,29 @@ public class MainPanel extends JPanel {
         p.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
         JTable tbl = new JTable(mFact);
         tbl.setRowHeight(24);
+        tbl.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         p.add(new JScrollPane(tbl), BorderLayout.CENTER);
 
         JPanel sur = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton btnRefrescar = new JButton("Actualizar");
-        btnRefrescar.addActionListener(e -> cargarFacturas());
+        JButton btnPdfFactura = new JButton("Descargar PDF");
+        JButton btnRefrescar  = new JButton("Actualizar");
+        sur.add(btnPdfFactura);
         sur.add(btnRefrescar);
         p.add(sur, BorderLayout.SOUTH);
+
+        btnRefrescar.addActionListener(e -> cargarFacturas());
+        btnPdfFactura.addActionListener(e -> {
+            int row = tbl.getSelectedRow();
+            if (row < 0) { error("Selecciona una factura de la tabla."); return; }
+            int idFactura = ((Number) mFact.getValueAt(row, 0)).intValue();
+            ComprobanteCompra comp = comprobantes.get(idFactura);
+            if (comp == null) {
+                error("Solo puedes descargar el PDF de facturas generadas en esta sesion.\n"
+                        + "Realiza una compra nueva para obtener el comprobante completo.");
+                return;
+            }
+            descargarComprobantePDF(comp);
+        });
         return p;
     }
 
@@ -313,13 +415,14 @@ public class MainPanel extends JPanel {
         JPanel p = new JPanel(new BorderLayout(8, 8));
         p.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
-        JPanel arriba = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 4));
-        arriba.add(new JLabel("Partido:"));
-        cboPartidoReporte.setPreferredSize(new Dimension(420, 28));
-        arriba.add(cboPartidoReporte);
+        JPanel arriba = new JPanel(new BorderLayout(8, 4));
+        arriba.add(new JLabel("Partido:"), BorderLayout.WEST);
+        arriba.add(cboPartidoReporte, BorderLayout.CENTER);
         JButton btnGenerar = new JButton("Generar reporte");
-        arriba.add(btnGenerar);
-        arriba.add(btnPdf);
+        JPanel botonesRep = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 0));
+        botonesRep.add(btnGenerar);
+        botonesRep.add(btnPdf);
+        arriba.add(botonesRep, BorderLayout.EAST);
         p.add(arriba, BorderLayout.NORTH);
 
         tblReporte.setRowHeight(24);
@@ -347,9 +450,11 @@ public class MainPanel extends JPanel {
                 if (!filas.isEmpty()) {
                     mRep.addRow(new Object[]{"-- TOTAL --", totalVendidos, Moneda.fmt(totalRec)});
                     reporteHeaderPartido = sel.toString();
+                    ultimoReporte = filas;
                     btnPdf.setEnabled(true);
                 } else {
                     mRep.addRow(new Object[]{"(sin ventas registradas)", "", ""});
+                    ultimoReporte = java.util.Collections.emptyList();
                     btnPdf.setEnabled(false);
                 }
             } catch (Exception ex) {
@@ -362,33 +467,26 @@ public class MainPanel extends JPanel {
         return p;
     }
 
-    /**
-     * Lanza el dialogo de impresion del SO. El usuario elige "Save as PDF" en
-     * macOS (boton PDF abajo a la izquierda) o "Microsoft Print to PDF" en
-     * Windows. JTable.print maneja la paginacion y el formato.
-     */
+    private List<ResumenLocalidad> ultimoReporte = java.util.Collections.emptyList();
+
+    /** Genera el reporte de ventas directamente como PDF (PDFBox), sin pasar por la impresora. */
     private void descargarReportePdf() {
-        if (mRep.getRowCount() == 0) {
+        if (ultimoReporte.isEmpty()) {
             error("No hay datos para exportar. Genera un reporte primero.");
             return;
         }
+        String nombre = ("reporte-" + reporteHeaderPartido).replaceAll("[^A-Za-z0-9_-]", "_") + ".pdf";
+        File dest = elegirArchivoPDF(nombre);
+        if (dest == null) return;
         try {
-            java.text.MessageFormat header = new java.text.MessageFormat(
-                    "TICKETPREMIUM GR06   Resumen de Ventas\n"
-                  + reporteHeaderPartido);
-            java.text.MessageFormat footer = new java.text.MessageFormat(
-                    "Pagina {0}   Generado: "
-                    + new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm")
-                          .format(new java.util.Date())
-                    + "   Operador: " + ctrl.getSesion().getNombre());
-            boolean ok = tblReporte.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-            if (ok) {
-                JOptionPane.showMessageDialog(this,
-                        "Reporte enviado a la impresora / guardado correctamente.",
-                        "PDF", JOptionPane.INFORMATION_MESSAGE);
+            byte[] pdf = GeneradorComprobantePDF.reporteVentas(
+                    reporteHeaderPartido, ultimoReporte, ctrl.getSesion().getNombre());
+            try (FileOutputStream fos = new FileOutputStream(dest)) {
+                fos.write(pdf);
             }
-        } catch (java.awt.print.PrinterException pe) {
-            error("No se pudo imprimir/exportar el reporte:\n" + pe.getMessage());
+            abrirArchivo(dest);
+        } catch (Exception ex) {
+            error("No se pudo generar el reporte:\n" + ex.getMessage());
         }
     }
 
@@ -505,6 +603,7 @@ public class MainPanel extends JPanel {
         }
 
         JPanel form = new JPanel(new GridLayout(0, 2, 6, 6));
+        form.setPreferredSize(new Dimension(440, 140));
         form.add(new JLabel("Equipo local:"));        form.add(txtLocal);
         form.add(new JLabel("Equipo visita:"));       form.add(txtVisita);
         form.add(new JLabel("Fecha (yyyy-MM-dd HH:mm:ss):")); form.add(txtFecha);
@@ -558,11 +657,10 @@ public class MainPanel extends JPanel {
         JPanel p = new JPanel(new BorderLayout(8, 8));
         p.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
-        JPanel arriba = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 4));
-        arriba.add(new JLabel("Partido:"));
-        cboAdminPartido.setPreferredSize(new Dimension(420, 28));
+        JPanel arriba = new JPanel(new BorderLayout(8, 4));
+        arriba.add(new JLabel("Partido:"), BorderLayout.WEST);
         cboAdminPartido.setModel(cboPartido.getModel());
-        arriba.add(cboAdminPartido);
+        arriba.add(cboAdminPartido, BorderLayout.CENTER);
         p.add(arriba, BorderLayout.NORTH);
 
         tblAdminLocs.setRowHeight(24);
@@ -635,6 +733,7 @@ public class MainPanel extends JPanel {
         }
 
         JPanel form = new JPanel(new GridLayout(0, 2, 6, 6));
+        form.setPreferredSize(new Dimension(400, 110));
         form.add(new JLabel("Codigo (GENERAL, TRIBUNA, ...):")); form.add(txtCodigo);
         form.add(new JLabel("Disponibilidad:"));                 form.add(txtDispo);
         form.add(new JLabel("Precio:"));                          form.add(txtPrecio);
@@ -687,6 +786,14 @@ public class MainPanel extends JPanel {
     // ============================================================================
     private void error(String msg) {
         JOptionPane.showMessageDialog(this, msg, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    /** Mini-panel "Etiqueta: valor" usado en la fila de totales. */
+    private static JPanel panelMonto(String etiqueta, JLabel valor) {
+        JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0));
+        p.add(new JLabel(etiqueta));
+        p.add(valor);
+        return p;
     }
 
     /** Item del combo de partidos. toString() es lo que se renderiza. */

@@ -13,6 +13,8 @@
     <section class="auth-hero">
         <div class="auth-hero-inner">
             <div class="brand-mark"><span class="brand-dot"></span> TICKETPREMIUM</div>
+            <img src="${pageContext.request.contextPath}/assets/images/moster.png"
+                 alt="Monster mascot" class="auth-hero-image">
             <h1 class="hero-title">Sistema web de venta de boletos.</h1>
             <p class="hero-copy">Compra boletos y revisa tus compras en un solo lugar.</p>
         </div>
@@ -20,6 +22,8 @@
 
     <section class="auth-panel">
         <div class="card auth-card">
+            <img src="${pageContext.request.contextPath}/assets/images/moster.png"
+                 alt="Monster" class="auth-card-logo">
             <div class="section-eyebrow">Acceso al sistema</div>
             <h2 class="section-title">Iniciar sesion</h2>
             <p class="section-copy">Ingresa con tus credenciales para acceder al panel de operaciones.</p>

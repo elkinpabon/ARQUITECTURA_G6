@@ -10,11 +10,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.InputStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 @WebServlet("/comprobante")
 public class ComprobantePDFServlet extends HttpServlet {
@@ -43,16 +45,26 @@ public class ComprobantePDFServlet extends HttpServlet {
         try (PDDocument doc = new PDDocument()) {
             PDPage page = new PDPage(PDRectangle.A4);
             doc.addPage(page);
+            PDImageXObject logo = cargarLogo(doc);
 
             try (PDPageContentStream cs = new PDPageContentStream(doc, page)) {
                 dibujarMarco(cs);
-                escribirCabecera(cs, comprobante);
+                escribirCabecera(cs, comprobante, logo);
                 escribirDetalles(cs, comprobante);
                 dibujarPanelValidacion(cs, comprobante);
                 escribirPie(cs, comprobante);
             }
 
             doc.save(resp.getOutputStream());
+        }
+    }
+
+    private PDImageXObject cargarLogo(PDDocument doc) {
+        try (InputStream in = getClass().getResourceAsStream("/images/moster.png")) {
+            if (in == null) return null;
+            return PDImageXObject.createFromByteArray(doc, in.readAllBytes(), "moster");
+        } catch (Exception ignore) {
+            return null;
         }
     }
 
@@ -86,19 +98,35 @@ public class ComprobantePDFServlet extends HttpServlet {
         cs.stroke();
     }
 
-    private void escribirCabecera(PDPageContentStream cs, ComprobanteCompra c) throws IOException {
+    private void escribirCabecera(PDPageContentStream cs, ComprobanteCompra c,
+                                  PDImageXObject logo) throws IOException {
         cs.setNonStrokingColor(new Color(19, 32, 64));
         cs.addRect(36, 760, 523, 46);
         cs.fill();
 
+        if (logo != null) {
+            cs.drawImage(logo, 44, 762, 42, 42);
+        }
+
         cs.setNonStrokingColor(Color.WHITE);
-        escribirTexto(cs, PDType1Font.HELVETICA_BOLD, 20, 52, 788, "TICKETPREMIUM", Color.WHITE);
-        escribirTexto(cs, PDType1Font.HELVETICA_BOLD, 12, 52, 770, "ENTRADA DIGITAL / COMPROBANTE DE COMPRA", Color.WHITE);
-        escribirTexto(cs, PDType1Font.HELVETICA_OBLIQUE, 8, 390, 771, c.getCodigoR() + "  |  Factura #" + c.getIdFactura(), Color.WHITE);
+        escribirTexto(cs, PDType1Font.HELVETICA_BOLD, 20, 96, 788, "TICKETPREMIUM", Color.WHITE);
+        escribirTexto(cs, PDType1Font.HELVETICA_BOLD, 12, 96, 770, "ENTRADA DIGITAL / COMPROBANTE DE COMPRA", Color.WHITE);
+
+        // Codigo + factura alineados a la derecha (dos lineas, dentro del banner)
+        float xRight = 549;     // 10pt de padding desde el borde derecho del banner (559)
+        textoDerecha(cs, PDType1Font.HELVETICA_OBLIQUE, 9, xRight, 790, c.getCodigoR());
+        textoDerecha(cs, PDType1Font.HELVETICA_OBLIQUE, 9, xRight, 776, "Factura #" + c.getIdFactura());
 
         cs.setNonStrokingColor(new Color(230, 236, 248));
         cs.addRect(36, 752, 523, 1.2f);
         cs.fill();
+    }
+
+    /** Escribe un texto cuyo borde derecho queda en {@code xRight}. */
+    private void textoDerecha(PDPageContentStream cs, PDType1Font font, float size,
+                              float xRight, float y, String texto) throws IOException {
+        float w = font.getStringWidth(texto) / 1000f * size;
+        escribirTexto(cs, font, size, xRight - w, y, texto, Color.WHITE);
     }
 
     private void escribirDetalles(PDPageContentStream cs, ComprobanteCompra c) throws IOException {

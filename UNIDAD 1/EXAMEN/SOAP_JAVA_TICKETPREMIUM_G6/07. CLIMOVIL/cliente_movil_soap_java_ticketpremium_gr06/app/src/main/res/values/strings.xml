@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TicketPremium GR06</string>
+
+    <string name="login_titulo">TicketPremium</string>
+    <string name="login_subtitulo">Iniciar sesion - GR06</string>
+    <string name="hint_usuario">Usuario</string>
+    <string name="hint_contrasena">Contrasena</string>
+    <string name="hint_servidor">Servidor base (ej: http://10.0.2.2:8080/servidor_soap_java_federacion_gr06)</string>
+    <string name="boton_iniciar">Iniciar sesion</string>
+    <string name="ayuda_login">monster / monster9 (ADMIN)\njosue, mikaela, elkin / admin2002 (CLIENTE)</string>
+
+    <string name="tab_comprar">Comprar</string>
+    <string name="tab_facturas">Facturas</string>
+    <string name="tab_reporte">Reporte</string>
+    <string name="tab_admin">Admin</string>
+
+    <string name="label_partido">Partido:</string>
+    <string name="label_localidad">Localidad:</string>
+    <string name="label_cantidad">Cantidad:</string>
+    <string name="label_subtotal">Subtotal:</string>
+    <string name="label_iva">IVA (15%):</string>
+    <string name="label_total">Total:</string>
+    <string name="boton_comprar">Comprar boletos</string>
+    <string name="boton_descargar_pdf">Descargar PDF</string>
+    <string name="boton_actualizar">Actualizar</string>
+    <string name="boton_generar">Generar reporte</string>
+    <string name="boton_nuevo">Nuevo</string>
+    <string name="boton_editar">Editar</string>
+    <string name="boton_eliminar">Eliminar</string>
+    <string name="boton_guardar">Guardar</string>
+    <string name="boton_cancelar">Cancelar</string>
+    <string name="boton_salir">Cerrar sesion</string>
+
+    <string name="msg_login_error">Usuario o contrasena invalidos</string>
+    <string name="msg_compra_exito">Compra registrada</string>
+    <string name="msg_pdf_listo">Comprobante generado</string>
+    <string name="msg_sin_seleccion">Selecciona un elemento de la lista</string>
+    <string name="msg_solo_admin">Funcion solo disponible para administradores</string>
+</resources>

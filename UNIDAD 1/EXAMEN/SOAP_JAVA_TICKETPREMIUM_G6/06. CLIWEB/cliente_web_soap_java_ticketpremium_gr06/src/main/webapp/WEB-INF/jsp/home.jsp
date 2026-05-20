@@ -24,6 +24,11 @@
             </div>
         </div>
         <div class="topbar-right">
+            <c:if test="${admin}">
+                <a class="btn btn-admin" href="${pageContext.request.contextPath}/admin-panel">
+                    &#9881; Administracion
+                </a>
+            </c:if>
             <a class="btn-secondary" href="${pageContext.request.contextPath}/home">Actualizar</a>
             <a class="btn-danger" href="${pageContext.request.contextPath}/logout">Cerrar sesion</a>
         </div>
@@ -151,141 +156,15 @@
             </details>
 
             <c:if test="${admin}">
-                <details class="panel accordion">
-                    <summary>
-                        <div>
-                            <h2 class="panel-title">Partidos admin</h2>
-                            <p class="panel-subtitle">Abrir para mantener partidos.</p>
-                        </div>
-                        <span class="chip-soft">CRUD</span>
-                        <span class="accordion-caret"></span>
-                    </summary>
-                    <div class="accordion-body">
-                        <div class="grid-2 form-grid cols-2">
-                            <form method="post" action="${pageContext.request.contextPath}/admin" class="form-grid compact-form">
-                                <input type="hidden" name="accion" value="registrarPartido">
-                                <input type="hidden" name="partido" value="${partidoSel}">
-                                <input type="hidden" name="reportePartido" value="${reporteSel}">
-                                <input type="hidden" name="adminPartido" value="${adminPartidoSel}">
-                                <div class="field"><label>Equipo local</label><input type="text" name="equipoLocal" required></div>
-                                <div class="field"><label>Equipo visita</label><input type="text" name="equipoVisita" required></div>
-                                <div class="field"><label>Fecha</label><input type="text" name="fecha" placeholder="yyyy-MM-dd HH:mm:ss" required></div>
-                                <div class="field"><label>Lugar</label><input type="text" name="lugar" required></div>
-                                <div class="form-actions"><button class="btn" type="submit">Registrar partido</button></div>
-                            </form>
-
-                            <form method="post" action="${pageContext.request.contextPath}/admin" class="form-grid compact-form">
-                                <input type="hidden" name="accion" value="actualizarPartido">
-                                <input type="hidden" name="partido" value="${partidoSel}">
-                                <input type="hidden" name="reportePartido" value="${reporteSel}">
-                                <input type="hidden" name="adminPartido" value="${adminPartidoSel}">
-                                <div class="field"><label>Codigo</label><input type="number" name="codigo" required></div>
-                                <div class="field"><label>Equipo local</label><input type="text" name="equipoLocal" required></div>
-                                <div class="field"><label>Equipo visita</label><input type="text" name="equipoVisita" required></div>
-                                <div class="field"><label>Fecha</label><input type="text" name="fecha" placeholder="yyyy-MM-dd HH:mm:ss" required></div>
-                                <div class="field"><label>Lugar</label><input type="text" name="lugar" required></div>
-                                <div class="form-actions"><button class="btn-secondary" type="submit">Actualizar partido</button></div>
-                            </form>
-                        </div>
-
-                        <form method="post" action="${pageContext.request.contextPath}/admin" class="form-grid cols-3 compact-form section-block">
-                            <input type="hidden" name="accion" value="eliminarPartido">
-                            <input type="hidden" name="partido" value="${partidoSel}">
-                            <input type="hidden" name="reportePartido" value="${reporteSel}">
-                            <input type="hidden" name="adminPartido" value="${adminPartidoSel}">
-                            <div class="field"><label>Codigo a eliminar</label><input type="number" name="codigo" required></div>
-                            <div class="form-actions"><button class="btn-danger" type="submit">Eliminar partido</button></div>
-                        </form>
+                <div class="card admin-cta">
+                    <div>
+                        <h2 class="panel-title">Funciones de administracion</h2>
+                        <p class="panel-subtitle">Gestiona partidos y localidades en un panel dedicado.</p>
                     </div>
-                </details>
-
-                <details class="panel accordion">
-                    <summary>
-                        <div>
-                            <h2 class="panel-title">Localidades admin</h2>
-                            <p class="panel-subtitle">Abrir para mantener localidades.</p>
-                        </div>
-                        <span class="chip-soft">${localidadesAdminCount} registros</span>
-                        <span class="accordion-caret"></span>
-                    </summary>
-                    <div class="accordion-body">
-                        <form method="get" action="${pageContext.request.contextPath}/home" class="form-grid cols-2 compact-form section-block">
-                            <div class="field">
-                                <label>Partido admin</label>
-                                <select name="adminPartido" onchange="this.form.submit()">
-                                    <c:forEach items="${partidos}" var="p">
-                                        <option value="${p.codigo}" ${p.codigo == adminPartidoSel ? 'selected' : ''}>${p.codigo} - ${p.equipoLocal} vs ${p.equipoVisita}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div>
-                                <input type="hidden" name="partido" value="${partidoSel}">
-                                <input type="hidden" name="reportePartido" value="${reporteSel}">
-                                <div class="small-note">La tabla inferior muestra todas las localidades del partido seleccionado.</div>
-                            </div>
-                        </form>
-
-                        <div class="table-wrap section-block">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Localidad</th>
-                                    <th>Disponibilidad</th>
-                                    <th>Precio</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach items="${localidadesAdmin}" var="l">
-                                    <tr>
-                                        <td>${l.id}</td>
-                                        <td>${l.codigoLocalidad}</td>
-                                        <td>${l.disponibilidad}</td>
-                                        <td><fmt:formatNumber value="${l.precio}" pattern="#,##0.00"/></td>
-                                    </tr>
-                                </c:forEach>
-                                <c:if test="${empty localidadesAdmin}">
-                                    <tr><td colspan="4">Sin localidades para administrar.</td></tr>
-                                </c:if>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="grid-2 form-grid cols-2 section-block">
-                            <form method="post" action="${pageContext.request.contextPath}/admin" class="form-grid compact-form">
-                                <input type="hidden" name="accion" value="registrarLocalidad">
-                                <input type="hidden" name="partido" value="${partidoSel}">
-                                <input type="hidden" name="reportePartido" value="${reporteSel}">
-                                <input type="hidden" name="adminPartido" value="${adminPartidoSel}">
-                                <div class="field"><label>Codigo partido</label><input type="number" name="codigoPartido" required></div>
-                                <div class="field"><label>Codigo localidad</label><input type="text" name="codigoLocalidad" required></div>
-                                <div class="field"><label>Disponibilidad</label><input type="number" name="disponibilidad" required></div>
-                                <div class="field"><label>Precio</label><input type="text" name="precio" required></div>
-                                <div class="form-actions"><button class="btn" type="submit">Registrar localidad</button></div>
-                            </form>
-
-                            <form method="post" action="${pageContext.request.contextPath}/admin" class="form-grid compact-form">
-                                <input type="hidden" name="accion" value="actualizarLocalidad">
-                                <input type="hidden" name="partido" value="${partidoSel}">
-                                <input type="hidden" name="reportePartido" value="${reporteSel}">
-                                <input type="hidden" name="adminPartido" value="${adminPartidoSel}">
-                                <div class="field"><label>ID localidad</label><input type="number" name="idLocalidad" required></div>
-                                <div class="field"><label>Disponibilidad</label><input type="number" name="disponibilidad" required></div>
-                                <div class="field"><label>Precio</label><input type="text" name="precio" required></div>
-                                <div class="form-actions"><button class="btn-secondary" type="submit">Actualizar localidad</button></div>
-                            </form>
-                        </div>
-
-                        <form method="post" action="${pageContext.request.contextPath}/admin" class="form-grid cols-3 compact-form section-block">
-                            <input type="hidden" name="accion" value="eliminarLocalidad">
-                            <input type="hidden" name="partido" value="${partidoSel}">
-                            <input type="hidden" name="reportePartido" value="${reporteSel}">
-                            <input type="hidden" name="adminPartido" value="${adminPartidoSel}">
-                            <div class="field"><label>ID localidad a eliminar</label><input type="number" name="idLocalidad" required></div>
-                            <div class="form-actions"><button class="btn-danger" type="submit">Eliminar localidad</button></div>
-                        </form>
-                    </div>
-                </details>
+                    <a class="btn btn-admin" href="${pageContext.request.contextPath}/admin-panel">
+                        &#9881; Ir al panel admin
+                    </a>
+                </div>
             </c:if>
         </div>
 

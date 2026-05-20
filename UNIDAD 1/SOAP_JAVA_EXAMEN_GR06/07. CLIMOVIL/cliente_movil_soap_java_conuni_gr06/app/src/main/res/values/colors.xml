@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Paleta inspirada en Monsters University (azul Sulley + verde Mike) -->
+    <color name="md_theme_primary">#1E3A8A</color>           <!-- Azul Sulley -->
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_primaryContainer">#DBEAFE</color>
+    <color name="md_theme_onPrimaryContainer">#0C1B4D</color>
+
+    <color name="md_theme_secondary">#16A34A</color>         <!-- Verde Mike -->
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer">#DCFCE7</color>
+    <color name="md_theme_onSecondaryContainer">#052E14</color>
+
+    <color name="md_theme_tertiary">#A855F7</color>          <!-- Morado acento -->
+    <color name="md_theme_onTertiary">#FFFFFF</color>
+
+    <color name="md_theme_background">#F8FAFC</color>
+    <color name="md_theme_onBackground">#0F172A</color>
+    <color name="md_theme_surface">#FFFFFF</color>
+    <color name="md_theme_onSurface">#0F172A</color>
+    <color name="md_theme_surfaceVariant">#E2E8F0</color>
+    <color name="md_theme_onSurfaceVariant">#475569</color>
+
+    <color name="md_theme_error">#DC2626</color>
+    <color name="md_theme_onError">#FFFFFF</color>
+
+    <color name="texto_secundario">#64748B</color>
+    <color name="overlay_oscuro">#80000000</color>
+</resources>

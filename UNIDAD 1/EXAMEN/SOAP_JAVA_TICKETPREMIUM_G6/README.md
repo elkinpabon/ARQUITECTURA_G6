@@ -16,9 +16,9 @@ SOAP_JAVA_TICKETPREMIUM_G6/
 │   ├── 02. LOGICO/
 │   └── 03. FISICO/script_ticketpremium.sql      ← script DDL + seed
 ├── 03. BDD/                                     ← vacío a propósito (el servidor bootstrap solo)
-├── 04. CLICONSOLA/                              ← Java console (pendiente)
-├── 05. CLIESCRITORIO/                           ← Swing (pendiente)
-├── 06. CLIWEB/                                  ← JSP/Servlets (pendiente)
+├── 04. CLICONSOLA/                              ← Java console ✅
+├── 05. CLIESCRITORIO/                           ← Swing ✅
+├── 06. CLIWEB/                                  ← JSP/Servlets ✅
 ├── 07. CLIMOVIL/                                ← Android (pendiente)
 ├── 08. SERVIDOR/servidor_soap_java_federacion_gr06/   ← ✅ LISTO
 └── 09. DOCUMENTACION/
@@ -136,9 +136,9 @@ TOTAL    = SUBTOTAL + IVA
 
 | Cliente | Tecnología | Pendiente |
 |---|---|---|
-| 04. CLICONSOLA | Java Console | Generar stubs con `wsimport`, login + flujo compra |
-| 05. CLIESCRITORIO | Swing | Frames de login/partidos/localidades/factura |
-| 06. CLIWEB | Servlet+JSP | Vistas + reporte HTML del partido |
+| 04. CLICONSOLA | Java Console | Login, listar partidos/localidades, compra, facturas, reporte |
+| 05. CLIESCRITORIO | Swing | Login, listar partidos/localidades, compra, facturas, reporte |
+| 06. CLIWEB | Servlet+JSP | Login, listar partidos/localidades, compra, facturas, reporte |
 | 07. CLIMOVIL | Android (kSOAP2) | Activities + login + compra |
 
 > Cada cliente debe permitir **mostrar partidos, mostrar localidades y registrar compra**. El **reporte** "Resumen de Ventas de un Partido" se puede consumir desde cualquier cliente — lo más natural es en el web.

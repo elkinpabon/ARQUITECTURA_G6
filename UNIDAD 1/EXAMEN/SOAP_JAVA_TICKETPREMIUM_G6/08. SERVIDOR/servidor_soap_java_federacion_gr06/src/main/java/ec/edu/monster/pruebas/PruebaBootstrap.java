@@ -56,7 +56,7 @@ public class PruebaBootstrap {
         String host = orElse(System.getenv("TICKETPREMIUM_DB_HOST"), "localhost");
         String port = orElse(System.getenv("TICKETPREMIUM_DB_PORT"), "3306");
         String user = orElse(System.getenv("TICKETPREMIUM_DB_USER"), "root");
-        String pass = orElse(System.getenv("TICKETPREMIUM_DB_PASSWORD"), "admin2002");
+        String pass = orElse(System.getenv("TICKETPREMIUM_DB_PASSWORD"), "admin123");
         String url  = "jdbc:mysql://" + host + ":" + port + "/"
                     + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
         try (Connection cn = DriverManager.getConnection(url, user, pass);

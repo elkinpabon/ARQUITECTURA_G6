@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * Conexion centralizada a MySQL. La configuracion se resuelve en este orden:
  *  1) Variables de entorno (TICKETPREMIUM_DB_HOST, _PORT, _NAME, _USER, _PASSWORD).
  *  2) Archivo /db.properties dentro del classpath.
- *  3) Valores por defecto (localhost:3306 / ticketpremiumDB / root / admin2002).
+ *  3) Valores por defecto (localhost:3306 / ticketpremiumDB / root / admin123).
  *
  * Esto hace que el WAR sea portable: el mismo artefacto funciona en cualquier
  * maquina cambiando solo las variables de entorno del servidor de aplicaciones.
@@ -35,7 +35,7 @@ public final class ConexionBD {
         String port = resolver("TICKETPREMIUM_DB_PORT",     props, "db.port",     "3306");
         String db   = resolver("TICKETPREMIUM_DB_NAME",     props, "db.name",     "ticketpremiumDB");
         USUARIO     = resolver("TICKETPREMIUM_DB_USER",     props, "db.user",     "root");
-        CLAVE       = resolver("TICKETPREMIUM_DB_PASSWORD", props, "db.password", "admin2002");
+        CLAVE       = resolver("TICKETPREMIUM_DB_PASSWORD", props, "db.password", "admin123");
 
         URL = "jdbc:mysql://" + host + ":" + port + "/" + db
             + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";

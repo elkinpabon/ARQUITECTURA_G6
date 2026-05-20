@@ -240,7 +240,7 @@ Response : [
 |---|---|---|
 | 1 | Variables de entorno del servidor de aplicaciones | `TICKETPREMIUM_DB_HOST`, `_PORT`, `_NAME`, `_USER`, `_PASSWORD` |
 | 2 | `src/main/resources/db.properties` (dentro del WAR) | `db.host`, `db.port`, `db.name`, `db.user`, `db.password` |
-| 3 | Defaults hardcodeados | `localhost:3306 / ticketpremiumDB / root / admin2002` |
+| 3 | Defaults hardcodeados | `localhost:3306 / ticketpremiumDB / root / admin123` |
 
 > **No editar el código** para cambiar de máquina: cambia las variables de entorno del Payara o el `db.properties` y reempaqueta.
 
@@ -332,7 +332,7 @@ Ambos producen el mismo schema y seed, pero con distinta semántica.
 
 ```bash
 # Borrar la BD a mano
-mysql -u root -padmin2002 -e "DROP DATABASE IF EXISTS ticketpremiumDB"
+mysql -u root -padmin123 -e "DROP DATABASE IF EXISTS ticketpremiumDB"
 
 # Re-desplegar el WAR (o reiniciar Payara) → revisar logs:
 #   INFO: Iniciando bootstrap de ticketpremiumDB ...
@@ -340,7 +340,7 @@ mysql -u root -padmin2002 -e "DROP DATABASE IF EXISTS ticketpremiumDB"
 #   INFO: Bootstrap completado: 10 sentencias.
 
 # La BD aparece de vuelta con seed completo
-mysql -u root -padmin2002 -e "USE ticketpremiumDB; SELECT COUNT(*) FROM USUARIO;"
+mysql -u root -padmin123 -e "USE ticketpremiumDB; SELECT COUNT(*) FROM USUARIO;"
 ```
 
 O sin desplegar, usando `PruebaBootstrap` (ver sección 9).
@@ -462,7 +462,7 @@ Salida esperada al final:
 
 > ⚠️ `PruebaVenta` **inserta una factura y descuenta stock** en cada corrida. Para resetear:
 > ```bash
-> mysql -u root -padmin2002 < "02. MER/03. FISICO/script_ticketpremium.sql"
+> mysql -u root -padmin123 < "02. MER/03. FISICO/script_ticketpremium.sql"
 > ```
 
 ## 10. Pruebas rápidas con SoapUI

@@ -14,6 +14,7 @@ import ec.edu.monster.servicio.VentaService;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -89,5 +90,74 @@ public class WSFederacion {
     @WebMethod(operationName = "misFacturas")
     public List<Factura> misFacturas(@WebParam(name = "idUsuario") int idUsuario) {
         return ventaService.listarFacturasPorUsuario(idUsuario);
+    }
+
+    // =========================================================================
+    //  Administracion (solo rol ADMIN — el servicio valida)
+    // =========================================================================
+
+    /** Lista TODAS las localidades de un partido (incluye DISPONIBILIDAD=0). Util para el panel admin. */
+    @WebMethod(operationName = "listarTodasLocalidadesPorPartido")
+    public List<Localidad> listarTodasLocalidadesPorPartido(
+            @WebParam(name = "codigoPartido") int codigoPartido) {
+        return localidadService.listarTodasPorPartido(codigoPartido);
+    }
+
+    // ---------- CRUD PARTIDOS ----------
+
+    @WebMethod(operationName = "registrarPartido")
+    public Resultado registrarPartido(
+            @WebParam(name = "idAdmin")       int idAdmin,
+            @WebParam(name = "equipoLocal")   String equipoLocal,
+            @WebParam(name = "equipoVisita")  String equipoVisita,
+            @WebParam(name = "fecha")         String fecha,
+            @WebParam(name = "lugar")         String lugar) {
+        return partidoService.registrar(idAdmin, equipoLocal, equipoVisita, fecha, lugar);
+    }
+
+    @WebMethod(operationName = "actualizarPartido")
+    public Resultado actualizarPartido(
+            @WebParam(name = "idAdmin")       int idAdmin,
+            @WebParam(name = "codigo")        int codigo,
+            @WebParam(name = "equipoLocal")   String equipoLocal,
+            @WebParam(name = "equipoVisita")  String equipoVisita,
+            @WebParam(name = "fecha")         String fecha,
+            @WebParam(name = "lugar")         String lugar) {
+        return partidoService.actualizar(idAdmin, codigo, equipoLocal, equipoVisita, fecha, lugar);
+    }
+
+    @WebMethod(operationName = "eliminarPartido")
+    public Resultado eliminarPartido(
+            @WebParam(name = "idAdmin") int idAdmin,
+            @WebParam(name = "codigo")  int codigo) {
+        return partidoService.eliminar(idAdmin, codigo);
+    }
+
+    // ---------- CRUD LOCALIDADES ----------
+
+    @WebMethod(operationName = "registrarLocalidad")
+    public Resultado registrarLocalidad(
+            @WebParam(name = "idAdmin")          int idAdmin,
+            @WebParam(name = "codigoPartido")    int codigoPartido,
+            @WebParam(name = "codigoLocalidad")  String codigoLocalidad,
+            @WebParam(name = "disponibilidad")   int disponibilidad,
+            @WebParam(name = "precio")           BigDecimal precio) {
+        return localidadService.registrar(idAdmin, codigoPartido, codigoLocalidad, disponibilidad, precio);
+    }
+
+    @WebMethod(operationName = "actualizarLocalidad")
+    public Resultado actualizarLocalidad(
+            @WebParam(name = "idAdmin")         int idAdmin,
+            @WebParam(name = "idLocalidad")     int idLocalidad,
+            @WebParam(name = "disponibilidad")  int disponibilidad,
+            @WebParam(name = "precio")          BigDecimal precio) {
+        return localidadService.actualizar(idAdmin, idLocalidad, disponibilidad, precio);
+    }
+
+    @WebMethod(operationName = "eliminarLocalidad")
+    public Resultado eliminarLocalidad(
+            @WebParam(name = "idAdmin")     int idAdmin,
+            @WebParam(name = "idLocalidad") int idLocalidad) {
+        return localidadService.eliminar(idAdmin, idLocalidad);
     }
 }

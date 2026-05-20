@@ -12,7 +12,7 @@ package com.example.eurekabank_soap_java.config;
 public final class ServidorConfig {
 
     /** Única línea a editar para cambiar de servidor. */
-    public static final String BASE = "http://10.0.2.2:8080/eurekabank_soap_java_gr06";
+    public static final String BASE = "http://10.94.162.208:8080/eurekabank_soap_java_gr06";
 
     /** Namespace del servicio (targetNamespace de los @WebService). */
     public static final String NAMESPACE = "http://ws.monster.edu.ec/";

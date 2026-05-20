@@ -1,14 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "hDlFMHfr2yA=",
+  "dgSpecHash": "/jE2bm7/3tI=",
   "success": true,
-  "projectFilePath": "C:\\Users\\elkin\\Desktop\\Repositorios\\ARQUITECTURA_G6\\UNIDAD 1\\DBLOCAL\\EUREKABANK_SOAP_DOTNET_GR06\\04. CLICONSOLA\\CLICONSOLA.csproj",
+  "projectFilePath": "\\\\Mac\\Home\\ESPE\\Arquitectura\\ARQUITECTURA_G6\\UNIDAD 1\\DBLOCAL\\EUREKABANK_SOAP_DOTNET_GR06\\04. CLICONSOLA\\CLICONSOLA.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\elkin\\.nuget\\packages\\microsoft.extensions.objectpool\\8.0.10\\microsoft.extensions.objectpool.8.0.10.nupkg.sha512",
-    "C:\\Users\\elkin\\.nuget\\packages\\system.security.cryptography.pkcs\\8.0.1\\system.security.cryptography.pkcs.8.0.1.nupkg.sha512",
-    "C:\\Users\\elkin\\.nuget\\packages\\system.security.cryptography.xml\\8.0.2\\system.security.cryptography.xml.8.0.2.nupkg.sha512",
-    "C:\\Users\\elkin\\.nuget\\packages\\system.servicemodel.http\\8.1.1\\system.servicemodel.http.8.1.1.nupkg.sha512",
-    "C:\\Users\\elkin\\.nuget\\packages\\system.servicemodel.primitives\\8.1.1\\system.servicemodel.primitives.8.1.1.nupkg.sha512"
+    "C:\\Users\\im47\\.nuget\\packages\\microsoft.extensions.objectpool\\8.0.10\\microsoft.extensions.objectpool.8.0.10.nupkg.sha512",
+    "C:\\Users\\im47\\.nuget\\packages\\system.security.cryptography.pkcs\\8.0.1\\system.security.cryptography.pkcs.8.0.1.nupkg.sha512",
+    "C:\\Users\\im47\\.nuget\\packages\\system.security.cryptography.xml\\8.0.2\\system.security.cryptography.xml.8.0.2.nupkg.sha512",
+    "C:\\Users\\im47\\.nuget\\packages\\system.servicemodel.http\\8.1.1\\system.servicemodel.http.8.1.1.nupkg.sha512",
+    "C:\\Users\\im47\\.nuget\\packages\\system.servicemodel.primitives\\8.1.1\\system.servicemodel.primitives.8.1.1.nupkg.sha512",
+    "C:\\Users\\im47\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.14\\microsoft.windowsdesktop.app.ref.9.0.14.nupkg.sha512",
+    "C:\\Users\\im47\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.14\\microsoft.netcore.app.ref.9.0.14.nupkg.sha512",
+    "C:\\Users\\im47\\.nuget\\packages\\microsoft.netcore.app.host.win-arm64\\9.0.14\\microsoft.netcore.app.host.win-arm64.9.0.14.nupkg.sha512",
+    "C:\\Users\\im47\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.14\\microsoft.aspnetcore.app.ref.9.0.14.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,0 +1,121 @@
+# =============================================================================
+#  .gitignore  -  SOAP_JAVA_TICKETPREMIUM_G6 (servidor + 4 clientes)
+#  Cubre: Java/Maven, NetBeans, IntelliJ, Eclipse, VS Code, Android, macOS, Win.
+#  Objetivo: que el repo solo contenga fuentes + recursos + docs.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+#  Java / Maven
+# -----------------------------------------------------------------------------
+target/
+build/
+dist/
+out/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+dependency-reduced-pom.xml
+
+# Cache local de Maven en algunas configuraciones
+.mvn/
+.m2/repository/
+mvnw
+mvnw.cmd
+
+# -----------------------------------------------------------------------------
+#  NetBeans
+# -----------------------------------------------------------------------------
+nbproject/private/
+nbproject/Makefile-*.mk
+nbproject/Package-*.bash
+nbbuild/
+nbdist/
+.nb-gradle/
+.nb-gradle-properties
+
+# -----------------------------------------------------------------------------
+#  IntelliJ IDEA
+# -----------------------------------------------------------------------------
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# -----------------------------------------------------------------------------
+#  Eclipse / STS
+# -----------------------------------------------------------------------------
+.project
+.classpath
+.settings/
+.factorypath
+.apt_generated/
+.springBeans
+.recommenders/
+.metadata/
+bin/
+
+# -----------------------------------------------------------------------------
+#  VS Code
+# -----------------------------------------------------------------------------
+.vscode/
+*.code-workspace
+
+# -----------------------------------------------------------------------------
+#  Android Studio / Gradle (para cliente movil)
+# -----------------------------------------------------------------------------
+*.apk
+*.aab
+*.ap_
+*.dex
+local.properties
+.gradle/
+captures/
+proguard/
+**/proguard/
+
+# -----------------------------------------------------------------------------
+#  Logs & temporales
+# -----------------------------------------------------------------------------
+*.log
+*.log.*
+logs/
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# -----------------------------------------------------------------------------
+#  Sistemas operativos
+# -----------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# -----------------------------------------------------------------------------
+#  Sensibles / locales  (no subir credenciales reales)
+# -----------------------------------------------------------------------------
+.env
+.env.local
+**/db.properties.local
+**/application-local.properties
+
+# -----------------------------------------------------------------------------
+#  Payara / GlassFish (si se ejecuta dentro de la carpeta del proyecto)
+# -----------------------------------------------------------------------------
+glassfish/
+payara*/
+**/domain1/logs/
+**/domain1/generated/
+**/domain1/osgi-cache/
+**/domain1/applications/

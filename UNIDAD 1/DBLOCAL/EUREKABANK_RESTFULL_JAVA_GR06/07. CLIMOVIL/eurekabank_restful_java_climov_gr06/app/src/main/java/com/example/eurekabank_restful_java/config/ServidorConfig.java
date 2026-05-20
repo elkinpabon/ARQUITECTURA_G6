@@ -13,7 +13,7 @@ public final class ServidorConfig {
 
     /** Única línea a editar para cambiar de servidor (API REST). */
     public static final String BASE =
-            "http://10.0.2.2:8080/eurekabank_restful_java_gr06/api";
+            "http://10.94.162.208:8080/eurekabank_restful_java_gr06/api";
 
     private ServidorConfig() { }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CLIWEB")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b5b0d13b5dd99e604c861fe175a88ccf55c6d20")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e40c8841650b7945ad57810b151e2c2b58a50940")]
 [assembly: System.Reflection.AssemblyProductAttribute("CLIWEB")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CLIWEB")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

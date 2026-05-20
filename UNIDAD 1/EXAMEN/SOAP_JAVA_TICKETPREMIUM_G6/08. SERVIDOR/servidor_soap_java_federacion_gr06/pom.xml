@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ec.edu.monster</groupId>
+    <artifactId>servidor_soap_java_federacion_gr06</artifactId>
+    <version>1</version>
+    <packaging>war</packaging>
+    <name>servidor_soap_java_federacion_gr06</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>17</maven.compiler.release>
+        <jakartaee>10.0.0</jakartaee>
+    </properties>
+
+    <dependencies>
+        <!--
+            API completa de Jakarta EE 10: incluye jakarta.jws (@WebService, @WebMethod,
+            @WebParam) y jakarta.xml.ws. Suficiente para compilar el servidor SOAP.
+            scope=provided porque Payara aporta el runtime en tiempo de despliegue.
+        -->
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>${jakartaee}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--
+            Driver MySQL: NO va como provided porque Payara no lo trae por defecto.
+            Queda dentro del WAR (WEB-INF/lib).
+        -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.1.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>servidor_soap_java_federacion_gr06</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <!-- "release" garantiza que el bytecode sea compatible con ese JDK -->
+                    <release>17</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

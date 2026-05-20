@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Puedes editar este archivo libremente. Revisa los bloques comentados para -->
+<!-- algunos ejemplos de cómo personalizar la construcción. -->
+<!-- (Si lo borras y reabres el proyecto, se volverá a crear.) -->
+<!-- Por defecto, solo los comandos Limpiar y Construir usan este script. -->
+<!-- Los comandos Ejecutar, Depurar y Probar solo usan este script si -->
+<!-- la opción Compilar al Guardar está desactivada para el proyecto. -->
+<!-- Puedes desactivar la opción Compilar al Guardar (o Desplegar al Guardar) -->
+<!-- en el cuadro de diálogo Propiedades del Proyecto.-->
+<project name="servidor_soap_java_conuni_gr06" default="default" basedir=".">
+    <description>Construye, prueba y ejecuta el proyecto servidor_soap_java_conuni_gr06.</description>
+    <import file="nbproject/build-impl.xml"/>
+    <!--
+
+    Existen varios objetivos que estan vacios por defecto y que pueden
+    usarse para ejecutar tus tareas. Estos objetivos generalmente se ejecutan
+    antes y despues de algunos objetivos principales. Son:
+
+      -pre-init:                 llamado antes de inicializar las propiedades del proyecto
+      -post-init:                llamado despues de inicializar las propiedades del proyecto
+      -pre-compile:              llamado antes de la compilacion javac
+      -post-compile:             llamado despues de la compilacion javac
+      -pre-compile-single:       llamado antes de la compilacion javac de un archivo unico
+      -post-compile-single:      llamado despues de la compilacion javac de un archivo unico
+      -pre-compile-test:         llamado antes de la compilacion javac de pruebas JUnit
+      -post-compile-test:        llamado despues de la compilacion javac de pruebas JUnit
+      -pre-compile-test-single:  llamado antes de la compilacion javac de una prueba JUnit unica
+      -post-compile-test-single: llamado despues de la compilacion javac de una prueba JUnit unica
+      -pre-dist:                 llamado antes del empaquetado del archivo
+      -post-dist:                llamado despues del empaquetado del archivo
+      -post-clean:               llamado despues de limpiar los productos de compilacion
+      -pre-run-deploy:           llamado antes del despliegue
+      -post-run-deploy:          llamado despues del despliegue
+
+    Un ejemplo de insercion de un ofuscador despues de la compilacion podria verse asi:
+
+        <target name="-post-compile">
+            <obfuscate>
+                <fileset dir="${build.classes.dir}"/>
+            </obfuscate>
+        </target>
+
+    Para la lista de propiedades disponibles revisa el archivo importado
+    nbproject/build-impl.xml.
+
+
+    Otra forma de personalizar la construccion es sobrescribiendo los objetivos principales existentes.
+    Los objetivos de interes son:
+
+      init-macrodef-javac:    define macro para compilacion javac
+      init-macrodef-junit:    define macro para ejecucion de junit
+      init-macrodef-debug:    define macro para depuracion de clases
+      do-dist:                empaquetado del archivo
+      run:                    ejecucion del proyecto
+      javadoc-build:          generacion de javadoc
+
+    Un ejemplo de sobrescritura del objetivo para la ejecucion del proyecto podria verse asi:
+
+        <target name="run" depends="<NOMBRE_PROYECTO>-impl.jar">
+            <exec dir="bin" executable="launcher.exe">
+                <arg file="${dist.jar}"/>
+            </exec>
+        </target>
+
+    Observa que el objetivo sobrescrito depende del objetivo jar y no solo
+    del objetivo compile como lo hace el objetivo run normal. De nuevo, para la lista de
+    propiedades disponibles que puedes usar revisa el objetivo que estas sobrescribiendo en
+    el archivo nbproject/build-impl.xml.
+
+    -->
+</project>

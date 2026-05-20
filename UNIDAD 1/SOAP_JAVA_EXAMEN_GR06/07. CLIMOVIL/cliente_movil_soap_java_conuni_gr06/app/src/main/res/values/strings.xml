@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">CONUNI Móvil Soap_Java</string>
+    <string name="subtitulo_app">Conversor Universal Monsters</string>
+
+    <!-- Titulos -->
+    <string name="titulo_login">Iniciar Sesión</string>
+    <string name="titulo_menu">Menú Principal</string>
+    <string name="titulo_longitud">Longitud</string>
+    <string name="titulo_masa">Masa</string>
+    <string name="titulo_temperatura">Temperatura</string>
+
+    <!-- Login -->
+    <string name="hint_usuario">Usuario</string>
+    <string name="hint_contrasena">Contraseña</string>
+    <string name="btn_ingresar">Ingresar</string>
+    <string name="msg_campos_vacios">Completa usuario y contraseña</string>
+    <string name="msg_credenciales_invalidas">Credenciales inválidas</string>
+    <string name="msg_error_conexion">No se pudo conectar con el servidor: %1$s</string>
+    <string name="msg_bienvenida">Bienvenido, %1$s</string>
+    <string name="lbl_login_titulo">Bienvenido</string>
+    <string name="lbl_login_descripcion">Ingresa tus credenciales para acceder al conversor</string>
+
+    <!-- Menu -->
+    <string name="btn_longitud">Conversiones de Longitud</string>
+    <string name="btn_masa">Conversiones de Masa</string>
+    <string name="btn_temperatura">Conversiones de Temperatura</string>
+    <string name="btn_cerrar_sesion">Cerrar Sesión</string>
+    <string name="etiqueta_usuario_activo">Sesión iniciada como %1$s</string>
+    <string name="desc_longitud">5 operaciones: metros, kilómetros, centímetros, yardas, milímetros</string>
+    <string name="desc_masa">5 operaciones: kilogramos, gramos, toneladas, libras, miligramos</string>
+    <string name="desc_temperatura">5 operaciones: Celsius, Fahrenheit, Kelvin</string>
+
+    <!-- Conversion -->
+    <string name="lbl_operacion">Operación</string>
+    <string name="hint_valor">Valor a convertir</string>
+    <string name="btn_convertir">Convertir</string>
+    <string name="btn_limpiar">Limpiar</string>
+    <string name="etiqueta_resultado">Resultado</string>
+    <string name="placeholder_resultado">Selecciona una operación, ingresa un valor y pulsa Convertir.</string>
+    <string name="msg_error_servicio">Error al invocar el servicio: %1$s</string>
+    <string name="msg_valor_invalido">Debes ingresar un número válido</string>
+
+    <!-- Descripciones accesibilidad -->
+    <string name="desc_logo">Logo CONUNI</string>
+    <string name="desc_atras">Volver</string>
+    <string name="desc_cerrar_sesion">Cerrar sesión</string>
+
+    <!-- Operaciones Longitud -->
+    <string name="op_metros_pies">Metros → Pies</string>
+    <string name="op_km_millas">Kilómetros → Millas</string>
+    <string name="op_cm_pulgadas">Centímetros → Pulgadas</string>
+    <string name="op_yardas_metros">Yardas → Metros</string>
+    <string name="op_mm_pulgadas">Milímetros → Pulgadas</string>
+
+    <!-- Operaciones Masa -->
+    <string name="op_kg_libras">Kilogramos → Libras</string>
+    <string name="op_g_onzas">Gramos → Onzas</string>
+    <string name="op_t_kg">Toneladas → Kilogramos</string>
+    <string name="op_lb_oz">Libras → Onzas</string>
+    <string name="op_mg_g">Miligramos → Gramos</string>
+
+    <!-- Operaciones Temperatura -->
+    <string name="op_c_f">Celsius → Fahrenheit</string>
+    <string name="op_f_c">Fahrenheit → Celsius</string>
+    <string name="op_c_k">Celsius → Kelvin</string>
+    <string name="op_k_c">Kelvin → Celsius</string>
+    <string name="op_f_k">Fahrenheit → Kelvin</string>
+</resources>

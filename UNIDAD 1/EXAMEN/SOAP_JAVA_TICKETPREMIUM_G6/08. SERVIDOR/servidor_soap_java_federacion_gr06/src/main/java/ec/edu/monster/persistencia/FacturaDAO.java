@@ -102,8 +102,12 @@ public class FacturaDAO {
     public List<Factura> listarPorUsuario(int idUsuario) {
         List<Factura> out = new ArrayList<>();
         String sql =
-            "SELECT ID_FACTURA, ID_USUARIO, FECHA, SUBTOTAL, IVA, TOTAL " +
-            "  FROM FACTURA WHERE ID_USUARIO = ? ORDER BY FECHA DESC";
+            "SELECT f.ID_FACTURA, f.ID_USUARIO, u.NOMBRE AS USUARIO_NOMBRE, " +
+            "       f.FECHA, f.SUBTOTAL, f.IVA, f.TOTAL " +
+            "  FROM FACTURA f " +
+            "  JOIN USUARIO u ON f.ID_USUARIO = u.ID_USUARIO " +
+            " WHERE f.ID_USUARIO = ? " +
+            " ORDER BY f.FECHA DESC";
         Connection cn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -116,6 +120,7 @@ public class FacturaDAO {
                 out.add(new Factura(
                     rs.getInt("ID_FACTURA"),
                     rs.getInt("ID_USUARIO"),
+                    rs.getString("USUARIO_NOMBRE"),
                     String.valueOf(rs.getTimestamp("FECHA")),
                     rs.getBigDecimal("SUBTOTAL"),
                     rs.getBigDecimal("IVA"),
@@ -123,6 +128,42 @@ public class FacturaDAO {
             }
         } catch (SQLException e) {
             LOG.log(Level.SEVERE, "Error listando facturas del usuario " + idUsuario, e);
+        } finally {
+            ConexionBD.desconectar(rs);
+            ConexionBD.desconectar(ps);
+            ConexionBD.desconectar(cn);
+        }
+        return out;
+    }
+
+    /** TODAS las facturas del sistema con nombre de usuario (solo admin). */
+    public List<Factura> listarTodas() {
+        List<Factura> out = new ArrayList<>();
+        String sql =
+            "SELECT f.ID_FACTURA, f.ID_USUARIO, u.NOMBRE AS USUARIO_NOMBRE, " +
+            "       f.FECHA, f.SUBTOTAL, f.IVA, f.TOTAL " +
+            "  FROM FACTURA f " +
+            "  JOIN USUARIO u ON f.ID_USUARIO = u.ID_USUARIO " +
+            " ORDER BY f.FECHA DESC";
+        Connection cn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            cn = ConexionBD.conectar();
+            ps = cn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                out.add(new Factura(
+                    rs.getInt("ID_FACTURA"),
+                    rs.getInt("ID_USUARIO"),
+                    rs.getString("USUARIO_NOMBRE"),
+                    String.valueOf(rs.getTimestamp("FECHA")),
+                    rs.getBigDecimal("SUBTOTAL"),
+                    rs.getBigDecimal("IVA"),
+                    rs.getBigDecimal("TOTAL")));
+            }
+        } catch (SQLException e) {
+            LOG.log(Level.SEVERE, "Error listando todas las facturas", e);
         } finally {
             ConexionBD.desconectar(rs);
             ConexionBD.desconectar(ps);

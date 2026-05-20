@@ -1,51 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/brand_light"
     android:padding="12dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label_partido"
-        android:textStyle="bold" />
-
-    <Spinner
-        android:id="@+id/spnPartido"
+    <!-- Tarjeta superior: filtros -->
+    <com.google.android.material.card.MaterialCardView
+        style="@style/TP.Card"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp" />
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnGenerar"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
-            android:text="@string/boton_generar" />
+            android:orientation="vertical"
+            android:padding="14dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnPdf"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:enabled="false"
-            android:text="@string/boton_descargar_pdf" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_partido"
+                android:textStyle="bold"
+                android:textColor="@color/brand_dark"
+                android:textSize="13sp"
+                android:letterSpacing="0.05" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvReporte"
+            <Spinner
+                android:id="@+id/spnPartido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:minHeight="44dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGenerar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:text="@string/boton_generar" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPdf"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    android:enabled="false"
+                    android:text="@string/boton_descargar_pdf" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Tarjeta inferior: tabla resumen -->
+    <com.google.android.material.card.MaterialCardView
+        style="@style/TP.Card"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:layout_weight="1"
-        android:background="@color/white" />
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:background="@color/surface_alt"
+                android:orientation="horizontal">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="LOCALIDAD"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.08" />
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="VENDIDOS"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.08" />
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="TOTAL"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.08" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvReporte"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/surface_card" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

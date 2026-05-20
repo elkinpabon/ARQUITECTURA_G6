@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 public class Factura implements Serializable {
     private int idFactura;
     private int idUsuario;
+    private String usuarioNombre; // opcional, poblado solo en consultas con JOIN
     private String fecha;     // formato ISO yyyy-MM-dd HH:mm:ss
     private BigDecimal subtotal;
     private BigDecimal iva;
@@ -16,8 +17,14 @@ public class Factura implements Serializable {
 
     public Factura(int idFactura, int idUsuario, String fecha, BigDecimal subtotal,
                    BigDecimal iva, BigDecimal total) {
+        this(idFactura, idUsuario, null, fecha, subtotal, iva, total);
+    }
+
+    public Factura(int idFactura, int idUsuario, String usuarioNombre, String fecha,
+                   BigDecimal subtotal, BigDecimal iva, BigDecimal total) {
         this.idFactura = idFactura;
         this.idUsuario = idUsuario;
+        this.usuarioNombre = usuarioNombre;
         this.fecha = fecha;
         this.subtotal = subtotal;
         this.iva = iva;
@@ -28,6 +35,8 @@ public class Factura implements Serializable {
     public void setIdFactura(int v)           { this.idFactura = v; }
     public int getIdUsuario()                 { return idUsuario; }
     public void setIdUsuario(int v)           { this.idUsuario = v; }
+    public String getUsuarioNombre()          { return usuarioNombre; }
+    public void setUsuarioNombre(String v)    { this.usuarioNombre = v; }
     public String getFecha()                  { return fecha; }
     public void setFecha(String fecha)        { this.fecha = fecha; }
     public BigDecimal getSubtotal()           { return subtotal; }

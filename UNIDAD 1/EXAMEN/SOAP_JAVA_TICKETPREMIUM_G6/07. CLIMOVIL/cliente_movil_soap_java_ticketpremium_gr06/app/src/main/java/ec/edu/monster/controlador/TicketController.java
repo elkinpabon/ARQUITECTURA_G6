@@ -76,7 +76,12 @@ public class TicketController {
     }
 
     public void misFacturas(Callback<List<Factura>> cb) {
-        async(() -> ws.misFacturas(Sesion.idUsuario()), cb);
+        // Admin ve TODAS las facturas; cliente solo las suyas
+        if (Sesion.isAdmin()) {
+            async(() -> ws.listarTodasFacturas(Sesion.idUsuario()), cb);
+        } else {
+            async(() -> ws.misFacturas(Sesion.idUsuario()), cb);
+        }
     }
 
     public void resumenVentas(int codigoPartido, Callback<List<ResumenLocalidad>> cb) {

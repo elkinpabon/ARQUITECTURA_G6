@@ -105,6 +105,8 @@ final class SoapHelper {
     static Factura toFactura(SoapObject o) {
         Factura f = new Factura();
         f.setIdFactura(integer(o, "idFactura"));
+        f.setIdUsuario(integer(o, "idUsuario"));
+        f.setUsuarioNombre(str(o, "usuarioNombre"));
         f.setFecha(str(o, "fecha"));
         f.setSubtotal(dec(o, "subtotal"));
         f.setIva(dec(o, "iva"));

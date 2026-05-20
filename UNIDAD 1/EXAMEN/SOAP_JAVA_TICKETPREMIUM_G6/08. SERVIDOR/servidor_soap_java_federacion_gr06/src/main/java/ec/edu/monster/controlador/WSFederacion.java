@@ -92,6 +92,12 @@ public class WSFederacion {
         return ventaService.listarFacturasPorUsuario(idUsuario);
     }
 
+    /** Devuelve TODAS las facturas del sistema (solo si idAdmin es ADMIN). */
+    @WebMethod(operationName = "listarTodasFacturas")
+    public List<Factura> listarTodasFacturas(@WebParam(name = "idAdmin") int idAdmin) {
+        return ventaService.listarTodasFacturas(idAdmin);
+    }
+
     // =========================================================================
     //  Administracion (solo rol ADMIN — el servicio valida)
     // =========================================================================

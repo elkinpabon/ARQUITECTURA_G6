@@ -69,9 +69,12 @@ public class TicketController {
                 codigoPartido, codigoLocalidad, cantidad);
     }
 
-    /** Historial de facturas del usuario logueado. */
+    /** Historial de facturas. Admin ve todas; cliente solo las suyas. */
     public List<Factura> misFacturas() {
         if (!sesion.activa()) return Collections.emptyList();
+        if (sesion.isAdmin()) {
+            return ws().listarTodasFacturas(sesion.getIdUsuario());
+        }
         return ws().misFacturas(sesion.getIdUsuario());
     }
 

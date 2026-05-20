@@ -1006,3 +1006,377 @@ details[open] .accordion-caret {
         min-width: 180px;
     }
 }
+
+/* ============================================================================
+   TEMA PROFESIONAL (sobrescribe lo anterior)
+   - Sin gradientes ni sombras pesadas
+   - Colores planos
+   - Topbar tipo navbar corporativa, sticky, compacta
+   ============================================================================ */
+
+:root {
+    --brand:        #0f4c81;
+    --brand-dark:   #093868;
+    --bg-flat:      #f4f6f9;
+    --surface-flat: #ffffff;
+    --border-flat:  #e1e5ec;
+    --text-flat:    #1f2937;
+    --muted-flat:   #6b7280;
+}
+
+body {
+    background: var(--bg-flat) !important;
+    color: var(--text-flat);
+}
+
+/* --------- Topbar: navbar corporativa edge-to-edge --------- */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--brand) !important;
+    color: #fff;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10) !important;
+    backdrop-filter: none !important;
+    /* Trick: extender la topbar de borde a borde respetando padding del shell */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: -24px;
+    margin-bottom: 28px;
+    padding-left: max(20px, calc(50vw - 620px)) !important;
+    padding-right: max(20px, calc(50vw - 620px)) !important;
+    min-height: 60px;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 24px !important;
+    justify-content: space-between !important;
+}
+
+.topbar .topbar-left {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 18px !important;
+    flex-wrap: wrap;
+}
+
+.topbar .brand-mark {
+    background: transparent !important;
+    border: none !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    color: #fff !important;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    font-size: 0.95rem;
+}
+
+.topbar .brand-dot {
+    background: #ffc940 !important;
+    box-shadow: none !important;
+}
+
+.topbar .app-name {
+    margin: 0 !important;
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0 !important;
+    color: rgba(255, 255, 255, 0.92) !important;
+    padding-left: 18px;
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.topbar .app-meta {
+    color: rgba(255, 255, 255, 0.75) !important;
+    font-size: 0.85rem !important;
+    margin-left: auto;
+    order: 5;
+}
+
+.topbar .chip-row {
+    display: none !important;
+}
+
+.topbar .topbar-right {
+    gap: 8px !important;
+    order: 6;
+}
+
+.topbar .topbar-right .btn,
+.topbar .topbar-right .btn-secondary,
+.topbar .topbar-right .btn-danger,
+.topbar .topbar-right .btn-admin {
+    min-height: 38px !important;
+    padding: 0 14px !important;
+    font-size: 0.86rem !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    transform: none !important;
+    background: rgba(255, 255, 255, 0.10) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+}
+
+.topbar .topbar-right .btn-admin {
+    background: #ffc940 !important;
+    color: var(--brand-dark) !important;
+    border-color: transparent !important;
+    font-weight: 700 !important;
+}
+
+.topbar .topbar-right .btn-danger {
+    background: #c0392b !important;
+    border-color: #a93226 !important;
+}
+
+.topbar .topbar-right .btn:hover,
+.topbar .topbar-right .btn-secondary:hover,
+.topbar .topbar-right .btn-danger:hover,
+.topbar .topbar-right .btn-admin:hover {
+    background: rgba(255, 255, 255, 0.20) !important;
+    transform: none !important;
+}
+
+.topbar .topbar-right .btn-admin:hover {
+    background: #fcb900 !important;
+}
+
+.topbar .topbar-right .btn-danger:hover {
+    background: #a93226 !important;
+}
+
+/* --------- Shell: centrar el contenido --------- */
+.shell {
+    width: 100% !important;
+    max-width: 1240px;
+    margin: 0 auto !important;
+    padding: 24px 16px 40px !important;
+}
+
+/* --------- Cards / paneles: sin sombras pesadas (excepto la topbar) --------- */
+.card:not(.topbar),
+.panel,
+.stat-card {
+    background: var(--surface-flat) !important;
+    border: 1px solid var(--border-flat) !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+
+/* Topbar: fondo azul corporativo - forzar despues de .card */
+header.topbar,
+.card.topbar {
+    background: var(--brand) !important;
+    border: none !important;
+    border-radius: 0 !important;
+    color: #fff !important;
+}
+
+.panel,
+.card {
+    padding: 20px !important;
+}
+
+/* --------- Stats: numeros sobrios --------- */
+.stat-card {
+    padding: 16px 18px !important;
+}
+
+.stat-label {
+    font-size: 0.72rem !important;
+    color: var(--muted-flat) !important;
+}
+
+.stat-value {
+    font-size: 1.7rem !important;
+    color: var(--text-flat) !important;
+    font-weight: 700 !important;
+}
+
+.stat-sub {
+    font-size: 0.82rem !important;
+}
+
+/* --------- Botones: planos --------- */
+.btn {
+    background: var(--brand) !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    border-radius: 6px !important;
+    transform: none !important;
+    min-height: 40px !important;
+}
+
+.btn:hover {
+    background: var(--brand-dark) !important;
+    transform: none !important;
+}
+
+.btn-secondary {
+    background: #fff !important;
+    color: var(--text-flat) !important;
+    border-color: var(--border-flat) !important;
+    box-shadow: none !important;
+    border-radius: 6px !important;
+    transform: none !important;
+    min-height: 40px !important;
+}
+
+.btn-secondary:hover {
+    background: #f4f6f9 !important;
+    transform: none !important;
+}
+
+.btn-danger {
+    background: #c0392b !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    border-radius: 6px !important;
+    transform: none !important;
+    min-height: 40px !important;
+}
+
+.btn-danger:hover {
+    background: #a93226 !important;
+    transform: none !important;
+}
+
+.btn-admin {
+    background: #ffc940 !important;
+    color: var(--brand-dark) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.btn-admin:hover {
+    background: #fcb900 !important;
+    color: var(--brand-dark) !important;
+    transform: none !important;
+}
+
+/* --------- CTA admin (en home) --------- */
+.admin-cta {
+    background: var(--surface-flat) !important;
+    border: 1px solid var(--border-flat) !important;
+    border-left: 4px solid var(--brand) !important;
+    box-shadow: none !important;
+    border-radius: 8px !important;
+}
+
+/* --------- Sidebar admin --------- */
+.admin-sidebar {
+    box-shadow: none !important;
+    border-radius: 8px !important;
+}
+
+.admin-nav-item {
+    background: #fff !important;
+    border-color: var(--border-flat) !important;
+    border-radius: 6px !important;
+    transform: none !important;
+}
+
+.admin-nav-item:hover {
+    background: #f4f6f9 !important;
+    transform: none !important;
+}
+
+.admin-nav-item.active {
+    background: var(--brand) !important;
+    color: #fff !important;
+    box-shadow: none !important;
+}
+
+/* --------- Chips planas --------- */
+.chip,
+.chip-soft,
+.chip-success,
+.chip-danger,
+.chip-solid {
+    box-shadow: none !important;
+    border-radius: 4px !important;
+    font-weight: 600 !important;
+}
+
+/* --------- Accordion: estilo plano --------- */
+.panel.accordion summary {
+    cursor: pointer;
+}
+
+.panel.accordion {
+    padding: 0 !important;
+}
+
+.panel.accordion > summary {
+    padding: 16px 20px !important;
+    border-radius: 8px !important;
+}
+
+.panel.accordion[open] > summary {
+    border-bottom: 1px solid var(--border-flat);
+    border-radius: 8px 8px 0 0 !important;
+}
+
+.accordion-body {
+    padding: 20px !important;
+}
+
+/* --------- Sub-tabs: estilo plano --------- */
+.subtabs-nav label {
+    border-radius: 4px 4px 0 0 !important;
+    font-weight: 600 !important;
+}
+
+/* --------- Inputs: bordes sobrios --------- */
+.field input,
+.field select,
+.field textarea {
+    border-radius: 6px !important;
+    border-color: var(--border-flat) !important;
+    box-shadow: none !important;
+    background: #fff !important;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color: var(--brand) !important;
+    box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.10) !important;
+}
+
+/* --------- Tablas planas --------- */
+.table {
+    border-collapse: collapse;
+}
+
+.table th {
+    background: #f4f6f9 !important;
+    color: var(--text-flat) !important;
+    font-weight: 600 !important;
+    border-bottom: 2px solid var(--border-flat) !important;
+}
+
+.table td {
+    border-bottom: 1px solid var(--border-flat) !important;
+}
+
+/* --------- Responsive de topbar --------- */
+@media (max-width: 720px) {
+    .topbar {
+        flex-wrap: wrap;
+        min-height: auto;
+        padding: 12px 16px !important;
+    }
+    .topbar .app-name {
+        border-left: none;
+        padding-left: 0;
+    }
+    .topbar .app-meta {
+        width: 100%;
+        margin-left: 0;
+    }
+}

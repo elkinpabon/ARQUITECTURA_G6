@@ -46,7 +46,9 @@ class LocalidadAdapter extends RecyclerView.Adapter<LocalidadAdapter.VH> {
         h.txtNombre.setText(l.getCodigoLocalidad());
         h.txtDispo.setText(String.valueOf(l.getDisponibilidad()));
         h.txtPrecio.setText(Moneda.fmt(l.getPrecio()));
-        h.itemView.setBackgroundColor(pos == selectedPos ? 0xFFFFF3D6 : 0xFFFFFFFF);
+        int colorSel    = h.itemView.getResources().getColor(R.color.row_selected, null);
+        int colorNormal = h.itemView.getResources().getColor(R.color.surface_card, null);
+        h.itemView.setBackgroundColor(pos == selectedPos ? colorSel : colorNormal);
         h.itemView.setOnClickListener(v -> {
             int prev = selectedPos;
             selectedPos = h.getAdapterPosition();

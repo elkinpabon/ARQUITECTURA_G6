@@ -12,12 +12,15 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
+            style="@style/TP.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/brand_dark"
             app:title="Localidades"
-            app:titleTextColor="@color/white"
-            app:navigationIcon="@android:drawable/ic_menu_revert" />
+            app:titleTextColor="@color/text_inverse"
+            app:subtitleTextColor="@color/text_on_brand_subtle"
+            app:navigationIcon="@android:drawable/ic_menu_revert"
+            app:navigationIconTint="@color/text_inverse" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvLocalidades"
@@ -34,5 +37,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@android:drawable/ic_input_add"
-        app:tint="@color/white" />
+        app:backgroundTint="@color/brand_accent"
+        app:tint="@color/brand_dark" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

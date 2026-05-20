@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipe"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/brand_light">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,95 +13,179 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_partido"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/spnPartido"
+        <!-- Tarjeta: selector de partido -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/TP.Card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/label_localidad"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_partido"
+                    android:textStyle="bold"
+                    android:textColor="@color/brand_dark"
+                    android:textSize="13sp"
+                    android:letterSpacing="0.05" />
+                <Spinner
+                    android:id="@+id/spnPartido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:minHeight="44dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvLocalidades"
+        <!-- Tarjeta: lista de localidades -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/TP.Card"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="4dp"
             android:layout_weight="1"
-            android:background="@color/white" />
+            android:layout_marginTop="10dp">
 
-        <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:text="@string/label_localidad"
+                    android:textStyle="bold"
+                    android:textColor="@color/brand_dark"
+                    android:textSize="13sp"
+                    android:letterSpacing="0.05"
+                    android:background="@color/surface_alt" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvLocalidades"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clipToPadding="false"
+                    android:background="@color/white" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Tarjeta: resumen + comprar -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/TP.Card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_marginTop="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/label_cantidad" />
+                android:orientation="vertical"
+                android:padding="14dp">
 
-            <EditText
-                android:id="@+id/edtCantidad"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp"
-                android:inputType="number"
-                android:text="1" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/label_cantidad"
+                        android:textColor="@color/text_primary"
+                        android:textStyle="bold" />
+                    <EditText
+                        android:id="@+id/edtCantidad"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:inputType="number"
+                        android:text="1"
+                        android:gravity="center"
+                        android:background="@android:color/transparent" />
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="8dp"
+                    android:background="@color/divider" />
 
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:text="@string/label_subtotal" />
-            <TextView android:id="@+id/lblSubtotal" android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:gravity="end" android:text="$ 0.00" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/label_subtotal"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp" />
+                    <TextView android:id="@+id/lblSubtotal"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:gravity="end"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp"
+                        android:text="$ 0.00" />
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:text="@string/label_iva" />
-            <TextView android:id="@+id/lblIva" android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:gravity="end" android:text="$ 0.00" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/label_iva"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp" />
+                    <TextView android:id="@+id/lblIva"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:gravity="end"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp"
+                        android:text="$ 0.00" />
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:text="@string/label_total" android:textStyle="bold" />
-            <TextView android:id="@+id/lblTotal" android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:gravity="end" android:text="$ 0.00"
-                android:textColor="@color/success_green" android:textSize="18sp" android:textStyle="bold" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp"
+                    android:background="@color/success_bg"
+                    android:orientation="horizontal">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/label_total"
+                        android:textStyle="bold"
+                        android:textColor="@color/success_green" />
+                    <TextView android:id="@+id/lblTotal"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:gravity="end"
+                        android:text="$ 0.00"
+                        android:textColor="@color/success_green"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnComprar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/boton_comprar"
-            android:textStyle="bold" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnComprar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/boton_comprar"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

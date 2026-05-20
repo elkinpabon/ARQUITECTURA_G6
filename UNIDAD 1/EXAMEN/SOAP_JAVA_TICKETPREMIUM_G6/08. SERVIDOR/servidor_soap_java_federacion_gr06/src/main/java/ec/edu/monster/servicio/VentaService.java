@@ -76,4 +76,13 @@ public class VentaService {
     public List<Factura> listarFacturasPorUsuario(int idUsuario) {
         return facturaDAO.listarPorUsuario(idUsuario);
     }
+
+    /** Todas las facturas (solo si idAdmin tiene rol ADMIN). */
+    public List<Factura> listarTodasFacturas(int idAdmin) {
+        Usuario u = usuarioDAO.buscarPorId(idAdmin);
+        if (u == null || !"ADMIN".equalsIgnoreCase(u.getRol())) {
+            return java.util.Collections.emptyList();
+        }
+        return facturaDAO.listarTodas();
+    }
 }

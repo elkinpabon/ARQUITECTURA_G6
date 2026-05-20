@@ -62,6 +62,10 @@ public class TicketController {
 
     public List<Factura> misFacturas() {
         if (!sesion.activa()) return Collections.emptyList();
+        // Admin ve TODAS las facturas del sistema; cliente solo las suyas
+        if (sesion.isAdmin()) {
+            return ws().listarTodasFacturas(sesion.getIdUsuario());
+        }
         return ws().misFacturas(sesion.getIdUsuario());
     }
 

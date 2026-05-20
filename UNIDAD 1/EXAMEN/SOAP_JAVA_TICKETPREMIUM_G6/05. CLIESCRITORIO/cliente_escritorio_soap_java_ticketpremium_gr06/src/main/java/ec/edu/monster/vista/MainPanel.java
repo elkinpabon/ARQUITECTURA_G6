@@ -74,10 +74,13 @@ public class MainPanel extends JPanel {
     private final JLabel lblTotal    = new JLabel("$ 0.00");
 
     // --- Tab Facturas ---
+    // Columnas se reconfiguran segun rol en construirTabFacturas()
     private final DefaultTableModel mFact = new DefaultTableModel(
             new Object[]{"# Factura", "Fecha", "Subtotal", "IVA", "Total"}, 0) {
         @Override public boolean isCellEditable(int r, int c) { return false; }
     };
+    /** Indice de la columna ID factura (varia segun haya o no columna Cliente). */
+    private int colIdFactura = 0;
 
     // --- Tab Reporte ---
     private final JComboBox<PartidoItem> cboPartidoReporte = new JComboBox<>();
@@ -361,8 +364,23 @@ public class MainPanel extends JPanel {
     // TAB 2 - FACTURAS
     // ============================================================================
     private JPanel construirTabFacturas() {
+        // Reconfigurar columnas segun rol: admin ve columna Cliente
+        boolean admin = ctrl.getSesion().isAdmin();
+        if (admin) {
+            mFact.setColumnIdentifiers(new Object[]{"# Factura", "Cliente", "Fecha", "Subtotal", "IVA", "Total"});
+        } else {
+            mFact.setColumnIdentifiers(new Object[]{"# Factura", "Fecha", "Subtotal", "IVA", "Total"});
+        }
+        colIdFactura = 0;
+
         JPanel p = new JPanel(new BorderLayout(8, 8));
         p.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
+
+        JLabel titulo = new JLabel(admin ? "Todas las facturas del sistema" : "Mis facturas");
+        titulo.setFont(titulo.getFont().deriveFont(Font.BOLD, 14f));
+        titulo.setBorder(BorderFactory.createEmptyBorder(0, 0, 6, 0));
+        p.add(titulo, BorderLayout.NORTH);
+
         JTable tbl = new JTable(mFact);
         tbl.setRowHeight(24);
         tbl.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -379,7 +397,7 @@ public class MainPanel extends JPanel {
         btnPdfFactura.addActionListener(e -> {
             int row = tbl.getSelectedRow();
             if (row < 0) { error("Selecciona una factura de la tabla."); return; }
-            int idFactura = ((Number) mFact.getValueAt(row, 0)).intValue();
+            int idFactura = ((Number) mFact.getValueAt(row, colIdFactura)).intValue();
             ComprobanteCompra comp = comprobantes.get(idFactura);
             if (comp == null) {
                 error("Solo puedes descargar el PDF de facturas generadas en esta sesion.\n"
@@ -393,15 +411,29 @@ public class MainPanel extends JPanel {
 
     private void cargarFacturas() {
         mFact.setRowCount(0);
+        boolean admin = ctrl.getSesion().isAdmin();
         try {
             for (Factura f : ctrl.misFacturas()) {
-                mFact.addRow(new Object[]{
-                        f.getIdFactura(),
-                        f.getFecha(),
-                        Moneda.fmt(f.getSubtotal()),
-                        Moneda.fmt(f.getIva()),
-                        Moneda.fmt(f.getTotal())
-                });
+                if (admin) {
+                    String nombre = f.getUsuarioNombre();
+                    if (nombre == null || nombre.isEmpty()) nombre = "id=" + f.getIdUsuario();
+                    mFact.addRow(new Object[]{
+                            f.getIdFactura(),
+                            nombre,
+                            f.getFecha(),
+                            Moneda.fmt(f.getSubtotal()),
+                            Moneda.fmt(f.getIva()),
+                            Moneda.fmt(f.getTotal())
+                    });
+                } else {
+                    mFact.addRow(new Object[]{
+                            f.getIdFactura(),
+                            f.getFecha(),
+                            Moneda.fmt(f.getSubtotal()),
+                            Moneda.fmt(f.getIva()),
+                            Moneda.fmt(f.getTotal())
+                    });
+                }
             }
         } catch (Exception ex) {
             error("No se pudieron cargar las facturas:\n" + ex.getMessage());

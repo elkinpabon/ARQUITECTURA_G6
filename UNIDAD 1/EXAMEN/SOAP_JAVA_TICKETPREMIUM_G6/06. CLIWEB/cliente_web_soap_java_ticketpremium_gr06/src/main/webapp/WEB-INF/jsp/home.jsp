@@ -106,6 +106,48 @@
             <details class="panel accordion" open>
                 <summary>
                     <div>
+                        <h2 class="panel-title">${admin ? 'Todas las facturas' : 'Mis facturas'}</h2>
+                        <p class="panel-subtitle">${admin ? 'Historial completo del sistema.' : 'Tu historial de compras.'}</p>
+                    </div>
+                    <span class="chip-soft">${facturasCount} ${facturasCount == 1 ? 'factura' : 'facturas'}</span>
+                    <span class="accordion-caret"></span>
+                </summary>
+                <div class="accordion-body">
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th># Factura</th>
+                                <c:if test="${admin}"><th>Cliente</th></c:if>
+                                <th>Fecha</th>
+                                <th>Subtotal</th>
+                                <th>IVA</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${facturas}" var="f">
+                                <tr>
+                                    <td><strong>#${f.idFactura}</strong></td>
+                                    <c:if test="${admin}"><td>${not empty f.usuarioNombre ? f.usuarioNombre : f.idUsuario}</td></c:if>
+                                    <td>${f.fecha}</td>
+                                    <td><fmt:formatNumber value="${f.subtotal}" pattern="#,##0.00"/></td>
+                                    <td><fmt:formatNumber value="${f.iva}" pattern="#,##0.00"/></td>
+                                    <td><strong><fmt:formatNumber value="${f.total}" pattern="#,##0.00"/></strong></td>
+                                </tr>
+                            </c:forEach>
+                            <c:if test="${empty facturas}">
+                                <tr><td colspan="${admin ? 6 : 5}">${admin ? 'Sin facturas registradas en el sistema.' : 'Aun no tienes compras registradas.'}</td></tr>
+                            </c:if>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </details>
+
+            <details class="panel accordion" open>
+                <summary>
+                    <div>
                         <h2 class="panel-title">Resumen de ventas</h2>
                         <p class="panel-subtitle">Solo para administrador.</p>
                     </div>

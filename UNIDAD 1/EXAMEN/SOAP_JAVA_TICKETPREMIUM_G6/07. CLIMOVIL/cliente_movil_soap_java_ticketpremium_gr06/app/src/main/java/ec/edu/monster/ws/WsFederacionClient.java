@@ -143,6 +143,16 @@ public class WsFederacionClient {
         return out;
     }
 
+    /** TODAS las facturas del sistema (solo si idAdmin es ADMIN en el servidor). */
+    public List<Factura> listarTodasFacturas(int idAdmin) throws Exception {
+        Map<String, Object> p = new LinkedHashMap<>();
+        p.put("idAdmin", idAdmin);
+        Object body = invocar("listarTodasFacturas", p);
+        List<Factura> out = new ArrayList<>();
+        for (SoapObject so : rets(body)) out.add(SoapHelper.toFactura(so));
+        return out;
+    }
+
     // ============================================================================
     // ADMIN
     // ============================================================================

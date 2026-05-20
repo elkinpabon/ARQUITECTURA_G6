@@ -16,6 +16,7 @@ import com.google.android.material.button.MaterialButton;
 import ec.edu.monster.R;
 import ec.edu.monster.modelo.ComprobanteCompra;
 import ec.edu.monster.modelo.Factura;
+import ec.edu.monster.modelo.Sesion;
 import ec.edu.monster.servicio.GeneradorComprobantePDF;
 import java.io.File;
 import java.util.ArrayList;
@@ -83,13 +84,24 @@ public class FacturasFragment extends Fragment {
             h.txtTotal.setText(Moneda.fmt(f.getTotal()));
             h.txtDetalle.setText("Subtotal: " + Moneda.fmt(f.getSubtotal())
                     + "   IVA: " + Moneda.fmt(f.getIva()));
+
+            // Solo el admin ve el nombre del cliente que compro la factura
+            if (Sesion.isAdmin()) {
+                String nombre = f.getUsuarioNombre();
+                if (nombre == null || nombre.isEmpty()) nombre = "id=" + f.getIdUsuario();
+                h.txtUsuario.setText("Cliente: " + nombre);
+                h.txtUsuario.setVisibility(View.VISIBLE);
+            } else {
+                h.txtUsuario.setVisibility(View.GONE);
+            }
+
             h.btnPdf.setOnClickListener(v -> descargar(f));
         }
         @Override public int getItemCount() { return data.size(); }
     }
 
     static class VH extends RecyclerView.ViewHolder {
-        TextView txtFactura, txtFecha, txtTotal, txtDetalle;
+        TextView txtFactura, txtFecha, txtTotal, txtDetalle, txtUsuario;
         MaterialButton btnPdf;
         VH(View v) {
             super(v);
@@ -97,6 +109,7 @@ public class FacturasFragment extends Fragment {
             txtFecha   = v.findViewById(R.id.txtFecha);
             txtTotal   = v.findViewById(R.id.txtTotal);
             txtDetalle = v.findViewById(R.id.txtDetalle);
+            txtUsuario = v.findViewById(R.id.txtUsuario);
             btnPdf     = v.findViewById(R.id.btnPdf);
         }
     }

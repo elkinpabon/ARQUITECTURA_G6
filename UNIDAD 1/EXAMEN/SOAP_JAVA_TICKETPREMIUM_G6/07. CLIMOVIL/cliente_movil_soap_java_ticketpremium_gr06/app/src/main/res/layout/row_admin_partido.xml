@@ -1,62 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/TP.Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/txtTitulo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textColor="@color/brand_dark" />
-
-    <TextView
-        android:id="@+id/txtSub"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:textColor="@color/text_secondary" />
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginTop="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:orientation="horizontal">
+        android:padding="14dp"
+        android:orientation="vertical">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLocalidades"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/txtTitulo"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
-            android:textSize="12sp"
-            android:text="Localidades" />
+            android:textStyle="bold"
+            android:textColor="@color/brand_dark"
+            android:textSize="15sp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnEditar"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/txtSub"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
+            android:layout_marginTop="4dp"
             android:textSize="12sp"
-            android:text="@string/boton_editar" />
+            android:textColor="@color/text_secondary" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnEliminar"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="12sp"
-            android:text="@string/boton_eliminar" />
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLocalidades"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:textSize="12sp"
+                android:minHeight="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="Localidades" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEditar"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:textSize="12sp"
+                android:minHeight="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/boton_editar" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEliminar"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="12sp"
+                android:minHeight="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:textColor="@color/error_red"
+                app:strokeColor="@color/error_red"
+                android:text="@string/boton_eliminar" />
+        </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/divider" />
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

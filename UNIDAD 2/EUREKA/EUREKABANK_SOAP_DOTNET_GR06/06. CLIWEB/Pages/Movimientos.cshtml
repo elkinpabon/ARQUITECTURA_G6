@@ -1,0 +1,136 @@
+@page
+@model CLIWEB.Pages.MovimientosModel
+@{
+    ViewData["Title"] = "Movimientos";
+}
+
+<div class="wrap">
+    <div class="card printable">
+        <div class="topbar">
+            <div class="brand">
+                <img src="/img/moster.webp" alt="Monster" />
+                <h1>EUREKABANK GR06</h1>
+            </div>
+            <span class="user no-print">Usuario: <strong>@Model.User</strong></span>
+            <span class="print-only">Estado de cuenta</span>
+        </div>
+
+        <h2>Estado de cuenta</h2>
+
+        <form method="get" class="no-print">
+            <fieldset class="fieldset">
+                <legend>Cuenta</legend>
+                <label for="Campo1">Código de cuenta</label>
+                <input id="Campo1" type="text" name="Campo1" value="@Model.Campo1" required />
+                <button type="submit">Buscar</button>
+            </fieldset>
+        </form>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Campo1))
+        {
+            <div class="statement-head">
+                <div class="col">
+                    <span class="k">Titular</span><span class="v">@Model.Titular</span>
+                </div>
+                <div class="col">
+                    <span class="k">Cuenta</span><span class="v">@Model.Campo1</span>
+                </div>
+                <div class="col">
+                    <span class="k">Moneda</span><span class="v">@Moneda.Nombre(Model.MonedaCuenta)</span>
+                </div>
+                <div class="col">
+                    <span class="k">Saldo actual</span><span class="v">@Model.SaldoCuenta</span>
+                </div>
+                <div class="col">
+                    <span class="k">Emitido</span><span class="v">@Model.Emitido</span>
+                </div>
+            </div>
+        }
+
+        @if (Model.Movimientos.Count == 0 && !string.IsNullOrWhiteSpace(Model.Campo1))
+        {
+            <div class="alert err">No se encontraron movimientos.</div>
+        }
+        else if (Model.Movimientos.Count > 0)
+        {
+            <div class="summary">
+                <div class="pill"><div class="k">Movimientos</div><div class="v">@Model.Movimientos.Count</div></div>
+                <div class="pill"><div class="k">Total créditos</div><div class="v in">+ @Model.TotalCreditos.ToString("N2")</div></div>
+                <div class="pill"><div class="k">Total débitos</div><div class="v out">- @Model.TotalDebitos.ToString("N2")</div></div>
+                <div class="pill"><div class="k">Neto</div><div class="v">@((Model.TotalCreditos - Model.TotalDebitos).ToString("N2"))</div></div>
+            </div>
+
+            <div class="table-scroll">
+                <table>
+                    <tr>
+                        <th>#</th><th>Fecha</th><th>Cuenta</th><th>Tipo</th>
+                        <th>Mov.</th><th style="text-align:right;">Crédito</th>
+                        <th style="text-align:right;">Débito</th><th>Cta. Ref.</th><th class="no-print">Detalle</th>
+                    </tr>
+                    @{
+                        var ingresos = new HashSet<string>(new[] { "001", "003", "005", "008" });
+                        var idx = 0;
+                    }
+                    @foreach (var m in Model.Movimientos)
+                    {
+                        idx++;
+                        var ingreso = ingresos.Contains(m.CodigoTipoMovimiento);
+                        var importe = m.ImporteMovimiento.ToString("N2");
+                        var conv = !string.IsNullOrWhiteSpace(m.MonedaOrigen);
+                        <tr>
+                            <td>@m.NumeroMovimiento</td>
+                            <td>@m.FechaMovimiento</td>
+                            <td>@Model.Campo1</td>
+                            <td><span class="tag @(ingreso ? "in" : "out")">@m.TipoDescripcion</span></td>
+                            <td><strong style="color:@(ingreso ? "#16a34a" : "#dc2626");">@(ingreso ? "CRÉDITO" : "DÉBITO")</strong></td>
+                            <td style="text-align:right;color:#4ade80;font-weight:700;">@(ingreso ? "+ " + importe : "")</td>
+                            <td style="text-align:right;color:#f87171;font-weight:700;">@(ingreso ? "" : "- " + importe)</td>
+                            <td>@(string.IsNullOrWhiteSpace(m.CuentaReferencia) ? "-" : m.CuentaReferencia)</td>
+                            <td class="no-print" style="text-align:center;">
+                                @if (conv)
+                                {
+                                    <button type="button" title="Ver conversión de moneda"
+                                            onclick="document.getElementById('cv@idx').classList.toggle('hide')"
+                                            style="width:auto;margin:0;padding:4px 10px;">&#128065;</button>
+                                }
+                                else
+                                {
+                                    <span>&mdash;</span>
+                                }
+                            </td>
+                        </tr>
+                        @if (conv)
+                        {
+                            <tr id="cv@idx" class="conv-detail hide">
+                                <td colspan="9">
+                                    <strong>Conversión de moneda</strong> &nbsp;·&nbsp;
+                                    Monto original: <strong>@(m.ImporteOrigen.HasValue ? m.ImporteOrigen.Value.ToString("N2") : "0.00") @Moneda.Nombre(m.MonedaOrigen)</strong>
+                                    &nbsp;×&nbsp; tasa <strong>@(m.TasaAplicada.HasValue ? m.TasaAplicada.Value.ToString("0.####") : "0")</strong>
+                                    &nbsp;=&nbsp; <strong>@importe @Moneda.Nombre(Model.MonedaCuenta)</strong>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    <tr style="border-top:2px solid #334155;font-weight:800;">
+                        <td colspan="5">TOTALES</td>
+                        <td style="text-align:right;color:#4ade80;">+ @Model.TotalCreditos.ToString("N2")</td>
+                        <td style="text-align:right;color:#f87171;">- @Model.TotalDebitos.ToString("N2")</td>
+                        <td></td><td class="no-print"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <p class="print-only" style="margin-top:24px;font-size:11px;color:#000;">
+                Documento generado por EUREKABANK GR06 — Banca SOAP. Sin valor legal.
+            </p>
+        }
+
+        <div class="actions no-print">
+            <a class="link" href="/Index" style="margin-top:0;">&larr; Volver al menú</a>
+            @if (Model.Movimientos.Count > 0)
+            {
+                <button type="button" onclick="window.print()">Imprimir estado de cuenta</button>
+            }
+        </div>
+    </div>
+</div>

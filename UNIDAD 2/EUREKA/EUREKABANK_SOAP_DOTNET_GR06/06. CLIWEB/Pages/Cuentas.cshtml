@@ -1,0 +1,44 @@
+@page
+@model CLIWEB.Pages.CuentasModel
+@{
+    ViewData["Title"] = Model.IsAdmin ? "Listar Cuentas" : "Mis Cuentas";
+}
+
+<div class="wrap">
+    <div class="card">
+        <div class="topbar">
+            <div class="brand">
+                <img src="/img/moster.webp" alt="Monster" />
+                <h1>EUREKABANK GR06</h1>
+            </div>
+            <span class="user">Usuario: <strong>@Model.User</strong> &middot; <a class="link" href="/Logout">Salir</a></span>
+        </div>
+
+        <h2>@ViewData["Title"]</h2>
+
+        @if (Model.Cuentas.Count == 0)
+        {
+            <div class="alert">No hay cuentas.</div>
+        }
+        else
+        {
+            <div class="table-scroll">
+                <table>
+                    <tr><th>Cuenta</th><th>Moneda</th><th>Saldo</th><th>Estado</th><th>Cliente</th></tr>
+                    @foreach (var c in Model.Cuentas)
+                    {
+                        <tr>
+                            <td>@c.CodigoCuenta</td>
+                            <td>@Moneda.Nombre(c.Moneda)</td>
+                            <td>@c.Saldo.ToString("N2")</td>
+                            <td>@c.Estado</td>
+                            <td>@c.NombreCliente</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        }
+
+        <a class="link" href="/Index">&larr; Volver al menú</a>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+@page
+@model CLIWEB.Pages.IndexModel
+@{
+    ViewData["Title"] = "EUREKABANK - Menu";
+}
+<div class="wrap">
+    <div class="card">
+        <div class="topbar">
+            <div class="brand">
+                <img class="brand-logo" src="/img/moster.webp" alt="Monster" />
+                <h1>EUREKABANK GR06</h1>
+            </div>
+            <span class="user">Usuario: <strong>@Model.User</strong> &middot;
+                <a class="link" href="/Logout">Salir</a></span>
+        </div>
+
+        <h2 class="menu-title">
+            Operaciones bancarias
+            @if (Model.IsAdmin)
+            {
+                <span class="admin-chip">ADMIN</span>
+            }
+        </h2>
+
+        @if (Model.IsAdmin)
+        {
+            <form method="get" action="/Index">
+                <fieldset class="fieldset" style="margin-top:0;">
+                    <legend>Seleccionar cliente</legend>
+                    <label for="cliente">Cliente registrado</label>
+                    <select id="cliente" name="cliente" required>
+                        <option value="">-- Selecciona un cliente --</option>
+                        @foreach (var c in Model.Clientes)
+                        {
+                            if (c.Codigo == Model.SelectedCliente)
+                            {
+                                <option value="@c.Codigo" selected>@c.Codigo &middot; DNI @c.Dni &middot; @c.Nombre</option>
+                            }
+                            else
+                            {
+                                <option value="@c.Codigo">@c.Codigo &middot; DNI @c.Dni &middot; @c.Nombre</option>
+                            }
+                        }
+                    </select>
+                    <button type="submit">Ver cuentas</button>
+                </fieldset>
+            </form>
+        }
+
+        @if (Model.Cuentas.Count > 0)
+        {
+            <div class="client-head">
+                <div class="who">@(!string.IsNullOrWhiteSpace(Model.ClienteNombre) ? Model.ClienteNombre : Model.User)
+                    <small>Cliente @(string.IsNullOrWhiteSpace(Model.SelectedCliente) ? "-" : Model.SelectedCliente) &middot; @Model.Cuentas.Count cuenta(s)</small>
+                </div>
+                <div class="total-box">
+                    <div class="lbl">Saldo total</div>
+                    <div class="amt">@Model.TotalSaldo.ToString("N2")</div>
+                </div>
+            </div>
+
+            <div class="acct-grid">
+                @foreach (var c in Model.Cuentas)
+                {
+                    <div class="acct">
+                        <div class="code">CTA @c.CodigoCuenta</div>
+                        <div class="bal">@c.Saldo.ToString("N2")</div>
+                        <div class="meta">
+                            <span>@Moneda.Nombre(c.Moneda)</span>
+                            <span class="badge @(c.Estado.Equals("ACTIVO", StringComparison.OrdinalIgnoreCase) ? "activo" : "otro")">@c.Estado</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else if (Model.IsAdmin && string.IsNullOrWhiteSpace(Model.SelectedCliente))
+        {
+            <div class="alert">Busca un cliente por su código o DNI para ver sus cuentas y saldos.</div>
+        }
+
+        <div class="menu-grid">
+            @if (Model.IsAdmin)
+            {
+                <a href="/Depositar">Depositar</a>
+                <a href="/RegistrarCliente">Registrar cliente</a>
+                <a href="/RegistrarCuenta">Registrar cuenta</a>
+                <a href="/EliminarCuenta">Eliminar cuenta</a>
+                <a href="/Cuentas">Cuentas</a>
+                <a href="/Clientes">Clientes</a>
+            }
+            <a href="/Retirar">Retirar</a>
+            <a href="/ConsultarSaldo">Consultar saldo</a>
+            <a href="/Transferir">Transferir</a>
+            <a href="/Movimientos">Movimientos</a>
+        </div>
+    </div>
+</div>

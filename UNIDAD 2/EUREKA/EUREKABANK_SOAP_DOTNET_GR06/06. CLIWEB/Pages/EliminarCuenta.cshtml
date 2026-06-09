@@ -1,0 +1,35 @@
+@page
+@model CLIWEB.Pages.EliminarCuentaModel
+@{
+    ViewData["Title"] = "Eliminar Cuenta";
+}
+
+<div class="wrap">
+    <div class="card">
+        <div class="topbar">
+            <div class="brand">
+                <img src="/img/moster.webp" alt="Monster" />
+                <h1>EUREKABANK GR06</h1>
+            </div>
+            <span class="user">Usuario: <strong>@Model.User</strong> &middot; <a class="link" href="/Logout">Salir</a></span>
+        </div>
+
+        <h2>Eliminar cuenta</h2>
+
+        <form method="post" onsubmit="return confirm('¿Eliminar la cuenta y TODOS sus movimientos? Esta acción no se puede deshacer.');">
+            <fieldset class="fieldset">
+                <legend>Cuenta a eliminar</legend>
+                <label for="Campo1">Código de cuenta</label>
+                <input id="Campo1" type="text" name="Campo1" required />
+                <button type="submit" style="background:#f87171;color:#3f0d0d;">Eliminar</button>
+            </fieldset>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.Mensaje))
+        {
+            <div class="alert @(Model.Mensaje.StartsWith("OK") ? "ok" : "err")">@Model.Mensaje</div>
+        }
+
+        <a class="link" href="/Index">&larr; Volver al menú</a>
+    </div>
+</div>

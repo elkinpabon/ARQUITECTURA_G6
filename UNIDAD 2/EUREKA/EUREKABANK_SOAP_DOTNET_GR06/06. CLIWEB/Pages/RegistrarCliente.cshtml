@@ -1,0 +1,49 @@
+@page
+@model CLIWEB.Pages.RegistrarClienteModel
+@{
+    ViewData["Title"] = "Registrar Cliente";
+}
+
+<div class="wrap">
+    <div class="card">
+        <div class="topbar">
+            <div class="brand">
+                <img src="/img/moster.webp" alt="Monster" />
+                <h1>EUREKABANK GR06</h1>
+            </div>
+            <span class="user">Usuario: <strong>@Model.User</strong> &middot; <a class="link" href="/Logout">Salir</a></span>
+        </div>
+
+        <h2>Registrar cliente</h2>
+
+        <form method="post">
+            <fieldset class="fieldset">
+                <legend>Datos del cliente</legend>
+                <label for="Campo1">Apellido paterno</label>
+                <input id="Campo1" type="text" name="Campo1" required />
+                <label for="Campo2">Apellido materno</label>
+                <input id="Campo2" type="text" name="Campo2" required />
+                <label for="Campo3">Nombre</label>
+                <input id="Campo3" type="text" name="Campo3" required />
+                <label for="Campo4">DNI</label>
+                <input id="Campo4" type="text" name="Campo4" required />
+                <label for="Campo5">Ciudad</label>
+                <input id="Campo5" type="text" name="Campo5" required />
+                <label for="Campo6">Dirección</label>
+                <input id="Campo6" type="text" name="Campo6" required />
+                <label for="Campo7">Teléfono</label>
+                <input id="Campo7" type="text" name="Campo7" required />
+                <label for="Campo8">Email</label>
+                <input id="Campo8" type="text" name="Campo8" required />
+                <button type="submit">Registrar</button>
+            </fieldset>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.Mensaje))
+        {
+            <div class="alert @(Model.Mensaje.StartsWith("OK") ? "ok" : "err")">@Model.Mensaje</div>
+        }
+
+        <a class="link" href="/Index">&larr; Volver al menú</a>
+    </div>
+</div>

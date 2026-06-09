@@ -1,0 +1,41 @@
+@page
+@model CLIWEB.Pages.TransferirModel
+@{
+    ViewData["Title"] = "Transferir";
+}
+
+<div class="wrap">
+    <div class="card">
+        <div class="topbar">
+            <div class="brand">
+                <img src="/img/moster.webp" alt="Monster" />
+                <h1>EUREKABANK GR06</h1>
+            </div>
+            <span class="user">Usuario: <strong>@Model.User</strong> &middot; <a class="link" href="/Logout">Salir</a></span>
+        </div>
+
+        <h2>Transferir</h2>
+
+        <form method="post">
+            <fieldset class="fieldset">
+                <legend>Datos de la operación</legend>
+                <label for="Campo1">Cuenta origen</label>
+                <input id="Campo1" type="text" name="Campo1" required />
+                <label for="Campo2">Cuenta destino</label>
+                <input id="Campo2" type="text" name="Campo2" required />
+                <label for="Campo3">Monto</label>
+                <input id="Campo3" type="text" name="Campo3" required />
+                <label for="Campo4">Moneda (01/02)</label>
+                <input id="Campo4" type="text" name="Campo4" value="01" />
+                <button type="submit">Transferir</button>
+            </fieldset>
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.Mensaje))
+        {
+            <div class="alert @(Model.Mensaje.StartsWith("OK") ? "ok" : "err")">@Model.Mensaje</div>
+        }
+
+        <a class="link" href="/Index">&larr; Volver al menú</a>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+@page
+@model CLIWEB.Pages.LoginModel
+@{
+    ViewData["Title"] = "EUREKABANK - Iniciar sesion";
+}
+
+<div class="login-wrap">
+    <div class="card login-split">
+        <div class="login-art" style="background-image:url('/img/login.jpg');">
+            <div class="art-brand">
+                <img src="/img/moster.webp" alt="Monster" />
+                <h1>EUREKABANK GR06</h1>
+                <p>Banca SOAP &middot; Cliente Web .NET</p>
+            </div>
+        </div>
+        <div class="login-form">
+            <h2>Iniciar sesion</h2>
+            <p class="sub">Ingresa tus credenciales para continuar</p>
+
+            @if (!string.IsNullOrEmpty(Model.Error))
+            {
+                <div class="alert err">@Model.Error</div>
+            }
+
+            <form method="post" autocomplete="off">
+                <label for="usuario">Usuario</label>
+                <input type="text" id="usuario" asp-for="Usuario" required autofocus autocapitalize="off" autocorrect="off" spellcheck="false" />
+
+                <label for="clave">Clave</label>
+                <input type="password" id="clave" asp-for="Clave" required autocapitalize="off" autocorrect="off" spellcheck="false" />
+
+                <button type="submit">Ingresar</button>
+            </form>
+        </div>
+    </div>
+</div>

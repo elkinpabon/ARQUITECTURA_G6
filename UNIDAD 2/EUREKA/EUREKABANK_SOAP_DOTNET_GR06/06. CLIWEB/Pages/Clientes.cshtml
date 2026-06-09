@@ -1,0 +1,42 @@
+@page
+@model CLIWEB.Pages.ClientesModel
+@{
+    ViewData["Title"] = "Listar Clientes";
+}
+
+<div class="wrap">
+    <div class="card">
+        <div class="topbar">
+            <div class="brand">
+                <img src="/img/moster.webp" alt="Monster" />
+                <h1>EUREKABANK GR06</h1>
+            </div>
+            <span class="user">Usuario: <strong>@Model.User</strong> &middot; <a class="link" href="/Logout">Salir</a></span>
+        </div>
+
+        <h2>Listado de clientes</h2>
+
+        @if (Model.Clientes.Count == 0)
+        {
+            <div class="alert">No hay clientes.</div>
+        }
+        else
+        {
+            <div class="table-scroll">
+                <table>
+                    <tr><th>Código</th><th>DNI</th><th>Nombre</th></tr>
+                    @foreach (var c in Model.Clientes)
+                    {
+                        <tr>
+                            <td>@c.Codigo</td>
+                            <td>@c.Dni</td>
+                            <td>@c.Nombre</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        }
+
+        <a class="link" href="/Index">&larr; Volver al menú</a>
+    </div>
+</div>

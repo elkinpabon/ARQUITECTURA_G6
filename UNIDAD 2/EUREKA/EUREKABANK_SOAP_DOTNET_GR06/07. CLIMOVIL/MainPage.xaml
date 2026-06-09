@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:services="clr-namespace:CLIMOVIL.Services"
+             x:Class="CLIMOVIL.MainPage"
+             Title="EurekaBank"
+             BackgroundColor="#0F172A">
+    <ScrollView>
+        <VerticalStackLayout Spacing="16" Padding="0,0,0,24">
+            <Grid HeightRequest="210">
+                <Image Source="login.jpg" Aspect="AspectFill" Opacity="0.30" />
+                <Border Margin="16,32,16,16"
+                        StrokeThickness="0"
+                        BackgroundColor="#EAF2FF"
+                        Opacity="0.96">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="28" />
+                    </Border.StrokeShape>
+                    <Grid Padding="18" ColumnDefinitions="116,*" ColumnSpacing="16">
+                        <Image Source="moster.png" HeightRequest="96" WidthRequest="96" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                            <Label Text="EUREKABANK GR06" FontSize="22" FontAttributes="Bold" TextColor="#0F172A" />
+                            <Label Text="Banca SOAP · Cliente móvil" FontSize="14" TextColor="#334155" />
+                            <Label Text="Login / Cuentas / Movimientos" FontSize="12" TextColor="#64748B" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <VerticalStackLayout Padding="16" Spacing="16">
+                <Border x:Name="frmLogin" StrokeThickness="0" BackgroundColor="#EAEFF7">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="26" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Padding="18" Spacing="12">
+                        <Label Text="Iniciar sesión" FontSize="18" FontAttributes="Bold" TextColor="#0F172A" />
+                        <Entry x:Name="txtUsuario" Placeholder="Usuario" TextColor="#000000" PlaceholderColor="#64748B" />
+                        <Entry x:Name="txtClave" Placeholder="Contraseña" IsPassword="True" TextColor="#000000" PlaceholderColor="#64748B" />
+                        <Button x:Name="btnLogin" Text="Login" Clicked="OnLoginClicked" />
+                        <Label x:Name="lblError" TextColor="#B91C1C" FontSize="13" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border x:Name="frmSession" IsVisible="False" StrokeThickness="0" BackgroundColor="#111C33">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="26" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Padding="18" Spacing="12">
+                        <Label Text="Sesión" TextColor="#38BDF8" FontSize="18" FontAttributes="Bold" />
+                        <Label x:Name="lblSessionUser" TextColor="#E2E8F0" FontSize="14" />
+                        <Label x:Name="lblSessionRole" TextColor="#94A3B8" FontSize="13" />
+
+                        <VerticalStackLayout x:Name="pnlClients" Spacing="8" IsVisible="False">
+                            <Label Text="Cliente" TextColor="#94A3B8" FontSize="13" />
+                            <Picker x:Name="pkrClientes" Title="Seleccione un cliente" ItemDisplayBinding="{Binding DisplayText}" />
+                            <Button x:Name="btnLoadAccounts" Text="Ver cuentas" Clicked="OnLoadAccountsClicked" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Cuentas" TextColor="#94A3B8" FontSize="13" />
+                            <Label x:Name="lblAccountsSummary" TextColor="#E2E8F0" FontSize="13" />
+                            <Picker x:Name="pkrCuentas" Title="Seleccione una cuenta" ItemDisplayBinding="{Binding DisplayText}" />
+                            <CollectionView x:Name="cvCuentas" SelectionMode="None">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="services:CuentaResumen">
+                                        <Border Margin="0,4" Padding="12" StrokeThickness="0" BackgroundColor="#1E293B">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="18" />
+                                            </Border.StrokeShape>
+                                            <Label Text="{Binding DisplayText}" TextColor="#E2E8F0" LineBreakMode="WordWrap" />
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border x:Name="frmMenu" IsVisible="False" StrokeThickness="0" BackgroundColor="#111C33">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="26" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Padding="18" Spacing="10">
+                        <Label Text="Operaciones" TextColor="#38BDF8" FontSize="18" FontAttributes="Bold" />
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                            <Button Text="Consultar saldo" Clicked="OnConsultarSaldoClicked" />
+                            <Button Text="Retirar" Grid.Column="1" Clicked="OnRetirarClicked" />
+                            <Button Text="Transferir" Grid.Row="1" Clicked="OnTransferirClicked" />
+                            <Button x:Name="btnDeposit" Text="Depositar" Grid.Column="1" Grid.Row="1" Clicked="OnDepositarClicked" />
+                            <Button Text="Movimientos" Grid.Row="2" Clicked="OnMovimientosClicked" />
+                            <Button x:Name="btnClientes" Text="Ver clientes" Grid.Column="1" Grid.Row="2" Clicked="OnClientesClicked" />
+                            <Button x:Name="btnRegCliente" Text="Registrar cliente" Grid.Row="3" Clicked="OnRegistrarClienteClicked" />
+                            <Button x:Name="btnRegCuenta" Text="Registrar cuenta" Grid.Column="1" Grid.Row="3" Clicked="OnRegistrarCuentaClicked" />
+                        </Grid>
+                        <Button x:Name="btnEliminarCuenta" Text="Eliminar cuenta" Clicked="OnEliminarCuentaClicked" />
+                        <Button Text="Cerrar sesión" BackgroundColor="#7F1D1D" Clicked="OnLogoutClicked" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border x:Name="frmAction" IsVisible="False" StrokeThickness="0" BackgroundColor="#EAEFF7">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="26" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Padding="18" Spacing="10">
+                        <Label x:Name="lblActionTitle" TextColor="#0F172A" FontSize="18" FontAttributes="Bold" />
+                        <Label x:Name="lblActionHint" TextColor="#475569" FontSize="13" />
+                        <Entry x:Name="txtActionCuenta" Placeholder="Cuenta" TextColor="#000000" PlaceholderColor="#64748B" />
+                        <Entry x:Name="txtActionMonto" Placeholder="Monto" Keyboard="Numeric" TextColor="#000000" PlaceholderColor="#64748B" />
+                        <Picker x:Name="pkrActionMoneda" Title="Moneda" />
+                        <Button x:Name="btnAction" Text="Procesar" Clicked="OnActionClicked" />
+                        <Label x:Name="lblActionResult" FontSize="13" />
+                        <Button Text="Cancelar" BackgroundColor="#94A3B8" Clicked="OnCancelarActionClicked" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border x:Name="frmList" IsVisible="False" StrokeThickness="0" BackgroundColor="#111C33">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="26" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Padding="18" Spacing="10">
+                        <Label x:Name="lblListTitle" TextColor="#38BDF8" FontSize="18" FontAttributes="Bold" />
+                        <Label x:Name="lblListSubTitle" TextColor="#94A3B8" FontSize="13" />
+                        <CollectionView x:Name="cvList" SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="services:MovimientoModel">
+                                    <Border Margin="0,4" Padding="12" StrokeThickness="0" BackgroundColor="#1E293B">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="18" />
+                                        </Border.StrokeShape>
+                                        <Label Text="{Binding DisplayText}" TextColor="#E2E8F0" LineBreakMode="WordWrap" />
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        <Button Text="Volver" Clicked="OnListBackClicked" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

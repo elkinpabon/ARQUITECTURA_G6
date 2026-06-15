@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Paleta corporativa plana unificada con el cliente web -->
+    <color name="brand_dark">#0F4C81</color>
+    <color name="brand_dark_variant">#093868</color>
+    <color name="brand_accent">#FFC940</color>
+    <color name="brand_light">#F4F6F9</color>
+
+    <!-- Texto -->
+    <color name="text_primary">#1F2937</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_inverse">#FFFFFF</color>
+    <color name="text_on_brand_subtle">#CED9E8</color>
+
+    <!-- Estados -->
+    <color name="success_green">#147814</color>
+    <color name="success_bg">#E6F4EA</color>
+    <color name="error_red">#C0392B</color>
+    <color name="error_bg">#FBEAE8</color>
+    <color name="warning_amber">#D97706</color>
+
+    <!-- Superficies -->
+    <color name="white">#FFFFFF</color>
+    <color name="surface_card">#FFFFFF</color>
+    <color name="surface_alt">#F9FAFC</color>
+    <color name="divider">#DFE3EA</color>
+    <color name="row_selected">#FFF8DE</color>
+
+    <!-- Mapa de asientos -->
+    <color name="seat_libre">#1E8E3E</color>
+    <color name="seat_reservado">#D97706</color>
+    <color name="seat_ocupado">#C0392B</color>
+    <color name="seat_mio">#0F4C81</color>
+</resources>

@@ -9,7 +9,7 @@ namespace CLIWEB.Services
 
         public static string BaseUrl
         {
-            get => $"http://{IpServidor}:5000";
+            get => $"http://192.168.58.189:5000";
         }
     }
 }

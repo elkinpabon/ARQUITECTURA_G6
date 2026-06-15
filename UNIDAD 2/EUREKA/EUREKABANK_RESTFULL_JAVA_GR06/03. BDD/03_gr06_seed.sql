@@ -1,5 +1,5 @@
 -- EUREKABANK_SOAP_JAVA_GR06 - Seed de pruebas GR06
-USE eurekarestjava;
+USE eurekabank;
 
 -- Usuario de prueba GR06: usuario=monster  clave=monster9
 -- (SHA1('monster9') = ce545786ea39ba4527f8fd50b7957ead139dc125)

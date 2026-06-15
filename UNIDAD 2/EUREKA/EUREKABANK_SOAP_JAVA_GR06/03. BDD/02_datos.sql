@@ -1,5 +1,5 @@
 -- EUREKABANK_SOAP_JAVA_GR06 - Datos
-USE eurekasopajava;
+USE eurekabank;
 
 -- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --

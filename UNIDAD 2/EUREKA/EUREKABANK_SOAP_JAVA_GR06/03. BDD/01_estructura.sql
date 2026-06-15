@@ -1,6 +1,6 @@
 -- EUREKABANK_SOAP_JAVA_GR06 - Estructura
-CREATE DATABASE IF NOT EXISTS eurekasopajava CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE eurekasopajava;
+CREATE DATABASE IF NOT EXISTS eurekabank CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE eurekabank;
 
 -- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --

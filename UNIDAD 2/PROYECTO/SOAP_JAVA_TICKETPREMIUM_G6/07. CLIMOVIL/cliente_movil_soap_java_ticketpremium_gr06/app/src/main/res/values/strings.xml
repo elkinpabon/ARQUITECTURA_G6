@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TicketPremium GR06</string>
+
+    <string name="login_titulo">TicketPremium</string>
+    <string name="login_subtitulo">Mundial FIFA 2026 - Iniciar sesion - GR06</string>
+    <string name="hint_usuario">Usuario</string>
+    <string name="hint_contrasena">Contrasena</string>
+    <string name="hint_servidor">Servidor base (ej: http://10.0.2.2:8080/servidor_soap_java_federacion_gr06)</string>
+    <string name="boton_iniciar">Iniciar sesion</string>
+    <string name="ayuda_login">monster / monster9 (ADMIN)\njosue, mikaela, elkin / admin2002 (CLIENTE)</string>
+
+    <string name="tab_partidos">Partidos</string>
+    <string name="tab_carrito">Carrito</string>
+    <string name="tab_facturas">Mis compras</string>
+    <string name="tab_cuenta">Mi cuenta</string>
+
+    <string name="titulo_partidos">Partidos del Mundial 2026</string>
+    <string name="subtitulo_partidos">Toca un partido para elegir categoria, seccion y asientos.</string>
+
+    <string name="label_categoria">Categoria:</string>
+    <string name="label_seccion">Seccion:</string>
+    <string name="label_precio">Precio:</string>
+    <string name="titulo_mapa">Mapa de asientos</string>
+    <string name="leyenda_libre">Libre</string>
+    <string name="leyenda_reservado">Reservado</string>
+    <string name="leyenda_ocupado">Ocupado</string>
+    <string name="leyenda_mio">Mio</string>
+    <string name="boton_refrescar">Refrescar</string>
+    <string name="ayuda_mapa">Toca un asiento libre para reservarlo y agregarlo al carrito. Toca un asiento tuyo (azul) para liberarlo. El mapa se actualiza cada 5 segundos.</string>
+
+    <string name="titulo_carrito">Carrito de compras</string>
+    <string name="subtitulo_carrito">Asientos reservados pendientes de pago.</string>
+    <string name="carrito_vacio">El carrito esta vacio. Reserva asientos desde la pestana Partidos.</string>
+    <string name="label_subtotal">Subtotal:</string>
+    <string name="label_iva">IVA (15%):</string>
+    <string name="label_total">Total:</string>
+    <string name="label_tipo_pago">Tipo de pago</string>
+    <string name="pago_contado">Contado</string>
+    <string name="pago_credito">Credito</string>
+    <string name="hint_entrada">Entrada (USD)</string>
+    <string name="hint_cuotas">Numero de cuotas</string>
+    <string name="hint_tasa">Tasa interes mensual (%)</string>
+    <string name="boton_pagar">Pagar</string>
+    <string name="boton_quitar">Quitar</string>
+    <string name="boton_vaciar">Vaciar carrito</string>
+
+    <string name="titulo_facturas">Mis compras</string>
+    <string name="subtitulo_facturas">Toca Detalle para ver boletos y amortizacion.</string>
+    <string name="boton_detalle">Detalle</string>
+    <string name="boton_descargar_pdf">Descargar PDF</string>
+
+    <string name="titulo_cuenta">Mi cuenta</string>
+    <string name="label_numero_cuenta">Numero de cuenta</string>
+    <string name="label_saldo">Saldo (deuda por creditos)</string>
+    <string name="titulo_movimientos">Movimientos</string>
+
+    <string name="boton_actualizar">Actualizar</string>
+    <string name="boton_cancelar">Cancelar</string>
+    <string name="boton_salir">Cerrar sesion</string>
+
+    <string name="msg_login_error">Usuario o contrasena invalidos</string>
+    <string name="msg_compra_exito">Compra registrada</string>
+    <string name="msg_pdf_listo">Comprobante generado</string>
+    <string name="msg_sin_seleccion">Selecciona un elemento de la lista</string>
+</resources>

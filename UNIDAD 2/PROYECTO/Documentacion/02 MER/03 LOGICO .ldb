@@ -3809,7 +3809,7 @@ DAT 1782096034</a:History>
 <a:ModificationDate>1782096034</a:ModificationDate>
 <a:Modifier>DELL</a:Modifier>
 <a:ExtractionBranchName/>
-<a:TargetModelURL>file:///%[PRJ_ROOT_DIR]%/03 FISICO .pdm</a:TargetModelURL>
+<a:TargetModelURL>file:///C|/Users/DELL/Pictures/ARQUITECTURA_G6/UNIDAD 2/PROYECTO/SOAP_JAVA_TICKETPREMIUM_G6/02. MER/03 FISICO.pdm</a:TargetModelURL>
 <a:TargetModelID>E416036A-EDF6-4560-9B99-5FBBC9E08E0C</a:TargetModelID>
 <a:TargetModelClassID>CDE44E21-9669-11D1-9914-006097355D9B</a:TargetModelClassID>
 <c:SessionShortcuts>
@@ -3825,7 +3825,7 @@ DAT 1782096034</a:History>
 <a:ModificationDate>1782096112</a:ModificationDate>
 <a:Modifier>DELL</a:Modifier>
 <a:ExtractionBranchName/>
-<a:TargetModelURL>file:///%[PRJ_ROOT_DIR]%/03 CONCEPTUAL .cdm</a:TargetModelURL>
+<a:TargetModelURL>file:///C|/Users/DELL/Pictures/ARQUITECTURA_G6/UNIDAD 2/PROYECTO/SOAP_JAVA_TICKETPREMIUM_G6/02. MER/03 CONCEPTUAL.cdm</a:TargetModelURL>
 <a:TargetModelID>D424A015-30FC-4E52-9A2D-B9077ACB6929</a:TargetModelID>
 <a:TargetModelClassID>1E597170-9350-11D1-AB3C-0020AF71E433</a:TargetModelClassID>
 <c:SessionShortcuts>

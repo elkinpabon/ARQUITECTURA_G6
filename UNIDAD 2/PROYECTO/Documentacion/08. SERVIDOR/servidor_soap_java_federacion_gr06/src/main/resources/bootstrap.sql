@@ -1,0 +1,178 @@
+-- =============================================================================
+--  bootstrap.sql  -  IDEMPOTENTE, ejecutado por BootstrapBD al desplegar.
+--  Esquema TicketPremium FIFA 2026 (8 tablas). Crea BD/tablas si no existen y
+--  siembra los datos NUCLEO (usuarios + 16 estadios + 48 selecciones).
+--
+--  Los 72 partidos / localidades / secciones se cargan con el script maestro
+--  "02. MER/03. FISICO/script_ticketpremium_fifa2026.sql" (datos reales del
+--  Mundial). El bootstrap solo garantiza que login y catalogos existan en una
+--  BD recien creada; no duplica datos (INSERT IGNORE / ON DUPLICATE KEY).
+-- =============================================================================
+
+CREATE DATABASE IF NOT EXISTS ticketpremiumDB
+    CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE ticketpremiumDB;
+
+CREATE TABLE IF NOT EXISTS USUARIO (
+    ID_USUARIO INT NOT NULL AUTO_INCREMENT,
+    USUARIO VARCHAR(50) NOT NULL,
+    CONTRASENA VARCHAR(100) NOT NULL,
+    NOMBRE VARCHAR(120) NOT NULL,
+    ROL VARCHAR(20) NOT NULL,
+    PRIMARY KEY (ID_USUARIO),
+    UNIQUE KEY uk_usuario (USUARIO)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS ESTADIO (
+    ID_ESTADIO INT NOT NULL AUTO_INCREMENT,
+    NOMBRE_OFICIAL VARCHAR(120) NOT NULL,
+    NOMBRE_FIFA VARCHAR(120) NOT NULL,
+    CIUDAD VARCHAR(100) NOT NULL,
+    PAIS VARCHAR(60) NOT NULL,
+    CAPACIDAD INT NOT NULL,
+    PRIMARY KEY (ID_ESTADIO),
+    UNIQUE KEY uk_estadio (NOMBRE_OFICIAL)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS SELECCION (
+    ID_SELECCION INT NOT NULL AUTO_INCREMENT,
+    NOMBRE VARCHAR(80) NOT NULL,
+    GRUPO CHAR(1) NOT NULL,
+    PRIMARY KEY (ID_SELECCION),
+    UNIQUE KEY uk_seleccion (NOMBRE)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS PARTIDO_FUTBOL (
+    CODIGO INT NOT NULL AUTO_INCREMENT,
+    ID_LOCAL INT NOT NULL,
+    ID_VISITA INT NOT NULL,
+    ID_ESTADIO INT NOT NULL,
+    FECHA DATETIME NOT NULL,
+    FASE VARCHAR(30) NOT NULL DEFAULT 'GRUPOS',
+    GRUPO CHAR(1) NOT NULL,
+    PRIMARY KEY (CODIGO),
+    CONSTRAINT fk_partido_local FOREIGN KEY (ID_LOCAL) REFERENCES SELECCION(ID_SELECCION),
+    CONSTRAINT fk_partido_visita FOREIGN KEY (ID_VISITA) REFERENCES SELECCION(ID_SELECCION),
+    CONSTRAINT fk_partido_estadio FOREIGN KEY (ID_ESTADIO) REFERENCES ESTADIO(ID_ESTADIO)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS LOCALIDAD_PARTIDO (
+    ID INT NOT NULL AUTO_INCREMENT,
+    CODIGO_PARTIDO INT NOT NULL,
+    CATEGORIA VARCHAR(20) NOT NULL,
+    PRECIO DECIMAL(10,2) NOT NULL,
+    DISPONIBILIDAD INT NOT NULL DEFAULT 0,
+    PRIMARY KEY (ID),
+    UNIQUE KEY uk_localidad (CODIGO_PARTIDO, CATEGORIA),
+    CONSTRAINT fk_locpar_partido FOREIGN KEY (CODIGO_PARTIDO) REFERENCES PARTIDO_FUTBOL(CODIGO)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS SECCION (
+    ID_SECCION INT NOT NULL AUTO_INCREMENT,
+    ID_LOCALIDAD INT NOT NULL,
+    CODIGO_SECCION VARCHAR(20) NOT NULL,
+    NUM_FILAS INT NOT NULL,
+    ASIENTOS_POR_FILA INT NOT NULL,
+    PRIMARY KEY (ID_SECCION),
+    UNIQUE KEY uk_seccion (ID_LOCALIDAD, CODIGO_SECCION),
+    CONSTRAINT fk_seccion_localidad FOREIGN KEY (ID_LOCALIDAD) REFERENCES LOCALIDAD_PARTIDO(ID)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS FACTURA (
+    ID_FACTURA INT NOT NULL AUTO_INCREMENT,
+    ID_USUARIO INT NOT NULL,
+    FECHA DATETIME NOT NULL,
+    SUBTOTAL DECIMAL(10,2) NOT NULL,
+    IVA DECIMAL(10,2) NOT NULL,
+    TOTAL DECIMAL(10,2) NOT NULL,
+    MONEDA VARCHAR(5) NOT NULL DEFAULT 'USD',
+    TIPO_PAGO VARCHAR(10) NOT NULL DEFAULT 'CONTADO',
+    ENTRADA DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    MONTO_FINANCIADO DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    NUM_CUOTAS INT NOT NULL DEFAULT 0,
+    TASA_INTERES DECIMAL(6,4) NOT NULL DEFAULT 0.0000,
+    PRIMARY KEY (ID_FACTURA),
+    CONSTRAINT fk_factura_usuario FOREIGN KEY (ID_USUARIO) REFERENCES USUARIO(ID_USUARIO)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS DETALLE_FACTURA (
+    ID_DETALLE INT NOT NULL AUTO_INCREMENT,
+    ID_FACTURA INT NOT NULL,
+    CODIGO_PARTIDO INT NOT NULL,
+    ID_SECCION INT NOT NULL,
+    CATEGORIA VARCHAR(20) NOT NULL,
+    FILA VARCHAR(10) NOT NULL,
+    ASIENTOS VARCHAR(60) NOT NULL,
+    CANTIDAD INT NOT NULL,
+    PRECIO_UNITARIO DECIMAL(10,2) NOT NULL,
+    TOTAL DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (ID_DETALLE),
+    CONSTRAINT fk_det_factura FOREIGN KEY (ID_FACTURA) REFERENCES FACTURA(ID_FACTURA),
+    CONSTRAINT fk_det_partido FOREIGN KEY (CODIGO_PARTIDO) REFERENCES PARTIDO_FUTBOL(CODIGO),
+    CONSTRAINT fk_det_seccion FOREIGN KEY (ID_SECCION) REFERENCES SECCION(ID_SECCION)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS AMORTIZACION (
+    ID_AMORTIZACION INT NOT NULL AUTO_INCREMENT,
+    ID_FACTURA INT NOT NULL,
+    NUM_CUOTA INT NOT NULL,
+    FECHA_VENCIMIENTO DATE NOT NULL,
+    SALDO_INICIAL DECIMAL(10,2) NOT NULL,
+    CUOTA DECIMAL(10,2) NOT NULL,
+    INTERES DECIMAL(10,2) NOT NULL,
+    ABONO_CAPITAL DECIMAL(10,2) NOT NULL,
+    SALDO_FINAL DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (ID_AMORTIZACION),
+    UNIQUE KEY uk_amort (ID_FACTURA, NUM_CUOTA),
+    CONSTRAINT fk_amort_factura FOREIGN KEY (ID_FACTURA) REFERENCES FACTURA(ID_FACTURA)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS RESERVA_ASIENTO (
+    ID_RESERVA INT NOT NULL AUTO_INCREMENT,
+    ID_SECCION INT NOT NULL,
+    FILA VARCHAR(10) NOT NULL,
+    ASIENTO VARCHAR(10) NOT NULL,
+    ESTADO VARCHAR(12) NOT NULL,
+    ID_USUARIO INT NOT NULL,
+    ID_FACTURA INT NULL,
+    CREADO DATETIME NOT NULL,
+    PRIMARY KEY (ID_RESERVA),
+    UNIQUE KEY uk_asiento (ID_SECCION, FILA, ASIENTO),
+    CONSTRAINT fk_res_seccion FOREIGN KEY (ID_SECCION) REFERENCES SECCION(ID_SECCION),
+    CONSTRAINT fk_res_usuario FOREIGN KEY (ID_USUARIO) REFERENCES USUARIO(ID_USUARIO),
+    CONSTRAINT fk_res_factura FOREIGN KEY (ID_FACTURA) REFERENCES FACTURA(ID_FACTURA)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS CUENTA (
+    ID_CUENTA INT NOT NULL AUTO_INCREMENT,
+    ID_USUARIO INT NOT NULL,
+    NUMERO VARCHAR(20) NOT NULL,
+    SALDO DECIMAL(12,2) NOT NULL DEFAULT 0.00,
+    PRIMARY KEY (ID_CUENTA),
+    UNIQUE KEY uk_cuenta_usuario (ID_USUARIO),
+    UNIQUE KEY uk_cuenta_numero (NUMERO),
+    CONSTRAINT fk_cuenta_usuario FOREIGN KEY (ID_USUARIO) REFERENCES USUARIO(ID_USUARIO)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS MOVIMIENTO (
+    ID_MOVIMIENTO INT NOT NULL AUTO_INCREMENT,
+    ID_CUENTA INT NOT NULL,
+    FECHA DATETIME NOT NULL,
+    TIPO VARCHAR(20) NOT NULL,
+    MONTO DECIMAL(12,2) NOT NULL,
+    DESCRIPCION VARCHAR(200) NOT NULL,
+    ID_FACTURA INT NULL,
+    PRIMARY KEY (ID_MOVIMIENTO),
+    CONSTRAINT fk_mov_cuenta FOREIGN KEY (ID_CUENTA) REFERENCES CUENTA(ID_CUENTA),
+    CONSTRAINT fk_mov_factura FOREIGN KEY (ID_FACTURA) REFERENCES FACTURA(ID_FACTURA)
+) ENGINE=InnoDB;
+
+-- ---- Semilla nucleo (idempotente) ------------------------------------------
+INSERT INTO USUARIO (USUARIO, CONTRASENA, NOMBRE, ROL) VALUES ('monster','monster9','Administrador TicketPremium','ADMIN'), ('josue','admin2002','Josue Marin','CLIENTE'), ('mikaela','admin2002','Mikaela Salcedo','CLIENTE'), ('elkin','admin2002','Elkin Pabon','CLIENTE') ON DUPLICATE KEY UPDATE CONTRASENA=VALUES(CONTRASENA), NOMBRE=VALUES(NOMBRE), ROL=VALUES(ROL);
+
+INSERT IGNORE INTO ESTADIO (ID_ESTADIO, NOMBRE_OFICIAL, NOMBRE_FIFA, CIUDAD, PAIS, CAPACIDAD) VALUES (1,'Estadio Azteca','Mexico City Stadium','Ciudad de Mexico','Mexico',93000),(2,'Estadio Akron','Estadio Guadalajara','Zapopan','Mexico',52000),(3,'Estadio BBVA','Estadio Monterrey','Guadalupe','Mexico',53500),(4,'Mercedes-Benz Stadium','Atlanta Stadium','Atlanta','Estados Unidos',75000),(5,'SoFi Stadium','Los Angeles Stadium','Inglewood','Estados Unidos',70000),(6,'BMO Field','Toronto Stadium','Toronto','Canada',45000),(7,'Levi''s Stadium','San Francisco Bay Area Stadium','Santa Clara','Estados Unidos',71000),(8,'BC Place','Vancouver Stadium','Vancouver','Canada',54000),(9,'Gillette Stadium','Boston Stadium','Foxborough','Estados Unidos',65000),(10,'Lumen Field','Seattle Stadium','Seattle','Estados Unidos',69000),(11,'MetLife Stadium','New York New Jersey Stadium','East Rutherford','Estados Unidos',82500),(12,'Lincoln Financial Field','Philadelphia Stadium','Philadelphia','Estados Unidos',69000),(13,'Hard Rock Stadium','Miami Stadium','Miami Gardens','Estados Unidos',65000),(14,'NRG Stadium','Houston Stadium','Houston','Estados Unidos',72000),(15,'Arrowhead Stadium','Kansas City Stadium','Kansas City','Estados Unidos',73000),(16,'AT&T Stadium','Dallas Stadium','Arlington','Estados Unidos',94000);
+
+INSERT IGNORE INTO CUENTA (ID_USUARIO, NUMERO, SALDO) VALUES (1,'CTA-0001',0.00),(2,'CTA-0002',0.00),(3,'CTA-0003',0.00),(4,'CTA-0004',0.00);
+
+INSERT IGNORE INTO SELECCION (ID_SELECCION, NOMBRE, GRUPO) VALUES (1,'Mexico','A'),(2,'Sudafrica','A'),(3,'Corea del Sur','A'),(4,'Chequia','A'),(5,'Canada','B'),(6,'Suiza','B'),(7,'Qatar','B'),(8,'Bosnia y Herzegovina','B'),(9,'Brasil','C'),(10,'Marruecos','C'),(11,'Haiti','C'),(12,'Escocia','C'),(13,'Estados Unidos','D'),(14,'Paraguay','D'),(15,'Australia','D'),(16,'Turquia','D'),(17,'Alemania','E'),(18,'Curazao','E'),(19,'Costa de Marfil','E'),(20,'Ecuador','E'),(21,'Paises Bajos','F'),(22,'Japon','F'),(23,'Tunez','F'),(24,'Suecia','F'),(25,'Belgica','G'),(26,'Egipto','G'),(27,'Iran','G'),(28,'Nueva Zelanda','G'),(29,'Espana','H'),(30,'Cabo Verde','H'),(31,'Arabia Saudi','H'),(32,'Uruguay','H'),(33,'Francia','I'),(34,'Senegal','I'),(35,'Noruega','I'),(36,'Irak','I'),(37,'Argentina','J'),(38,'Argelia','J'),(39,'Austria','J'),(40,'Jordania','J'),(41,'Portugal','K'),(42,'Uzbekistan','K'),(43,'Colombia','K'),(44,'Republica Democratica del Congo','K'),(45,'Inglaterra','L'),(46,'Croacia','L'),(47,'Ghana','L'),(48,'Panama','L');

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Archivo de construccion Ant para el cliente CONSOLA REST EurekaBank GR06. -->
+<project name="eurekabank_restful_java_con_gr06" default="default" basedir=".">
+    <description>Construye, prueba y ejecuta el cliente consola eurekabank_restful_java_con_gr06.</description>
+    <import file="nbproject/build-impl.xml"/>
+</project>

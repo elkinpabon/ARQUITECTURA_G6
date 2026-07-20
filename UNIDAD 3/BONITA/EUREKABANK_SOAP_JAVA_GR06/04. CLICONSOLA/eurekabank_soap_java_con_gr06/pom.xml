@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ec.edu.monster</groupId>
+    <artifactId>eurekabank_soap_java_con_gr06</artifactId>
+    <version>1</version>
+    <packaging>jar</packaging>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+             <groupId>com.sun.xml.ws</groupId>
+    <artifactId>jaxws-maven-plugin</artifactId>
+    <version>4.0.1</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>wsimport</goal>
+            </goals>
+            <configuration>
+                <wsdlUrls>
+                    <wsdlUrl>http://localhost:8080/eurekabank_soap_java_gr06/WSLogin?wsdl</wsdlUrl>
+                </wsdlUrls>
+                <packageName>ec.edu.monster.ws</packageName>
+                <vmArgs>
+                    <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                </vmArgs>
+                <sourceDestDir>${project.build.directory}/generated-sources/wsimport</sourceDestDir>
+                <keep>true</keep>
+            </configuration>
+            <id>wsimport-generate-WSLogin</id>
+            <phase>generate-sources</phase>
+        </execution>
+        <execution>
+            <goals>
+                <goal>wsimport</goal>
+            </goals>
+            <configuration>
+                <wsdlUrls>
+                    <wsdlUrl>http://localhost:8080/eurekabank_soap_java_gr06/WSCuenta?wsdl</wsdlUrl>
+                </wsdlUrls>
+                <packageName>ec.edu.monster.ws</packageName>
+                <vmArgs>
+                    <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                </vmArgs>
+                <sourceDestDir>${project.build.directory}/generated-sources/wsimport</sourceDestDir>
+                <keep>true</keep>
+            </configuration>
+            <id>wsimport-generate-WSCuenta</id>
+            <phase>generate-sources</phase>
+        </execution>
+        <execution>
+            <goals>
+                <goal>wsimport</goal>
+            </goals>
+            <configuration>
+                <wsdlUrls>
+                    <wsdlUrl>http://localhost:8080/eurekabank_soap_java_gr06/WSMovimiento?wsdl</wsdlUrl>
+                </wsdlUrls>
+                <packageName>ec.edu.monster.ws</packageName>
+                <vmArgs>
+                    <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+                </vmArgs>
+                <sourceDestDir>${project.build.directory}/generated-sources/wsimport</sourceDestDir>
+                <keep>true</keep>
+            </configuration>
+            <id>wsimport-generate-WSMovimiento</id>
+            <phase>generate-sources</phase>
+        </execution>
+    </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <!-- Jakarta XML Web Services API -->
+        <dependency>
+            <groupId>jakarta.xml.ws</groupId>
+            <artifactId>jakarta.xml.ws-api</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        
+        <!-- Jakarta XML Web Services Runtime -->
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-rt</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        
+        <!-- Jakarta XML Bind API -->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        
+        <!-- Jakarta Annotations API -->
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+    </dependencies>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <exec.mainClass>ec.edu.monster.vista.ConsolaApp</exec.mainClass>
+    </properties>
+</project>

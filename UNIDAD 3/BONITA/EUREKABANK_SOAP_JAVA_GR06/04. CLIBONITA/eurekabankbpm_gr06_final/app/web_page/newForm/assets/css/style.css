@@ -1,0 +1,263 @@
+/* ============================================
+   ESTILOS BASE BONITA
+   ============================================ */
+
+.component {
+    margin-bottom: 3px;
+    margin-top: 3px;
+}
+
+.table-hover tr {
+    cursor: pointer;
+}
+
+input[type='text'].ng-invalid.ng-dirty, input[type='email'].ng-invalid.ng-dirty,
+input[type='number'].ng-invalid.ng-dirty, input[type='password'].ng-invalid.ng-dirty,
+input[type='url'].ng-invalid.ng-dirty {
+  border-color: #e53e3e;
+  border-width: 2px;
+}
+
+.control-label--required:after {
+  content: " *";
+  color: #e53e3e;
+}
+
+.btn-invalid {
+    border-color: #e53e3e;
+    border-width: 2px;
+}
+
+.bonita-modal {
+    overflow-y: auto;
+}
+
+.modal-open .datepicker,
+.modal-open .timepicker {
+    z-index: 9999;
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+    width: 700px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    background: #fff;
+    padding: 0;
+    border-radius: 16px;
+}
+
+.ngdialog.ngdialog-theme-default {
+    padding-top: 30px;
+}
+
+@media screen and (max-width: 767px) {
+    .ngdialog.ngdialog-theme-default .ngdialog-content {
+        width: 90%;
+    }
+}
+
+/* ============================================
+   EUREKA BANK - DISEÑO PREMIUM 2024
+   ============================================ */
+
+body, .Page-content {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+}
+
+.container, .FormContent {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 20px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+    padding: 0;
+    margin: 30px auto;
+    max-width: 480px;
+    overflow: hidden;
+}
+
+/* ============================================
+   HEADER PREMIUM
+   ============================================ */
+
+.header-banco {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%) !important;
+    padding: 35px 20px !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    text-align: center !important;
+    border-bottom: 4px solid #3b82f6 !important;
+}
+
+.header-banco h1,
+.header-banco .widget-title,
+.header-banco span,
+.header-banco p,
+.header-banco div,
+.header-banco * {
+    color: #ffffff !important;
+    background: transparent !important;
+    font-size: 26px !important;
+    font-weight: 800 !important;
+    letter-spacing: 4px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-transform: uppercase !important;
+}
+
+.subtitulo-banco,
+.subtitulo-banco * {
+    color: #64748b !important;
+    font-size: 13px !important;
+    text-align: center !important;
+    padding: 15px 20px !important;
+    margin: 0 !important;
+    font-weight: 500 !important;
+    letter-spacing: 1px !important;
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+/* ============================================
+   FORMULARIO PREMIUM
+   ============================================ */
+
+.form-group {
+    margin: 0 30px 25px 30px;
+    padding-top: 25px;
+}
+
+.control-label {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 11px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: block;
+}
+
+.form-control {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 15px;
+    color: #1e293b;
+    background: #f8fafc;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-control:hover {
+    border-color: #cbd5e1;
+    background: #ffffff;
+}
+
+.form-control:focus {
+    border-color: #3b82f6;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    outline: none;
+}
+
+select.form-control {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 50px;
+}
+
+/* ============================================
+   BOTON PREMIUM
+   ============================================ */
+
+.btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 18px 40px;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ffffff;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+    width: calc(100% - 60px);
+    margin: 30px 30px 35px 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+}
+
+/* ============================================
+   VALIDACIONES
+   ============================================ */
+
+.form-control.ng-valid.ng-dirty {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+.form-control.ng-invalid.ng-dirty {
+    border-color: #ef4444;
+    background: #fef2f2;
+}
+
+.alert-danger {
+    border-radius: 12px;
+    border: none;
+    background: #fef2f2;
+    color: #dc2626;
+    padding: 16px 20px;
+    margin: 0 30px 20px 30px;
+    font-size: 13px;
+    border-left: 4px solid #ef4444;
+}
+
+.alert-success {
+    border-radius: 12px;
+    border: none;
+    background: #f0fdf4;
+    color: #16a34a;
+    padding: 16px 20px;
+    margin: 0 30px 20px 30px;
+    font-size: 13px;
+    border-left: 4px solid #10b981;
+}
+
+.form-control::placeholder {
+    color: #94a3b8;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media screen and (max-width: 520px) {
+    .container, .FormContent {
+        margin: 15px;
+        border-radius: 16px;
+    }
+    
+    .form-group {
+        margin: 0 20px 20px 20px;
+    }
+    
+    .btn-primary {
+        width: calc(100% - 40px);
+        margin: 25px 20px 30px 20px;
+    }
+}

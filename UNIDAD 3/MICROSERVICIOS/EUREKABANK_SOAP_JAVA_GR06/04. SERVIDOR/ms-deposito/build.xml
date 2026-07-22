@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project name="ms-deposito" default="default" basedir=".">
+    <description>Construye, prueba y despliega el microservicio ms-deposito.</description>
+    <import file="nbproject/build-impl.xml"/>
+</project>

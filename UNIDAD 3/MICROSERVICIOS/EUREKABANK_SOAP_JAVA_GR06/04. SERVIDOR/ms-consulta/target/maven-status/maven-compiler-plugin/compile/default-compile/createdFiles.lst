@@ -1,0 +1,4 @@
+ec\edu\monster\servicio\ConsultaService.class
+ec\edu\monster\controlador\WSMovimiento.class
+ec\edu\monster\servicio\MovimientoService.class
+ec\edu\monster\controlador\WSConsulta.class

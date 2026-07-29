@@ -1,0 +1,13 @@
+ec\edu\monster\modelo\ClienteResumen.class
+ec\edu\monster\modelo\MovimientoModel.class
+ec\edu\monster\persistencia\MovimientoDAO.class
+ec\edu\monster\modelo\Resultado.class
+ec\edu\monster\servicio\SeguridadUtil.class
+ec\edu\monster\modelo\CuentaModel.class
+ec\edu\monster\persistencia\CuentaDAO.class
+ec\edu\monster\persistencia\ClienteDAO.class
+ec\edu\monster\persistencia\UsuarioDAO.class
+ec\edu\monster\modelo\CuentaResumen.class
+ec\edu\monster\persistencia\ConexionBD.class
+ec\edu\monster\modelo\Usuario.class
+ec\edu\monster\persistencia\TasaCambioDAO.class

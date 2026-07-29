@@ -1,0 +1,2 @@
+package ec.edu.monster.modelo;
+public class CuentaModel { private String codigo,moneda,estado; private double saldo; public String getCodigo(){return codigo;} public void setCodigo(String v){codigo=v;} public String getMoneda(){return moneda;} public void setMoneda(String v){moneda=v;} public String getEstado(){return estado;} public void setEstado(String v){estado=v;} public double getSaldo(){return saldo;} public void setSaldo(double v){saldo=v;} }
